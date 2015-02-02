@@ -10,5 +10,8 @@
     "type": "git",
     "url": "git@bitbucket.org:brookspatton/fantasy-cricket.git"
   },
-  "author": "Latitude 40"
+  "author": "Latitude 40",
+  "dependencies": {
+    "express": "^4.11.2"
+  }
 }
