@@ -22,12 +22,12 @@
 }
 
 .jumbotron {
-	background: url("images/Stadium.jpg") no-repeat center center;
+	background: url("images/Stadium1.jpg") no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	padding: 283px 0px;
+	padding: 258px 0px;
 }
 
 .footer-text {
