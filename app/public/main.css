@@ -2,9 +2,23 @@
 	margin-bottom: -20px;
 }
 
+#navbar-head {
+	padding-bottom: 20px;
+}
+
+#navbar-sub {
+	padding-top: 5px;
+	padding-bottom: 3px;
+}
+
 .facebook-button {
 	color: #fff;
 	background-color: #43609C;
+}
+
+.google-plus-button {
+	color: #fff;
+	background-color: #E05542;
 }
 
 .jumbotron {
@@ -13,5 +27,5 @@
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	padding: 325px 0px;
+	padding: 283px 0px;
 }

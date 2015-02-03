@@ -10,7 +10,7 @@
   <body>
     
     <!-- Navbar Header -->
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default" id="navbar-head">
       <div class="container-fluid">
       <!-- Brand and toggle are grouped for better mobile display -->
         <div class="navbar-header">
@@ -37,6 +37,18 @@
 			</ul> <!-- /.navbar-right -->
 		</div> <!-- /.navbar-collapse -->
       </div> <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Navbar Sub-Header -->
+    <nav class="navbar navbar-default" id="navbar-sub">
+      <div class="container-fluid">
+        <ul class="nav nav-tabs">
+          <li role="presentation" class="active"><a href="#">Leaderboard</a></li>
+          <li role="presentation"><a href="#">Trades</a></li>
+          <li role="presentation"><a href="#">My Score</a></li>
+          <li role="presentation"><a href="#">Game Rules</a></li>
+        </ul>
+      </div>
     </nav>
 
     <!-- Jumbotron -->
@@ -70,6 +82,9 @@
               <div class="form-group">
                 <input class="form-control facebook-button" type="button" value="Register with Facebook">
               </div>
+              <div class="form-group">
+                <input class="form-control google-plus-button" type="button" value="Register with Google+">
+              </div>
     				</div> <!-- /.modal-body -->
     			</div> <!-- /.modal-content -->
     	</div> <!-- /.modal-dialog -->
@@ -96,6 +111,9 @@
               </div>
               <div class="form-group">
                 <input class="form-control facebook-button" type="button" value="Login with Facebook">
+              </div>
+              <div class="form-group">
+                <input class="form-control google-plus-button" type="button" value="Login with Google+">
               </div>
             </div> <!-- /.modal-body -->
           </div> <!-- /.modal-content -->
