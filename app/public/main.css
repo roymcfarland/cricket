@@ -2,6 +2,11 @@
 	margin-bottom: -20px;
 }
 
+.facebook-button {
+	color: #fff;
+	background-color: #43609C;
+}
+
 .jumbotron {
 	background: url("images/Stadium.jpg") no-repeat center center;
 	-webkit-background-size: cover;
