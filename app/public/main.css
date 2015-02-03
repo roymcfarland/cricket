@@ -1,0 +1,12 @@
+.navbar {
+	margin-bottom: -20px;
+}
+
+.jumbotron {
+	background: url("images/Stadium.jpg") no-repeat center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	padding: 325px 0px;
+}
