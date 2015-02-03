@@ -1,6 +1,4 @@
 {
-  "name": "fantasy_cricket",
-  "version": "0.0.1",
   "description": "",
   "main": "server.js",
   "scripts": {
