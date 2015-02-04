@@ -3,7 +3,6 @@ var should = require('should');
 
 var request = supertest('http://localhost:3000');
 
-
 describe('Sending a GET to /', function() {
 	it('should result in the index page', function(done) {
 		request
