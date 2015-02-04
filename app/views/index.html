@@ -2,7 +2,7 @@
 <html lang="en">
   <head ng-app="game">
     <meta charset="utf-8">
-    <title>Big Payouts! Fantasy Cricket</title>
+    <title>Huge Payouts! Fantasy Cricket</title>
     <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../public/main.css">
@@ -21,24 +21,26 @@
           	<span class="icon-bar"></span>
           	<span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">[LOGO]</a>
+          <a class="navbar-brand" href="#">[%]</a>
         </div> <!-- /.navbar-header -->
         <!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li><a href="#">Big Payouts! Fantasy Cricket</a></li>
-			</ul> <!-- /.navbar-nav -->
-			<ul class="nav navbar-nav navbar-right">
-				<li>
-          <a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
-				</li>
-			</ul> <!-- /.navbar-right -->
-		</div> <!-- /.navbar-collapse -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			     <ul class="nav navbar-nav">
+				      <li><a href="#">Huge Payouts! Fantasy Cricket</a></li>
+			     </ul> <!-- /.navbar-nav -->
+			     <ul class="nav navbar-nav navbar-right">
+				      <li><a href="#">Leaderboard</a></li>
+              <li><a href="#">Trades</a></li>
+              <li><a href="#">My Score</a></li>
+              <li><a href="#">Game Rules</a></li>
+              <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+			     </ul> <!-- /.navbar-right -->
+		    </div> <!-- /.navbar-collapse -->
       </div> <!-- /.container -->
     </nav>
 
     <!-- Navbar Sub-Header -->
-
+    <!--
     <nav class="navbar navbar-default" id="navbar-sub">
       <div class="container">
         <ul class="nav nav-tabs">
@@ -47,8 +49,9 @@
           <li role="presentation"><a href="#">My Score</a></li>
           <li role="presentation"><a href="#">Game Rules</a></li>
         </ul>
-      </div> <!-- /.container -->
+      </div>
     </nav>
+    -->
 
     <!-- Jumbotron -->
  
@@ -59,11 +62,48 @@
             <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#register-modal">Click Here to Join a League!</a>
           </div>
         </div> <!-- /.row join-a-league -->
-        <div class="row leaderboard-chart">
-          <div></div>
-        </div>
-    	</div>
-    </div>
+        <div class="row leaderboard-table">
+          <div class="col-sm-4 col-sm-offset-8">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Position</th>
+                  <th>Player</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>{{player in players[0]}}</td>
+                  <td>{{player.points}}</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>{{player in players[1]}}</td>
+                  <td>{{player.points}}</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>{{player in players[2]}}</td>
+                  <td>{{player.points}}</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>{{player in players[3]}}</td>
+                  <td>{{player.points}}</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>{{player in players[4]}}</td>
+                  <td>{{player.points}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div> <!-- /.row leaderboard-table -->
+    	</div> <!-- /.container -->
+    </div> <!-- /.jumbotron -->
 
     <!-- Register Modal -->
  
@@ -73,7 +113,7 @@
     			<div class="modal-content">
     				<div class="modal-header">
     					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    					<h4 class="modal-title">Register</h4>
+    					<h4 class="modal-title">Regsiter to Join a League!</h4>
     				</div> <!-- /.modal-header -->
     				<div class="modal-body">
     					<div class="form-group">
@@ -107,7 +147,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Login</h4>
+              <h4 class="modal-title">Login to Your Account</h4>
             </div> <!-- /.modal-header -->
             <div class="modal-body">
               <div class="form-group">
@@ -138,7 +178,7 @@
     <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
       <div class="container">
         <ul class="nav navbar-nav navbar-left navbar-bottom">
-          <li class="footer-text"><a href="#">Copyright 2015. Cricket Ventures Ltd. All rights reserved.</a></li>
+          <li class="footer-text"><a href="#"><i class="fa fa-copyright"></i> 2015. Huge Payouts! Ltd. All rights reserved.</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right navbar-bottom">
           <li class="footer-text"><a href="#">Terms of Use</a></li>
