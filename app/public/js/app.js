@@ -3,7 +3,7 @@ angular.module("fantasyCricket", ["routerRoutes", "userService"])
 // mainController for the ENTIRE site
 .controller("mainController", function() {
 	var vm = this;
-	vm.bigMessage = "Hello World!";
+	vm.topMessage = "Hello Cricket Fans!";
 });
 
 // homeController for index.html
