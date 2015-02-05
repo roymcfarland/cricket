@@ -1,22 +1,30 @@
-function(){
+angular.module("routerApp", [])
 
-	var app = angular.module("game", []);
+// Controllers
 
-	app.controller("")
+// mainController for the ENTIRE site
+.controller("mainController", function() {
 
-};
+	var vm = this;
 
-/*
-$(document).on("click", "#navbar-sub li", function(){
-	// Deselect other sibling elements
-	$(this).siblings().removeClass("active");
-	// Select specific clicked <li>
-	$(this).addClass("active");
-});
-*/
-
-/*
-$(document).on('ready', function() {
+	vm.bigMessage = "Hello World!";
 
 });
-*/
+
+// homeController for index.html
+.controller("homeController", function() {
+
+	var vm = this;
+
+	vm.message = "This is the home page!";
+
+});
+
+// rulesController for rules.html
+.controller("rulesController", function() {
+
+	var vm = this;
+
+	vm.message = "This is the rules page!"
+
+});
