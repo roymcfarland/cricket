@@ -1,10 +1,10 @@
-(function(){
+function(){
 
 	var app = angular.module("game", []);
 
 	app.controller("")
 
-})();
+};
 
 /*
 $(document).on("click", "#navbar-sub li", function(){

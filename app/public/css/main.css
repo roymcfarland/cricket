@@ -24,7 +24,7 @@
 }
 
 .jumbotron {
-	background: url("images/Stadium1.jpg") no-repeat center center;
+	background: url("../images/stadium1.jpg") no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
