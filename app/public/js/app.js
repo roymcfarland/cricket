@@ -1,13 +1,13 @@
 angular.module("fantasyCricket", ["routerRoutes", "userService"])
 
 // mainController for the ENTIRE site
-.controller("mainController", function() {
+controller("mainController", function() {
 	var vm = this;
 	vm.topMessage = "Hello Cricket Fans!";
 });
 
 // homeController for index.html
-.controller("homeController", function() {
+controller("homeController", function() {
 	var vm = this;
 	vm.message = "This is the home page!";
 });
@@ -31,19 +31,19 @@ controller("myScoreController", function(){
 });
 
 // rulesController for rules.html
-.controller("rulesController", function() {
+controller("rulesController", function() {
 	var vm = this;
 	vm.message = "These are the rules!";
 });
 
 // legalController for legal.html
-.controller("legalTermsController", function() {
+controller("legalTermsController", function() {
 	var vm = this;
 	vm.message = "This is our legal text.";
 });
 
 // contactController for contact info
-.controller("contactInfoController", function() {
+controller("contactInfoController", function() {
 	var vm = this;
 	vm.message = "This is our contact info...";
 });
