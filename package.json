@@ -1,17 +1,19 @@
 {
-	"name": "fantasy-cricket",
-	"version": "0.0.1",
-	"description": "",
-	"main": "server.js",
-	"scripts": {
-	"start": "node server/server.js"
-	},
-	"repository": {
-	"type": "git",
-	"url": "git@bitbucket.org:brookspatton/fantasy-cricket.git"
-	},
-	"author": "Latitude 40",
-	"dependencies": {
-	"express": "^4.11.2"
-	}
+  "name": "fantasy-cricket",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:brookspatton/fantasy-cricket.git"
+  },
+  "author": "Latitude 40",
+  "dependencies": {
+    "angular": "^1.3.12",
+    "angular-route": "^1.3.12",
+    "express": "^4.11.2"
+  }
 }
