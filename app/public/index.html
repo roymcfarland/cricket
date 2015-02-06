@@ -2,29 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Huge Payouts! Fantasy Cricket</title>
+    <title>CriketDuel</title>
     <!-- Set the base path for Angular routing -->
     <base href="/public">
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
-    <!-- JavaScript -->
-    <script src="/js/lib/angular/angular.js"></script>
-    <script src="/js/lib/angular-route/angular-route.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.js"></script>
-    <script src="/js/app.js"></script>
-    <script src="/js/app.routes.js"></script>
-    <script src="/js/services/userService.js"></script>
   </head>
   <!-- End </head> Start <body> --> 
-  <body class="container" ng-app="fantasyCricket" ng-controller="mainController as main"> 
+  <body class="container" ng-app="fantasyCricket" ng-controller="indexController as index"> 
     <!-- Navbar Header -->
     <header>
       <nav class="navbar navbar-default">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/">Huge Payouts! Fantasy Cricket</a>
+          <a class="navbar-brand" href="/">CricketDuel</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/">Leaderboard</a></li>
@@ -39,73 +31,12 @@
     <!-- Main content where angular templating will be injected -->
     <main>
       <div class="jumbotron text-center">
-        <h1>{{ main.topMessage }}</h1>
+        <h1>{{ index.topMessage }}</h1>
       </div>
       <div ng-view></div>
     </main>
 
-    <!-- Register Modal -->
-    <div id="register-modal" class="modal fade">
-    	<div class="modal-dialog">
-    		<form action="auth/signup" method="post" id="signup-form" class="form"></form>
-    			<div class="modal-content">
-    				<div class="modal-header">
-    					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    					<h4 class="modal-title">Regsiter to Join a League!</h4>
-    				</div> <!-- /.modal-header -->
-    				<div class="modal-body">
-    					<div class="form-group">
-    						<input class="form-control" type="email" name="email" placeholder="Email">
-    					</div>
-    					<div class="form-group">
-    						<input class="form-control" type="text" name="username" placeholder="Username">
-    					</div>
-    					<div class="form-group">
-    						<input class="form-control" type="password" name="password" placeholder="Password">
-    					</div>
-    					<div class="form-group">
-    						<input class="form-control btn btn-success" type="submit">
-    					</div>
-              <div class="form-group">
-                <input class="form-control facebook-button" type="button" value="Register with Facebook">
-              </div>
-              <div class="form-group">
-                <input class="form-control google-plus-button" type="button" value="Register with Google+">
-              </div>
-    				</div> <!-- /.modal-body -->
-    			</div> <!-- /.modal-content -->
-    	</div> <!-- /.modal-dialog -->
-    </div> <!-- /.register-modal -->
 
-    <!-- Login Modal -->
-    <div id="login-modal" class="modal fade">
-      <div class="modal-dialog">
-        <form action="auth/signup" method="post" id="signup-form" class="form"></form>
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Login to Your Account</h4>
-            </div> <!-- /.modal-header -->
-            <div class="modal-body">
-              <div class="form-group">
-                <input class="form-control" type="text" name="username" placeholder="Username">
-              </div>
-              <div class="form-group">
-                <input class="form-control" type="password" name="password" placeholder="Password">
-              </div>
-              <div class="form-group">
-                <input class="form-control btn btn-success" type="submit">
-              </div>
-              <div class="form-group">
-                <input class="form-control facebook-button" type="button" value="Login with Facebook">
-              </div>
-              <div class="form-group">
-                <input class="form-control google-plus-button" type="button" value="Login with Google+">
-              </div>
-            </div> <!-- /.modal-body -->
-          </div> <!-- /.modal-content -->
-      </div> <!-- /.modal-dialog -->
-    </div> <!-- /.login-modal -->
   
   </body>
   <!-- End </body> Start <footer> -->
@@ -114,7 +45,7 @@
     <nav class="navbar navbar-default">
       <div class="navbar-footer">
         <ul class="nav navbar-nav navbar-left">
-          <li class="footer-text"><a href="#"><i class="fa fa-copyright"></i> 2015. Huge Payouts! All rights reserved.</a></li>
+          <li class="footer-text"><a href="#"><i class="fa fa-copyright"></i> 2015. CricketDuel. All rights reserved.</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right navbar-bottom">
           <li class="footer-text"><a href="#">Legal</a></li>
@@ -123,6 +54,17 @@
         </ul>
       </div> <!-- /.navbar-footer -->
     </nav> <!-- /.navbar -->
+
+    <!-- JavaScript -->
+    <script src="/js/lib/angular/angular.js"></script>
+    <script src="/js/lib/angular-route/angular-route.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/app.routes.js"></script>
+    <script src="/js/services/userService.js"></script>
+    <script src="/js/services/registerService.js"></script>
+
   </footer>
   <!-- End </footer> -->
 </html>
