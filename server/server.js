@@ -3,8 +3,12 @@ var webRoutes = require('./web-routes');
 
 var app = express();
 
-app.use(express.static(__dirname + '/../app'));
-app.use(webRoutes);
+console.log('************');
+console.log(__dirname);
+console.log('************');
+
+app.use(express.static(__dirname + '/../app/public'));
+// app.use(webRoutes);
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {
