@@ -2,7 +2,7 @@ angular.module("routerRoutes", ["ngRoute"])
 
 .config(function($routeProvider, $locationProvider) {
 	$routeProvider
-
+/*
 		// route for the home page
 		.when("/", {
 			templateUrl: "../views/pages/home.html",
@@ -51,7 +51,7 @@ angular.module("routerRoutes", ["ngRoute"])
 			controller: "contactInfoController",
 			controllerAs: "contactInfo"
 		})
-
+*/
 	// Set app to use "pretty" URLs with no #
 	$locationProvider.html5Mode(true);
 
