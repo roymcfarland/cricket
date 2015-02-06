@@ -3,8 +3,9 @@ var webRoutes = require('./web-routes');
 
 var app = express();
 
-app.use(express.static(__dirname + '/../app'));
-app.use(webRoutes);
+// app.get('/', function(req, res) {
+// 	res.sendFile('../../../public/index.html')
+// });
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {
