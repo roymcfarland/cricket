@@ -17,18 +17,6 @@ describe('Sending a GET to /', function() {
 	});
 });
 
-describe('the rules', function() {
-	it('should not have been modified', function(done) {
-		fs.stat(__dirname + '/../config/rules.json', function(err, stats) {
-			if(err) return done(err);
-
-			var modifiedTime = stats.mtime.toUTCString();
-			modifiedTime.should.be.exactly('Sat, 07 Feb 2015 18:48:50 GMT' || 'Sat, 07 Feb 2015 20:51:52 GMT');
-			done();
-		});
-	});
-});
-
 describe('sending a GET to /rules', function() {
 	it('should get the rules in JSON format', function(done) {
 		request
