@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css">
   </head>
   <!-- End </head> Start <body> --> 
-  <body class="container" ng-app="fantasyCricket" ng-controller="indexController as index"> 
+  <body class="container" ng-app="cricketDuel" ng-controller="indexController as index"> 
     <!-- Navbar Header -->
     <header>
       <nav class="navbar navbar-default">
@@ -31,7 +31,7 @@
     <!-- Main content where angular templating will be injected -->
     <main>
       <div class="jumbotron text-center">
-        <h1>{{ index.topMessage }}</h1>
+        <h1>{{ index.bigMessage }}</h1>
       </div>
       <div ng-view></div>
     </main>
@@ -62,8 +62,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/app.routes.js"></script>
-    <script src="/js/services/userService.js"></script>
-    <script src="/js/services/registerService.js"></script>
+    <script src="/js/services/login.js"></script>
+    <script src="/js/services/register.js"></script>
 
   </footer>
   <!-- End </footer> -->

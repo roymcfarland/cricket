@@ -1,15 +1,15 @@
-angular.module("appRoutes", ["ngRoute"])
+angular.module("appRouter", ["ngRoute"])
 
 .config(function($routeProvider, $locationProvider) {
 	$routeProvider
-/*
+
 		// route for the home page
 		.when("/", {
 			templateUrl: "../views/pages/home.html",
 			controller: "homeController",
 			controllerAs: "home"
 		})
-
+/*
 		// route for the leaderboard
 		.when("/leaderboard", {
 			templateUrl: "../views/pages/leaderboard.html",

@@ -1,7 +1,26 @@
-angular.module("fantasyCricket", ["appRoutes", "userService", "registerService"])
+var cricketDuel = angular.module("cricketDuel", ["appRouter", "login", "register"])
 
-// mainController for the ENTIRE site
-.controller("indexController", function() {
+// indexController for the entire site
+cricketDuel.controller("indexController", function() {
 	var vm = this;
-	vm.topMessage = "Hello Cricket Fans!";
+	vm.bigMessage = "Hello Cricket Fans!";
+
+	/* 
+	ACTIVATE AFTER PARSE DB IS OPERATIONAL
+	var currentUser = Parse.User.current();
+	if (currentUser) {
+		// Insert logic
+	} else {
+		// Insert logic
+		alert("Please login again. Error: " + error.code + " " + error.message);
+		Parse.User.logOut();
+	}
+	*/
+});
+
+cricketDuel.controller("homeController", function() {
+	// Bind view-model
+	var vm = this;
+	vm.smallMessage = "This is the home page.";
+
 });
