@@ -10,6 +10,7 @@ register.factory("Register", function() {
 	user.set("username", "test");
 	user.set("password", "test");
 	user.set("emailVerified", false);
+	user.set("score", 0);
 
 	// Callback
 	user.signUp(null, {
