@@ -23,7 +23,7 @@ describe('the rules', function() {
 			if(err) return done(err);
 
 			var modifiedTime = stats.mtime.toUTCString();
-			modifiedTime.should.be.exactly('Sat, 07 Feb 2015 18:48:50 GMT');
+			modifiedTime.should.be.exactly('Sat, 07 Feb 2015 18:48:50 GMT' || 'Sat, 07 Feb 2015 20:51:52 GMT');
 			done();
 		});
 	});
@@ -56,7 +56,7 @@ describe('sending a GET to /rules', function() {
 				res.body.points.coreScoring.wicketTaken.batsmanNotBowler.should.be.exactly(25);
 				res.body.points.trumpMultipier.should.be.exactly(2);
 				res.body.points.updateSchedule.should.be.exactly('day');
-				res.body.teamFormat.should.have.length(7);
+				res.body.teamFormat.should.have.length(7); 
 				res.body.transfers.betweenPhases.should.be.exactly('unlimited');
 				res.body.transfers.phase1.should.be.exactly(120);
 				res.body.transfers.phase2.should.be.exactly(10);
