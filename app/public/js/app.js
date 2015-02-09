@@ -1,3 +1,14 @@
+// Parse DB initialization call (Application ID, JavaScript key)
+Parse.initialize("GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD", "tiAbB7WfaIdHr4RKfdDQ7FeeYBjDysL6lRI8oHzw");
+
+	// Parse Test Script
+	// var TestObject = Parse.Object.extend("TestObject");
+	// var testObject = new TestObject();
+	// testObject.save({foo: "bar"}).then(function(object) {
+	//   alert("yay! it worked");
+	// });
+
+// ng-app="cricketDuel"
 var cricketDuel = angular.module("cricketDuel", ["appRouter", "login", "register", "leaderboard"])
 
 // indexController for the entire site
@@ -24,7 +35,7 @@ cricketDuel.controller("loginController", function() {
 	vm.testMessage = "You are no longer signed in. Please login again!";
 })
 
-cricketDuel.controller("homeController", function() {
+cricketDuel.controller("dashboardController", function() {
 	// Bind view-model
 	var vm = this;
 	/* 
@@ -40,7 +51,7 @@ cricketDuel.controller("homeController", function() {
 		window.location.assign("/login");
 	}
 	*/
-	vm.testMessage = "This is the home page.";
+	vm.testMessage = "This is a Game Player's dashboard.";
 });
 
 cricketDuel.controller("leaderboardController", function() {
