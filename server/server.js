@@ -4,7 +4,7 @@ var dataRoutes = require('./data-routes');
 
 var app = express();
 
-app.use(express.static(__dirname + '/../app'));
+app.use(express.static(__dirname + '/../app/public/'));
 app.use(dataRoutes);
 app.use(webRoutes);
 
