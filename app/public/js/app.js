@@ -37,8 +37,14 @@ cricketDuel.controller("loginController", function() {
 		}
 	});
 	*/
-	vm.testMessage = "You are no longer signed in. Please login again!";
-})
+	vm.testMessage = "Please login by using the form below!";
+});
+
+cricketDuel.controller("logoutController", function() {
+	// Bind view-model
+	var vm = this;
+	vm.testMessage = "You have been logged out. Please login again!";
+});
 
 cricketDuel.controller("dashboardController", function() {
 	// Bind view-model

@@ -10,11 +10,18 @@ angular.module("appRouter", ["ngRoute"])
 			controllerAs: "dashboard"
 		})
 
-		// route when logout
+		// route for login
 		.when("/login", {
 			templateUrl: "../views/login.html",
 			controller: "loginController",
 			controllerAs: "login"
+		})
+
+		// route for logout
+		.when("/logout", {
+			templateUrl: "../views/logout.html",
+			controller: "logoutController",
+			controllerAs: "logout"
 		})
 
 		// route for the leaderboard
