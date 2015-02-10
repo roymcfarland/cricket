@@ -10,6 +10,13 @@ angular.module("appRouter", ["ngRoute"])
 			controllerAs: "dashboard"
 		})
 
+		// route for new user registration
+		.when("/register", {
+			templateUrl: "../views/register.html",
+			controller: "registerController",
+			controllerAs: "register"
+		})
+
 		// route for login
 		.when("/login", {
 			templateUrl: "../views/login.html",

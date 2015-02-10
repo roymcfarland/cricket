@@ -1,6 +1,5 @@
 // Parse DB initialization call (Application ID, JavaScript key)
 Parse.initialize("GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD", "tiAbB7WfaIdHr4RKfdDQ7FeeYBjDysL6lRI8oHzw");
-
 	// Parse Test Script
 	// var TestObject = Parse.Object.extend("TestObject");
 	// var testObject = new TestObject();
@@ -21,6 +20,12 @@ cricketDuel.controller("indexController", function() {
 	// Bind view-model
 	var vm = this;
 	vm.topMessage = "Welcome to CricketDuel!";
+});
+
+cricketDuel.controller("registerController", function() {
+	// Bind view-model
+	var vm = this;
+	vm.testMessage = "Join a league by registering using the form below!"
 });
 
 cricketDuel.controller("loginController", function() {

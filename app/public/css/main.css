@@ -13,12 +13,18 @@ Fixes functionality for ui-bootstrap
 	-o-background-size: cover;
 	background-size: cover;
 	padding: 150px 0px;
+	opacity: 0.75;
 }
 
-.ng-invvalid.ng-dirty {
+.ng-invalid.ng-dirty {
 	border-color: #fa787e;
 }
 
 .ng-valid.ng-dirty {
 	border-color: #78fa89;
+}
+
+#facebook-login-button {
+	color: #fff;
+	background-color: #43609c;
 }

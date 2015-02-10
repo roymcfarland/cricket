@@ -1,0 +1,24 @@
+<!-- Begin ng-view -->
+<!-- Form to login with username & password -->
+<form name="registerForm" ng-controller="registerController as register" ng-submit="registerForm.$valid && register.logIn(Parse.User)" novalidate>
+	<h4>Register</h4>
+	<fieldset class="form-group">
+		<input ng-model="authService.signUp.email" class="form-control" type="email" name="Email" placeholder="Email Address">
+	</fieldset>
+	<fieldset class="form-group">
+		<input ng-model="authService.signUp.username" class="form-control" type="text" name="Username" placeholder="Username">
+	</fieldset>
+	<fieldset class="form-group">
+		<input ng-model="authService.signUp.password" class="form-control" type="password" name="Password" placeholder="Password">
+	</fieldset>
+	<fieldset class="form-group">
+		<input type="submit" class="btn btn-success pull-right" value="Submit">
+	</fieldset>
+</form>
+
+<!-- Form to login with facebook -->
+<form action="fcbkLoginForm" ng-controller="fcbkLoginController as fcbkLogin" ng-submit="fcbkLoginForm.$valid && login.LogIn()" novalidate>
+	<fieldset class="form-group">
+		<input type="submit" class="btn pull-right" id="facebook-login-button" value="Register with Facebook">
+	</fieldset>
+</form>

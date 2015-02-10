@@ -1,11 +1,11 @@
 <!-- Form to login with username & password -->
-<form name="loginForm" ng-controller="loginController as login" ng-submit="login.logIn(Parse.User)">
-	<h4>Login | Username & Password</h4>
+<form name="loginForm" ng-controller="loginController as login" ng-submit="loginForm.$valid && login.logIn(Parse.User)" novalidate>
+	<h4>Login</h4>
 	<fieldset class="form-group">
-		<input ng-model="authService.login.username" class="form-control" type="text" name="Username">
+		<input ng-model="authService.login.username" class="form-control" type="text" name="Username" placeholder="Username">
 	</fieldset>
 	<fieldset class="form-group">
-		<input ng-model="authService.login.password" class="form-control" type="password" name="Password">
+		<input ng-model="authService.login.password" class="form-control" type="password" name="Password" placeholder="Password">
 	</fieldset>
 	<fieldset class="form-group">
 		<input type="submit" class="btn btn-success pull-right" value="Submit">
@@ -13,15 +13,8 @@
 </form>
 
 <!-- Form to login with facebook -->
-<form action="fcbkLoginForm" ng-controller="fcbkLoginController as fcbkLogin" ng-submit="login.LogIn()">
-	<h4><i class="fa fa-facebook-official"></i> Login | Username & Password</h4>
+<form action="fcbkLoginForm" ng-controller="fcbkLoginController as fcbkLogin" ng-submit="fcbkLoginForm.$valid && login.LogIn()" novalidate>
 	<fieldset class="form-group">
-		<input ng-model="authService.fcbkLogin.username" class="form-control" type="text" name="Username">
-	</fieldset>
-	<fieldset class="form-group">
-		<input ng-model="authService.fckbLogin.password" class="form-control" type="password" name="Password">
-	</fieldset>
-	<fieldset class="form-group">
-		<input type="submit" class="btn btn-success pull-right" value="Submit">
+		<input type="submit" class="btn pull-right" id="facebook-login-button" value="Login with Facebook">
 	</fieldset>
 </form>

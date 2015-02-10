@@ -8,7 +8,7 @@ authService.factory("AuthService", function() {
 	authFactory.logIn("myname", "mypass") 
 		success: {
 			// Insert logic if success
-			console.log("Login successful.");
+			alert("Login successful.");
 		}
 		error: {
 			// Insert logic if failure
