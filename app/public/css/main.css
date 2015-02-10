@@ -14,3 +14,11 @@ Fixes functionality for ui-bootstrap
 	background-size: cover;
 	padding: 150px 0px;
 }
+
+.ng-invvalid.ng-dirty {
+	border-color: #fa787e;
+}
+
+.ng-valid.ng-dirty {
+	border-color: #78fa89;
+}
