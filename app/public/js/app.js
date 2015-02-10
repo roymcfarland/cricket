@@ -9,7 +9,12 @@ Parse.initialize("GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD", "tiAbB7WfaIdHr4RKfd
 	// });
 
 // ng-app="cricketDuel"
-var cricketDuel = angular.module("cricketDuel", ["appRouter", "login", "register", "leaderboard"])
+var cricketDuel = angular.module("cricketDuel", [
+	"appRouter",
+	"authService",
+	"register", 
+	"leaderboard"
+]);
 
 // indexController for the entire site
 cricketDuel.controller("indexController", function() {

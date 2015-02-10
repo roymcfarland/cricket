@@ -1,12 +1,16 @@
-
-
 /*
-.jumbotron {
-	background: url("../images/stadium1.jpg") no-repeat center center;
+Fixes functionality for ui-bootstrap
+.nav, .pagination, .carousel, .panel-title a { 
+	cursor: pointer; 
+}
+*/
+
+#top-jumbotron {
+	color: #fff;
+	background: url("../images/stadium.jpg") no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	padding: 250px 0px;
+	padding: 150px 0px;
 }
-*/
