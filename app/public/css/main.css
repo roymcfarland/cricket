@@ -7,7 +7,7 @@ Fixes functionality for ui-bootstrap
 
 #top-jumbotron {
 	color: #fff;
-	background: url("../images/stadium.jpg") no-repeat center center;
+	background: url("/public/images/stadium.jpg") no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
