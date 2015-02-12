@@ -1,8 +1,8 @@
 var authService = angular.module("authService", [])
 
-authService.factory("AuthService", function() {
+authService.factory("Auth", function() {
 
-	var authFactory = Parse.User;
+	var authFactory = Parse.User();
 	var currentUser = Parse.User.current();
 
 	authFactory.logIn("myname", "mypass") 
@@ -29,5 +29,15 @@ authService.factory("AuthService", function() {
 			window.location.assign("/login");
 		}
 	};
+
+	/*
+	authFactory.getUser = function() {
+		if (currentUser) {
+			return $http.get("/");
+		} else {
+			return 
+		}
+	}
+	*/
 
 });

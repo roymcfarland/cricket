@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////////
+///////////////////////// PARSE DB /////////////////////////////
+////////////////////////////////////////////////////////////////
+
 // Parse DB initialization call (Application ID, JavaScript key)
 Parse.initialize("GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD", "tiAbB7WfaIdHr4RKfdDQ7FeeYBjDysL6lRI8oHzw");
 	// Parse Test Script
@@ -7,6 +11,10 @@ Parse.initialize("GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD", "tiAbB7WfaIdHr4RKfd
 	//   alert("yay! it worked");
 	// });
 
+////////////////////////////////////////////////////////////////
+///////////////////////// ng-app ///////////////////////////////
+////////////////////////////////////////////////////////////////
+
 // ng-app="cricketDuel"
 var cricketDuel = angular.module("cricketDuel", [
 	"appRouter",
@@ -15,7 +23,17 @@ var cricketDuel = angular.module("cricketDuel", [
 	"leaderboard"
 ]);
 
-// indexController for the entire site
+/////////////////////////////////////////////////////////////////
+////////////////////// ng-controllers ///////////////////////////
+/////////////////////////////////////////////////////////////////
+
+// mainController for the ENTIRE site
+// cricketDuel.controller("mainController", function() {
+	// // Bind view-model
+	// var vm = this;
+// });
+
+
 cricketDuel.controller("indexController", function() {
 	// Bind view-model
 	var vm = this;
