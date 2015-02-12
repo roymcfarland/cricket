@@ -7,8 +7,8 @@ loginCtrl.controller("loginController", function() {
 	vm.doLogin = function() {
 		Parse.User.logIn(vm.loginData.username, vm.loginData.password)
 			/*
-			if (status == success) {
-				window.location.assign("/views/dashboard.html");
+			if (Parse.User.current()) {
+				alert("Welcome back! You are now logged in!")
 			} else {
 				alert("Error: " + error.code + " " + error.message);
 			};

@@ -6,22 +6,22 @@ registerCtrl.controller("registerController", function() {
 	vm.heading = "Joining a league is easy! Use this form to open an account:"
 	vm.doRegister = function() {
 		
-		// Create a new user
+		// CREATE NEW USER
 		var user = new Parse.User();
-
-		// Configure new user
-		user.set("email", vm.registerData.email);
 		user.set("username", vm.registerData.username);
 		user.set("password", vm.registerData.password);
-		user.set("emailVerified", false);
+		user.set("email", vm.registerData.email);
+		// user.set("emailVerified", false);
 
-		// Callback
+		// REGISTER NEW USER
 		user.signUp(null, {
 			success: function(user) {
 				// Insert logic
+				alert("Congratulations! New user registration successful!")
 			},
 			error: function(user, error) {
 				// Insert logic
+				alert("Error: " + error.code + " " + error.message);
 			}
 		});
 	};

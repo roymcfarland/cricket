@@ -1,5 +1,8 @@
-<!-- Begin ng-view -->
-<div class="jumbotron text-center">
-	<h2>{{ logout.testMessage }}</h2>
-	<a href="/login" class="btn btn-success">Return</a>
+<!-- Begin ng-view & ng-controller="logoutController" -->
+<!-- Form to logout (TEST) -->
+<form ng-submit="logout.doLogout()">
+	<fieldset class="form-group">
+		<h2>{{ logout.heading }}</h2>
+		<button type="submit" class="btn btn-danger pull-left">Logout
+	</fieldset>
 </div>
