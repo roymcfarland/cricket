@@ -5,7 +5,7 @@ authService.factory("Auth", function() {
 	var authFactory = Parse.User;
 	var currentUser = Parse.User.current();
 
-	authFactory.logIn("myname", "mypass") 
+	authFactory.logIn("username", "password") 
 		success: {
 			// Insert logic if success
 			alert("Login successful.");

@@ -5,18 +5,14 @@ loginCtrl.controller("loginController", function() {
 	var vm = this;
 	vm.testMessage = "Please login by using the form below!";
 	vm.doLogin = function() {
-		// Call Auth.login()
-		Parse.User.logIn(vm.login.username, vm.login.password)
-			success: {
-				window.location.assign("/dashboard");
-			}
-			error: {
+		Parse.User.logIn(vm.loginData.username, vm.loginData.password)
+			/*
+			if (status == success) {
+				window.location.assign("/views/dashboard.html");
+			} else {
 				alert("Error: " + error.code + " " + error.message);
 			};
-
-		// .success(function(data) {
-			// $location.path("/dashboard");
-		// });
+			*/
 	};
 });
 

@@ -46,23 +46,6 @@ cricketDuel.controller("registerController", function() {
 	vm.testMessage = "Join a league by registering using the form below!"
 });
 
-/*
-cricketDuel.controller("loginController", function() {
-	// Bind view-model
-	var vm = this;
-	ACTIVATE AFTER PARSE DB IS OPERATIONAL
-	Parse.User.logIn("userame", "password", {
-		success: function(user) {
-			// Insert logic if login successful
-		},
-		error: function(user, error) {
-			// Insert logic if login failed.
-		}
-	});
-	vm.testMessage = "Please login by using the form below!";
-});
-*/
-
 cricketDuel.controller("logoutController", function() {
 	// Bind view-model
 	var vm = this;
@@ -85,7 +68,7 @@ cricketDuel.controller("dashboardController", function() {
 		window.location.assign("/login");
 	}
 	*/
-	vm.testMessage = "This is a Game Player's dashboard.";
+	vm.testMessage = "Welcome, {{ Parse.User.username }}! This is your dashboard.";
 });
 
 cricketDuel.controller("leaderboardController", function() {
