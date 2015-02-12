@@ -2,7 +2,7 @@ var authService = angular.module("authService", [])
 
 authService.factory("Auth", function() {
 
-	var authFactory = Parse.User();
+	var authFactory = Parse.User;
 	var currentUser = Parse.User.current();
 
 	authFactory.logIn("myname", "mypass") 

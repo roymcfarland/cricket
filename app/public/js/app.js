@@ -18,20 +18,20 @@ Parse.initialize("GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD", "tiAbB7WfaIdHr4RKfd
 // ng-app="cricketDuel"
 var cricketDuel = angular.module("cricketDuel", [
 	"appRouter",
-	"authService",
-	"register", 
-	"leaderboard"
+	"loginCtrl"
 ]);
 
 /////////////////////////////////////////////////////////////////
 ////////////////////// ng-controllers ///////////////////////////
 /////////////////////////////////////////////////////////////////
 
+/*
 // mainController for the ENTIRE site
-// cricketDuel.controller("mainController", function() {
-	// // Bind view-model
-	// var vm = this;
-// });
+cricketDuel.controller("mainController", function() {
+	// Bind view-model
+	var vm = this;
+});
+*/
 
 
 cricketDuel.controller("indexController", function() {
@@ -46,10 +46,10 @@ cricketDuel.controller("registerController", function() {
 	vm.testMessage = "Join a league by registering using the form below!"
 });
 
+/*
 cricketDuel.controller("loginController", function() {
 	// Bind view-model
 	var vm = this;
-	/*
 	ACTIVATE AFTER PARSE DB IS OPERATIONAL
 	Parse.User.logIn("userame", "password", {
 		success: function(user) {
@@ -59,9 +59,9 @@ cricketDuel.controller("loginController", function() {
 			// Insert logic if login failed.
 		}
 	});
-	*/
 	vm.testMessage = "Please login by using the form below!";
 });
+*/
 
 cricketDuel.controller("logoutController", function() {
 	// Bind view-model
