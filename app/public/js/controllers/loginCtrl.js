@@ -3,7 +3,7 @@ var loginCtrl = angular.module("loginCtrl", []);
 loginCtrl.controller("loginController", function() {
 	// Bind view-model
 	var vm = this;
-	vm.testMessage = "Please login by using the form below!";
+	vm.heading = "Please login by using the form below!";
 	vm.doLogin = function() {
 		Parse.User.logIn(vm.loginData.username, vm.loginData.password)
 			/*

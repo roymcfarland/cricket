@@ -18,7 +18,8 @@ Parse.initialize("GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD", "tiAbB7WfaIdHr4RKfd
 // ng-app="cricketDuel"
 var cricketDuel = angular.module("cricketDuel", [
 	"appRouter",
-	"loginCtrl"
+	"loginCtrl",
+	"registerCtrl"
 ]);
 
 /////////////////////////////////////////////////////////////////
@@ -38,12 +39,6 @@ cricketDuel.controller("indexController", function() {
 	// Bind view-model
 	var vm = this;
 	vm.topMessage = "Welcome to CricketDuel!";
-});
-
-cricketDuel.controller("registerController", function() {
-	// Bind view-model
-	var vm = this;
-	vm.testMessage = "Join a league by registering using the form below!"
 });
 
 cricketDuel.controller("logoutController", function() {

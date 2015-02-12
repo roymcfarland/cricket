@@ -1,24 +1,33 @@
 <!-- Begin ng-view ng-controller="loginController" -->
 <!-- Form to login with username & password -->
 <form ng-submit="login.doLogin()">
-	<h2>{{ login.testMessage }}</h2>
+	<h2>{{ login.heading }}</h2>
 	<h4>Login</h4>
+	
+	<!-- USERNAME -->
 	<fieldset class="form-group">
 		<input ng-model="login.loginData.username" class="form-control" type="text" name="Username" placeholder="Username">
 	</fieldset>
+	
+	<!-- PASSWORD -->
 	<fieldset class="form-group">
 		<input ng-model="login.loginData.password" class="form-control" type="password" name="Password" placeholder="Password">
 	</fieldset>
+	
+	<!-- LOGIN BUTTON -->
+	<!--
 	<fieldset class="form-group" ng-if="login.error">
 		<p>{{ login.error }}</p>
 	</fieldset>
+	-->
 	<fieldset class="form-group">
 		<button type="submit" class="btn btn-success pull-right">Submit
 	</fieldset>
+
 </form>
 
 <!-- Form to login with facebook -->
-<form name="fcbkLoginForm" ng-controller="fcbkLoginController as fcbkLogin" ng-submit="fcbkLoginForm.$valid" novalidate>
+<form ng-controller="fcbkLoginController as fcbkLogin" ng-submit="" novalidate>
 	<fieldset class="form-group">
 		<input type="submit" class="btn pull-right" id="facebook-login-button" value="Login with Facebook">
 	</fieldset>
