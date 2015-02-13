@@ -5,21 +5,13 @@ loginCtrl.controller("loginController", function() {
 	var vm = this;
 	vm.heading = "Please login by using the form below!";
 	vm.doLogin = function() {
-		var userPromise = Parse.User.logIn(vm.loginData.username, vm.loginData.password)
-			.then(function(user){
-				console.log('***logging user in***');
-				console.log(typeof user);
-			}, function(error){
-				console.log('***error logging user in');
-				console.log(error);
+		Parse.User.logIn(vm.loginData.username, vm.loginData.password)
+			.then(function(user) {
+				alert("Congratulations! User login successful!");
+				window.location.assign("/dashboard");
+			}, function(error) {
+				console.log("#####  Oops! There was an error!  #####");
 			});
-			/*
-			if (Parse.User.current()) {
-				alert("Welcome back! You are now logged in!")
-			} else {
-				alert("Error: " + error.code + " " + error.message);
-			};
-			*/
 	};
 });
 

@@ -18,10 +18,11 @@ registerCtrl.controller("registerController", function() {
 			success: function(user) {
 				// Insert logic
 				alert("Congratulations! New user registration successful!")
+				window.location.assign("/dashboard");
 			},
 			error: function(user, error) {
 				// Insert logic
-				alert("Error: " + error.code + " " + error.message);
+				console.log("#####  Oops! There was an error!  #####");
 			}
 		});
 	};

@@ -6,7 +6,7 @@ logoutCtrl.controller("logoutController", function() {
 	vm.heading = "Click to logout"
 	vm.doLogout = function() {
 		Parse.User.logOut();
-		// window.location.assign("/logout");
+		window.location.assign("/login");
 	};
 });
 
