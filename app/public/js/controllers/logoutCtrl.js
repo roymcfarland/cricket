@@ -1,14 +1,14 @@
 var logoutCtrl = angular.module("logoutCtrl", []);
 
-logoutCtrl.controller("logoutController", function() {
+logoutCtrl.controller("logoutController", ['$location', function($location) {
 	// Bind view-model
 	var vm = this;
 	vm.heading = "Click to logout"
 	vm.doLogout = function() {
 		Parse.User.logOut();
-		window.location.assign("/login");
+		$location.path("/login");
 	};
-});
+}]);
 
 logoutCtrl.controller("fcbkLogoutController", function() {
 	// Bind view-model
