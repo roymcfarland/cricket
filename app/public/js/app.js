@@ -20,21 +20,14 @@ var cricketDuel = angular.module("cricketDuel", [
 	"appRouter",
 	"loginCtrl",
 	"logoutCtrl",
-	"registerCtrl"
+	"registerCtrl",
+	"dashboardCtrl",
+	"myteamCtrl"
 ]);
 
 /////////////////////////////////////////////////////////////////
 /////////////////////  NG-CONTROLLERS  //////////////////////////
 /////////////////////////////////////////////////////////////////
-
-/*
-// mainController for the ENTIRE site
-cricketDuel.controller("mainController", function() {
-	// Bind view-model
-	var vm = this;
-});
-*/
-
 
 cricketDuel.controller("indexController", function() {
 	// Bind view-model
@@ -42,12 +35,15 @@ cricketDuel.controller("indexController", function() {
 	vm.topMessage = "Welcome to CricketDuel!";
 });
 
+///////////////////////// KEEP? /////////////////////////////
+/*
 cricketDuel.controller("dashboardController", ['$location', function($location) {
 	var user = Parse.User.current();
 	if(!user) return $location.path('/');
 	// we are authenticated
 	this.username = user.getUsername();
 }]);
+*/
 
 cricketDuel.controller("leaderboardController", function() {
 	// Bind view-model
@@ -66,25 +62,6 @@ cricketDuel.controller("leaderboardController", function() {
 	}
 	*/
 	vm.testMessage = "This is the leaderboard.";
-});
-
-cricketDuel.controller("myTeamController", function() {
-	// Bind view-model
-	var vm = this;
-	/* 
-	ACTIVATE AFTER PARSE DB IS OPERATIONAL
-	var currentUser = Parse.User.current();
-	if (currentUser) {
-		// Insert logic
-		// vm.smallMessage = "Welcome " + {{ User.username }} + "! This is your team dashboard.";
-	} else {
-		// Insert logic
-		alert("Please login again. Error: " + error.code + " " + error.message);
-		Parse.User.logOut();
-		window.location.assign("/login");
-	}
-	*/
-	vm.testMessage = "This is your team dashboard.";
 });
 
 cricketDuel.controller("tradesController", function() {

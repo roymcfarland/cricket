@@ -41,8 +41,8 @@ appRouter.config(function($routeProvider, $locationProvider) {
 		// route for my team dashboard
 		.when("/myteam", {
 			templateUrl: "../views/myteam.html",
-			controller: "myTeamController",
-			controllerAs: "myTeam"
+			controller: "myteamController",
+			controllerAs: "myteam"
 		})
 
 		// route for trades
@@ -53,7 +53,7 @@ appRouter.config(function($routeProvider, $locationProvider) {
 		})
 
 		// route for rules
-		.when("/rules", {
+		.when("/api/rules", {
 			templateUrl: "../views/rules.html",
 			controller: "rulesController",
 			controllerAs: "rules"
@@ -73,8 +73,12 @@ appRouter.config(function($routeProvider, $locationProvider) {
 			controllerAs: "contactInfo"
 		})
 
+		// catch all router
+		.otherwise({
+			redirectTo: "/"
+		});
+
 	// Set app to use "pretty" URLs with no #
-	// $locationProvider.html5Mode(false).hashPrefix("");
 	$locationProvider.html5Mode(true);
 
 });

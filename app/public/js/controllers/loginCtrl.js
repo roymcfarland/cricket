@@ -1,7 +1,5 @@
 var loginCtrl = angular.module("loginCtrl", []);
 
-var boo;
-
 loginCtrl.controller("loginController", ['$location', '$scope', function($location, $scope) {
 	// Bind view-model
 	var vm = this;
