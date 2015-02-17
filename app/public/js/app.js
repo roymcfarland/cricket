@@ -42,24 +42,12 @@ cricketDuel.controller("indexController", function() {
 	vm.topMessage = "Welcome to CricketDuel!";
 });
 
-cricketDuel.controller("dashboardController", function() {
-	// Bind view-model
-	var vm = this;
-	/* 
-	ACTIVATE AFTER PARSE DB IS OPERATIONAL
-	var currentUser = Parse.User.current();
-	if (currentUser) {
-		// Insert logic
-		// vm.smallMessage = "Welcome " + {{ User.username }} + "! You are now logged in.";
-	} else {
-		// Insert logic
-		alert("Please login again. Error: " + error.code + " " + error.message);
-		Parse.User.logOut();
-		window.location.assign("/login");
-	}
-	*/
-	vm.testMessage = "Welcome, {{ Parse.User.username }}! This is your dashboard.";
-});
+cricketDuel.controller("dashboardController", ['$location', function($location) {
+	var user = Parse.User.current();
+	if(!user) return $location.path('/');
+	// we are authenticated
+	this.username = user.getUsername();
+}]);
 
 cricketDuel.controller("leaderboardController", function() {
 	// Bind view-model
