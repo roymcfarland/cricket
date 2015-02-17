@@ -17,10 +17,10 @@ describe('Sending a GET to /', function() {
 	});
 });
 
-describe('sending a GET to /rules', function() {
+describe('sending a GET to /api/rules', function() {
 	it('should get the rules in JSON format', function(done) {
 		request
-			.get('/rules')
+			.get('/api/rules')
 			.expect(200)
 			.end(function(err, res) {
 				if(err) return done(err);
