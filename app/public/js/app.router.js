@@ -61,16 +61,16 @@ appRouter.config(function($routeProvider, $locationProvider) {
 
 		// route for legal terms
 		.when("/legal", {
-			templateUrl: "../views/legal.html",
-			controller: "legalTermsController",
-			controllerAs: "legalTerms"
+			templateUrl: "../views/terms.html",
+			controller: "termsController",
+			controllerAs: "terms"
 		})
 
 		// route for contact page
 		.when("/contact", {
 			templateUrl: "../views/contact.html",
-			controller: "contactInfoController",
-			controllerAs: "contactInfo"
+			controller: "contactController",
+			controllerAs: "contact"
 		})
 
 		// catch all router
