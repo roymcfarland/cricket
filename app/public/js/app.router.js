@@ -1,6 +1,6 @@
-angular.module("appRouter", ["ngRoute"])
+var appRouter = angular.module("appRouter", ["ngRoute"])
 
-.config(function($routeProvider, $locationProvider) {
+appRouter.config(function($routeProvider, $locationProvider) {
 	$routeProvider
 
 		// route to game player's unique dashboard
@@ -74,6 +74,7 @@ angular.module("appRouter", ["ngRoute"])
 		})
 
 	// Set app to use "pretty" URLs with no #
+	// $locationProvider.html5Mode(false).hashPrefix("");
 	$locationProvider.html5Mode(true);
 
 });

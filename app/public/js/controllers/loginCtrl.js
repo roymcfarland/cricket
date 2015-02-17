@@ -8,7 +8,7 @@ loginCtrl.controller("loginController", function() {
 		Parse.User.logIn(vm.loginData.username, vm.loginData.password)
 			.then(function(user) {
 				alert("Congratulations! User login successful!");
-				window.location.assign("/dashboard");
+				$window.location.href="/dashboard";
 			}, function(error) {
 				console.log("#####  Oops! There was an error!  #####");
 			});
