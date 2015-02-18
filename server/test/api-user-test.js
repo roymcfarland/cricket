@@ -81,6 +81,31 @@ describe('Populating new users with default stats by sending a POST to /api/user
 			.expect(514)
 			.end(done);
 	});
+
+	it('Should return a 200 When new user is updated', function(done) {
+		request = supertest('http://localhost:3000');
+
+		request
+			.post('/api/users/' + userOneId) //Darth Vader
+			.expect(200)
+			.end(done);
+	});
+
+	it('The new user should not be new on Parse anymore', function(done){
+		request = supertest('https://api.parse.com');
+
+		request
+			.get('/1/users/' + userOneId)
+			.set('X-Parse-Application-Id', config.parse.applicationId)
+			.set('X-Parse-Master-Key', config.parse.masterKey)
+			.expect(200)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				res.body.newUser.should.be.equal(false);
+				done();
+			});
+	});
 });
 
 describe('Removing the test user from Parse', function() {
