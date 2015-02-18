@@ -1,4 +1,14 @@
 <!-- Begin ng-view -->
 <div class="jumbotron text-center">
 	<h2>{{ rules.testMessage }}</h2>
+	<ul>
+		<li ng-repeat="teamFormat in gameRules.teamFormat">
+		Number of Batsmen Allowed: {{ teamFormat.batsman }}
+		Number of Bowlers Allowed: {{ teamFormat.bowlers }}
+		</li>
+		<li>
+			Money to create a team: {{ gameRules.moneyToCreateTeam }}
+		</li>
+	</ul>
+
 </div>

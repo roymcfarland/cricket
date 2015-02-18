@@ -53,7 +53,7 @@ appRouter.config(function($routeProvider, $locationProvider) {
 		})
 
 		// route for rules
-		.when("/api/rules", {
+		.when("/rules", {
 			templateUrl: "../views/rules.html",
 			controller: "rulesController",
 			controllerAs: "rules"

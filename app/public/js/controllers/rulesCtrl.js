@@ -1,9 +1,17 @@
 var rulesCtrl = angular.module("rulesCtrl", []);
 
-rulesCtrl.controller("rulesController", ["$location", function($location) {
-	// Bind view-model
-	var vm = this;
+rulesCtrl.controller("rulesController", ["$location", "$scope", "$http", function($location, $scope, $http) {
 
-	vm.testMessage = "This is the rules page!"
+	this.testMessage = "This is the rules page!"
+
+	// GET request for rules.json from server
+	$http.get("/api/rules")
+	.success(function(response) {
+		$scope.gameRules = response;
+	})
+	.error(function(error) {
+		alert("Sorry - there was an error. Try again.");
+		$location.path("/");
+	});
 	
 }]);
