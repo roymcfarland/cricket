@@ -73,12 +73,12 @@ appRouter.config(function($routeProvider, $locationProvider) {
 			controllerAs: "contact"
 		})
 
-		// catch all router
+		// catch all route
 		.otherwise({
 			redirectTo: "/"
 		});
 
-	// Set app to use "pretty" URLs with no #
+	// Remove # for html5 browsers
 	$locationProvider.html5Mode(true);
 
 });

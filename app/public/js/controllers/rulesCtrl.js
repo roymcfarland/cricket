@@ -2,7 +2,7 @@ var rulesCtrl = angular.module("rulesCtrl", []);
 
 rulesCtrl.controller("rulesController", ["$location", "$scope", "$http", function($location, $scope, $http) {
 
-	this.testMessage = "This is the rules page!"
+	this.testMessage = "Rules of CricketDuel"
 
 	// GET request for rules.json from server
 	$http.get("/api/rules")

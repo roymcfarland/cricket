@@ -1,14 +1,15 @@
 <!-- Begin ng-view -->
+<!-- ng-controller="rulesController as rules" -->
 <div class="jumbotron text-center">
 	<h2>{{ rules.testMessage }}</h2>
-	<ul>
-		<li ng-repeat="teamFormat in gameRules.teamFormat">
-		Number of Batsmen Allowed: {{ teamFormat.batsman }}
-		Number of Bowlers Allowed: {{ teamFormat.bowlers }}
-		</li>
-		<li>
-			Money to create a team: {{ gameRules.moneyToCreateTeam }}
-		</li>
-	</ul>
-
-</div>
+	<table class="table table-striped">
+		<tbody>
+			<tr>Money to create a team: {{gameRules.moneyToCreateTeam}}</tr></br>
+			<tr class="table-striped">Number of players per team: {{gameRules.numberOfPlayersPerTeam}}</tr></br>
+			<tr ng-repeat="teamFormat in gameRules.teamFormat">Team formats:
+				<td>Number of Batsmen Allowed: {{teamFormat.batsman}}</td>
+				<td>Number of Bowlers Allowed: {{teamFormat.bowlers}}</td>
+			</tr>
+		</tbody>
+	</table> <!-- /.table-striped -->
+</div> <!-- /.jumbotron text-center -->
