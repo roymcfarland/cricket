@@ -12,6 +12,7 @@ UserController.prototype.populateWithDefaultData = function(req, res) {
 		.set('X-Parse-Master-Key', config.parse.masterKey)
 		.end(function(response){
 			if(response.body.code == 101) return res.sendStatus(512);
+			if(!response.body.newUser) return res.sendStatus(514);
 		});
 };
 
