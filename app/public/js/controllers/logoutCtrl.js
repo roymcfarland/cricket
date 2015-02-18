@@ -6,7 +6,7 @@ logoutCtrl.controller("logoutController", ['$location', function($location) {
 	vm.heading = "Click to logout"
 	vm.doLogout = function() {
 		Parse.User.logOut();
-		$location.path("/login");
+		$location.path("/");
 	};
 }]);
 
