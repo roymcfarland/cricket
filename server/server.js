@@ -1,12 +1,14 @@
 var express = require('express');
-var webRoutes = require('./web-routes');
-var dataRoutes = require('./data-routes');
+var bodyParser = require('body-parser');
 
 var app = express();
 
-app.use(express.static(__dirname + '/../app/public/'));
-app.use(dataRoutes);
-app.use(webRoutes);
+app.use(express.static(__dirname + '/../app/public'));
+app.use(bodyParser());
+
+var userRoutes = require('./routes/user')(app);
+var rulesRoutes = require('./routes/rules')(app);
+var webRoutes = require('./routes/web')(app);
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {
