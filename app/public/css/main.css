@@ -5,6 +5,10 @@ Fixes functionality for ui-bootstrap
 }
 */
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 #top-jumbotron {
 	color: #fff;
 	background: url("/images/stadium.jpg") no-repeat center center;

@@ -12,9 +12,12 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js">
     <link rel="stylesheet" href="/css/main.css">
+    <!-- ANGULAR JS - inserted in <head> for best results of ngCloak -->
+    <script src="/js/lib/angular/angular.js"></script>
+    <script src="/js/lib/angular-route/angular-route.js"></script>
   </head>
   <!-- End </head> Start <body> --> 
-  <div ng-app="cricketDuel" ng-controller="indexController as index">
+  <div class="ng-cloak" ng-cloak ng-app="cricketDuel" ng-controller="indexController as index">
   <body class="container"> 
     <header>
       <!-- Navbar Header -->
@@ -68,9 +71,6 @@
     </nav> <!-- /.navbar -->
 
     <!-- JS -->
-    <!-- Angular and Angular Route -->
-    <script src="/js/lib/angular/angular.js"></script>
-    <script src="/js/lib/angular-route/angular-route.js"></script>
     <!-- App files -->
     <script src="/js/app.js"></script>
     <script src="/js/app.router.js"></script>
