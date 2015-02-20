@@ -13,13 +13,13 @@ LeagueController.prototype.create = function(req, res) {
 	if('name' in req.body == false) return res.sendStatus(515);
 
 	superagent
-		.get('https://api.parse.com/1/users/' + req.params.objectId)
+		.get('https://api.parse.com/1/users/' + req.body.objectId)
 		.set('X-Parse-Application-Id', config.parse.applicationId)
 		.set('X-Parse-Master-Key', config.parse.masterKey)
 		.end(function(response){
 			if(response.body.error) return res.sendStatus(404);
 
-			var rules = setRules(req.params.rules || null);
+			var rules = setRules(req.body.rules || null);
 
 			superagent
 				.post('https://api.parse.com/1/classes/League')
@@ -28,14 +28,14 @@ LeagueController.prototype.create = function(req, res) {
 				.set('Content-Type', 'application/json')
 				.send({
 					"totalScore": 0,
-					"owner": req.params.objectId,
-					"rules": rules,
-					"name": req.params.name
+					"owner": req.body.objectId,
+					"rules": setRules(),
+					"name": req.body.name
 				})
 				.end(function(createLeagueResponse){
 					if(createLeagueResponse.body.error) return res.status(516).send(createLeagueResponse.body.error);
 
-					res.sendStatus(200);
+					res.status(200).send(createLeagueResponse.body);
 				});
 		});
 };

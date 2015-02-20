@@ -2,6 +2,7 @@ var supertest = require('supertest');
 var config = require('../config/config');
 
 var testUser;
+var testLeague;
 
 var requestLocal = supertest('http://localhost:3000');
 var requestParse = supertest('https://api.parse.com');
@@ -69,6 +70,22 @@ describe('Creating a new league', function(){
 			.expect(515)
 			.end(done);
 	});
+
+	it('should create a league on parse with default rules', function(done){
+		requestLocal
+			.post('/api/league')
+			.send({
+				objectId: testUser,
+				name: 'test league'
+			})
+			.expect(200)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				testLeague = res.body.objectId;
+				done();
+			});
+	});
 });
 
 describe('Cleaning up', function(){
@@ -81,5 +98,14 @@ describe('Cleaning up', function(){
 			.set('X-Parse-Master-Key', config.parse.masterKey)
 			.expect(200)
 			.end(done)
+	});
+
+	it('by removing the test league', function(done) {
+		requestParse
+			.del('/1/classes/League/' + testLeague)
+			.set('X-Parse-Application-Id', config.parse.applicationId)
+			.set('X-Parse-Master-Key', config.parse.masterKey)
+			.expect(200)
+			.end(done);
 	});
 });
