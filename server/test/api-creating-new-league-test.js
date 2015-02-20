@@ -10,4 +10,14 @@ describe('Creating a new league', function(){
 			.expect(404)
 			.end(done);
 	});
+
+	it('should return a 404 when the user id does not correspond to a user on parse', function(done) {
+		requestLocal
+			.post('/api/league')
+			.send({
+				objectId: 'notreal'
+			})
+			.expect(404)
+			.end(done);
+	});
 });
