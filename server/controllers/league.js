@@ -4,6 +4,15 @@ var baseRules = require('../config/rules.json');
 
 var setRules = function(ruleChanges){
 	if(!ruleChanges) return baseRules;
+
+	var newRules = baseRules;
+
+	ruleChanges.forEach(function(ruleChange){
+		if(ruleChange[0] in newRules) {
+			newRules[ruleChange[0]] = ruleChange[1];
+		}
+		else throw 517;
+	});
 };
 
 var LeagueController = function(){};
@@ -18,8 +27,14 @@ LeagueController.prototype.create = function(req, res) {
 		.set('X-Parse-Master-Key', config.parse.masterKey)
 		.end(function(response){
 			if(response.body.error) return res.sendStatus(404);
+			var rules;
 
-			var rules = setRules(req.body.rules || null);
+			try {
+				rules = setRules(req.body.rules || null);
+			}
+			catch(err){
+				return res.sendStatus(err);
+			}
 
 			superagent
 				.post('https://api.parse.com/1/classes/League')
@@ -29,7 +44,7 @@ LeagueController.prototype.create = function(req, res) {
 				.send({
 					"totalScore": 0,
 					"owner": req.body.objectId,
-					"rules": setRules(),
+					"rules": rules,
 					"name": req.body.name
 				})
 				.end(function(createLeagueResponse){

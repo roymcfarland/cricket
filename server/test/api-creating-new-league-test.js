@@ -86,6 +86,26 @@ describe('Creating a new league', function(){
 				done();
 			});
 	});
+
+	describe('Creating a league with custom rules', function(){
+		it('should fail when a rule is added instead of modified', function(done){
+			requestLocal
+				.post('/api/league')
+				.send({
+					objectId: testUser,
+					name: 'Custom rules league',
+					rules: [
+						['newKey', 'newValue']
+					]
+				})
+				.expect(517)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					done();
+				});
+		});
+	});
 });
 
 describe('Cleaning up', function(){
