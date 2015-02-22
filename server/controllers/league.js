@@ -1,4 +1,5 @@
 var superagent = require('superagent');
+var prop = require('deep-property');
 var config = require('../config/config');
 var baseRules = require('../config/rules.json');
 
@@ -8,11 +9,13 @@ var setRules = function(ruleChanges){
 	var newRules = baseRules;
 
 	ruleChanges.forEach(function(ruleChange){
-		if(ruleChange[0] in newRules) {
-			newRules[ruleChange[0]] = ruleChange[1];
+		if(prop.has(newRules, ruleChange[0])){
+			prop.set(newRules, ruleChange[0], ruleChange[1]);
 		}
 		else throw 517;
 	});
+
+	return newRules;
 };
 
 var LeagueController = function(){};

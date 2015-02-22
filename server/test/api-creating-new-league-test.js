@@ -3,6 +3,8 @@ var config = require('../config/config');
 
 var testUser;
 var testLeague;
+var testLeagueWithCustomRules;
+var testLeagueWithCustomNestedRules;
 
 var requestLocal = supertest('http://localhost:3000');
 var requestParse = supertest('https://api.parse.com');
@@ -105,6 +107,44 @@ describe('Creating a new league', function(){
 					done();
 				});
 		});
+
+		it('should succeed when a rule is modified', function(done){
+			requestLocal
+				.post('/api/league')
+				.send({
+					objectId: testUser,
+					name: 'Custom rules league',
+					rules: [
+						['moneyToCreateTeam', 5]
+					]
+				})
+				.expect(200)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					testLeagueWithCustomRules = res.body.objectId;
+					done();
+				});
+		});
+
+		it('should succeed when a nested rule is modified', function(done){
+			requestLocal
+				.post('/api/league')
+				.send({
+					objectId: testUser,
+					name: 'Custom rules league',
+					rules: [
+						['transfers.phase1', 23]
+					]
+				})
+				.expect(200)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					testLeagueWithCustomNestedRules = res.body.objectId;
+					done();
+				});
+		});
 	});
 });
 
@@ -123,6 +163,24 @@ describe('Cleaning up', function(){
 	it('by removing the test league', function(done) {
 		requestParse
 			.del('/1/classes/League/' + testLeague)
+			.set('X-Parse-Application-Id', config.parse.applicationId)
+			.set('X-Parse-Master-Key', config.parse.masterKey)
+			.expect(200)
+			.end(done);
+	});
+
+	it('by removing the test league with custom rules', function(done) {
+		requestParse
+			.del('/1/classes/League/' + testLeagueWithCustomRules)
+			.set('X-Parse-Application-Id', config.parse.applicationId)
+			.set('X-Parse-Master-Key', config.parse.masterKey)
+			.expect(200)
+			.end(done);
+	});
+
+	it('by removing the test league with custom nested rules', function(done) {
+		requestParse
+			.del('/1/classes/League/' + testLeagueWithCustomNestedRules)
 			.set('X-Parse-Application-Id', config.parse.applicationId)
 			.set('X-Parse-Master-Key', config.parse.masterKey)
 			.expect(200)
