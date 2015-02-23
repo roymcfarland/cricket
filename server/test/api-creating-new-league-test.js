@@ -47,14 +47,14 @@ describe('Creating the test user', function(){
 describe('Creating a new league', function(){
 	it('should return a 404 when the user id is not provided', function(done){
 		requestLocal
-			.post('/api/league')
+			.post('/api/leagues')
 			.expect(404)
 			.end(done);
 	});
 
 	it('should return a 404 when the user id does not correspond to a user on parse', function(done) {
 		requestLocal
-			.post('/api/league')
+			.post('/api/leagues')
 			.send({
 				objectId: 'notreal',
 				name: 'not a real name'
@@ -65,7 +65,7 @@ describe('Creating a new league', function(){
 
 	it('should return a 515 error when no name is sent', function(done){
 		requestLocal
-			.post('/api/league')
+			.post('/api/leagues')
 			.send({
 				objectId: 'notreal'
 			})
@@ -75,7 +75,7 @@ describe('Creating a new league', function(){
 
 	it('should create a league on parse with default rules', function(done){
 		requestLocal
-			.post('/api/league')
+			.post('/api/leagues')
 			.send({
 				objectId: testUser,
 				name: 'test league'
@@ -92,7 +92,7 @@ describe('Creating a new league', function(){
 	describe('Creating a league with custom rules', function(){
 		it('should fail when a rule is added instead of modified', function(done){
 			requestLocal
-				.post('/api/league')
+				.post('/api/leagues')
 				.send({
 					objectId: testUser,
 					name: 'Custom rules league',
@@ -110,7 +110,7 @@ describe('Creating a new league', function(){
 
 		it('should succeed when a rule is modified', function(done){
 			requestLocal
-				.post('/api/league')
+				.post('/api/leagues')
 				.send({
 					objectId: testUser,
 					name: 'Custom rules league',
@@ -129,7 +129,7 @@ describe('Creating a new league', function(){
 
 		it('should succeed when a nested rule is modified', function(done){
 			requestLocal
-				.post('/api/league')
+				.post('/api/leagues')
 				.send({
 					objectId: testUser,
 					name: 'Custom rules league',
