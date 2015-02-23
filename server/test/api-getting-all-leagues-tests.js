@@ -144,6 +144,21 @@ describe('Getting all leagues owned by the user', function(){
 	});
 });
 
+describe('Getting all of the leagues', function(){
+	it('should be able to get an array of all leagues', function(done){
+		requestLocal
+			.get('/api/leagues')
+			.expect(200)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				res.body.length.should.be.exactly(2);
+				res.body[0].owner.should.be.exactly(userId || user2Id);
+				done();
+			});
+	});
+});
+
 describe('Cleaning up', function(){
 	it('by removing the test user', function(done) {
 		request = supertest('https://api.parse.com');
