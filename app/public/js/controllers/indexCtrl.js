@@ -1,7 +1,11 @@
 var indexCtrl = angular.module("indexCtrl", []);
 
-indexCtrl.controller("indexController", ["$location", function($location) {
-	// Bind view-model
-	var vm = this;
-	vm.topMessage = "Welcome to CricketDuel!";
+indexCtrl.controller("indexController", ["$location", "$scope", "$http", function($location, $scope, $http) {
+	
+	this.topMessage = "Welcome to CricketDuel!";
+
+	this.doLogout = function() {
+		Parse.User.logOut();
+		$location.path("/");
+	};
 }]);
