@@ -58,4 +58,18 @@ LeagueController.prototype.create = function(req, res) {
 		});
 };
 
+LeagueController.prototype.getAll = function(req, res) {
+	if(req.query.owner){
+		if(req.query.objectId){
+			res.send('booariset');
+		}
+		else{
+			res.sendStatus(427);
+		}
+	}
+	else{
+		res.send('boo');
+	}
+};
+
 module.exports = LeagueController;
