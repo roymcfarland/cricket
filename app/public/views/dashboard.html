@@ -4,3 +4,12 @@
 <div class="jumbotron text-center">
 	<h2>Welcome {{ dashboard.username }}! This is your personal game player dashboard.</h2>
 </div>
+
+<div ng-controller="panelController as panel">
+	<div class="panel" ng-show="panel.isSelected(1)">
+		<h4>My Leagues</h4>
+	</div>
+	<div class="panel" ng-show="panel.isSelected(2)">
+		<h4>My Scores</h4>
+	</div>
+</div> <!-- /.ng-controller -->
