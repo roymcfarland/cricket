@@ -8,4 +8,5 @@ indexCtrl.controller("indexController", ["$location", "$scope", "$http", functio
 		Parse.User.logOut();
 		$location.path("/");
 	};
+	
 }]);

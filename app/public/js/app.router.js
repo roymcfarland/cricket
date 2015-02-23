@@ -31,13 +31,6 @@ appRouter.config(function($routeProvider, $locationProvider) {
 			controllerAs: "login"
 		})
 
-		// route for logout
-		.when("/logout", {
-			templateUrl: "../views/logout.html",
-			controller: "logoutController",
-			controllerAs: "logout"
-		})
-
 		// route for the leaderboard
 		.when("/leaderboard", {
 			templateUrl: "../views/leaderboard.html",

@@ -16,7 +16,6 @@ var cricketDuel = angular.module("cricketDuel", [
 	"leaderboardCtrl",
 	"rulesCtrl",
 	"loginCtrl",
-	"logoutCtrl",
 	"registerCtrl",
 	"dashboardCtrl",
 	"myteamCtrl",
