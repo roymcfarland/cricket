@@ -83,6 +83,22 @@ describe('sending a GET to /api/rules', function() {
 				res.body.points.bonus.BowlingEconomyRate[1][2].should.be.exactly(0);
 				res.body.points.bonus.BowlingEconomyRate[1][3].should.be.exactly(-10);
 				res.body.points.bonus.BowlingEconomyRate[1][4].should.be.exactly(-15);
+				res.body.points.bonus.runRate[0][0].should.be.exactly("0.00-90.00");
+				res.body.points.bonus.runRate[0][1].should.be.exactly("90.01-120.00");
+				res.body.points.bonus.runRate[0][2].should.be.exactly("120.01-150.00");
+				res.body.points.bonus.runRate[0][3].should.be.exactly("150.01-180");
+				res.body.points.bonus.runRate[0][4].should.be.exactly("180.01+");
+				res.body.points.bonus.runRate[1][0].should.be.exactly(-10);
+				res.body.points.bonus.runRate[1][1].should.be.exactly(0);
+				res.body.points.bonus.runRate[1][2].should.be.exactly(5);
+				res.body.points.bonus.runRate[1][3].should.be.exactly(10);
+				res.body.points.bonus.runRate[1][4].should.be.exactly(15);
+				res.body.points.bonus.dismissedForDuck['non-bowler'].should.be.exactly(-20);
+				res.body.points.bonus.dismissedForDuck.bowler.should.be.exactly(-10);
+				res.body.points.bonus["non-bowler-out"].should.be.exactly(-5);
+				res.body.points.bonus.bowling['3wicketHaul'].should.be.exactly(20);
+				res.body.points.bonus.bowling['5wicketHaul'].should.be.exactly(30);
+				res.body.points.bonus.bowling.hatTrick.should.be.exactly(20);
 
 				done();
 			});
