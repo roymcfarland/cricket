@@ -2,7 +2,7 @@ var dashboardCtrl = angular.module("dashboardCtrl", []);
 
 dashboardCtrl.controller("dashboardController", [ "$location", "$scope", "$http", function($location, $scope, $http) {
 	
-	// First screen user authentication
+	// First screen for user authentication
 	var user = Parse.User.current();
 	if(!user) return $location.path("/");
 

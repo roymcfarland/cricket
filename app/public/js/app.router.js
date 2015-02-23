@@ -10,6 +10,13 @@ appRouter.config(function($routeProvider, $locationProvider) {
 			controllerAs: "dashboard"
 		})
 
+		// route for admin managment
+		.when("/admin", {
+			templateUrl: "../views/admin.html",
+			controller: "adminController",
+			controllerAs: "admin"
+		})
+
 		// route for new user registration
 		.when("/register", {
 			templateUrl: "../views/register.html",
