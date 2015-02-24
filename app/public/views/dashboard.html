@@ -5,11 +5,38 @@
 	<h2>Welcome {{ dashboard.username }}! This is your personal game player dashboard.</h2>
 </div>
 
-<div ng-controller="panelController as panel">
-	<div class="panel" ng-show="panel.isSelected(1)">
-		<h4>My Leagues</h4>
-	</div>
-	<div class="panel" ng-show="panel.isSelected(2)">
-		<h4>My Scores</h4>
+<div class="list-group" ng-controller="panelController as panel">
+	<div class="list-group-item">
+		<h3>My Leagues</h3>
+			<ul class="nav nav-pills">
+				<li ng-class="{ active: panel.isSelected(1) }">
+					<a href="" ng-click="panel.selectTab(1)">League #1</a>
+				</li>
+				<li ng-class="{ active: panel.isSelected(2) }">
+					<a href="" ng-click="panel.selectTab(2)">League #2</a>
+				</li>
+				<li ng-class="{ active: panel.isSelected(3) }">
+					<a href="" ng-click="panel.selectTab(3)">League #3</a>
+				</li>
+			</ul>
+			<!-- Panel #1 -->
+			<div class="panel" ng-show="panel.isSelected(1)">
+				<p>Player 1</p>
+			</div>
+			<!-- Panel #2 -->
+			<div class="panel" ng-show="panel.isSelected(2)">
+				<p>Player 1</p>
+				<p>Player 2</p>
+				<p>Player 3</p>
+			</div>
+			<!-- Panel #3 -->
+			<div class="panel" ng-show="panel.isSelected(3)">
+				<p>Player 1</p>
+				<p>Player 2</p>
+				<p>Player 3</p>
+				<p>Player 4</p>
+				<p>Player 5</p>
+				<p>Player 6</p>
+			</div>
 	</div>
 </div> <!-- /.ng-controller -->
