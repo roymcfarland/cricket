@@ -2,41 +2,112 @@
 <!-- ng-controller="dashboardController as dashboard" -->
 
 <div class="jumbotron text-center">
-	<h2>Welcome {{ dashboard.username }}! This is your personal game player dashboard.</h2>
+	<h2>Welcome {{ dashboard.username }}! This is your dashboard.</h2>
 </div>
 
 <div class="list-group" ng-controller="panelController as panel">
 	<div class="list-group-item">
-		<h3>My Leagues</h3>
+		<h3>My CricketDuel Leagues</h3>
 			<ul class="nav nav-pills">
 				<li ng-class="{ active: panel.isSelected(1) }">
-					<a href="" ng-click="panel.selectTab(1)">League #1</a>
+					<a href="" ng-click="panel.selectTab(1)">Led Zeppelin</a>
 				</li>
 				<li ng-class="{ active: panel.isSelected(2) }">
-					<a href="" ng-click="panel.selectTab(2)">League #2</a>
+					<a href="" ng-click="panel.selectTab(2)">TMNT</a>
 				</li>
 				<li ng-class="{ active: panel.isSelected(3) }">
-					<a href="" ng-click="panel.selectTab(3)">League #3</a>
+					<a href="" ng-click="panel.selectTab(3)">Ghostbusters</a>
 				</li>
 			</ul>
 			<!-- Panel #1 -->
 			<div class="panel" ng-show="panel.isSelected(1)">
-				<p>Player 1</p>
+				<table class="table table-striped">
+					<tr>
+						<th>Position</th>
+						<th>Name</th>
+						<th>Points</th>
+					</tr>
+					<tr>
+						<td>Batsman</td>
+						<td>Robert Plant</td>
+						<td>143</td>
+					</tr>
+					<tr>
+						<td>Batsman</td>
+						<td>Jimmy Page</td>
+						<td>129</td>
+					</tr>
+					<tr>
+						<td>Bowler</td>
+						<td>John Bonham</td>
+						<td>121</td>
+					</tr>
+					<tr>
+						<td>Bowler</td>
+						<td>John Paul Jones</td>
+						<td>118</td>
+					</tr>
+				</table>
 			</div>
 			<!-- Panel #2 -->
 			<div class="panel" ng-show="panel.isSelected(2)">
-				<p>Player 1</p>
-				<p>Player 2</p>
-				<p>Player 3</p>
+				<table class="table table-striped">
+					<tr>
+						<th>Position</th>
+						<th>Name</th>
+						<th>Points</th>
+					</tr>
+					<tr>
+						<td>Batsman</td>
+						<td>Michelangelo</td>
+						<td>96</td>
+					</tr>
+					<tr>
+						<td>Batsman</td>
+						<td>Raphael</td>
+						<td>95</td>
+					</tr>
+					<tr>
+						<td>Bowler</td>
+						<td>Leonardo</td>
+						<td>90</td>
+					</tr>
+					<tr>
+						<td>Bowler</td>
+						<td>Donatello</td>
+						<td>82</td>
+					</tr>
+				</table>
 			</div>
 			<!-- Panel #3 -->
 			<div class="panel" ng-show="panel.isSelected(3)">
-				<p>Player 1</p>
-				<p>Player 2</p>
-				<p>Player 3</p>
-				<p>Player 4</p>
-				<p>Player 5</p>
-				<p>Player 6</p>
+				<table class="table table-striped">
+					<tr>
+						<th>Position</th>
+						<th>Name</th>
+						<th>Points</th>
+					</tr>
+					<tr>
+						<td>Batsman</td>
+						<td>Peter Venkman</td>
+						<td>101</td>
+					</tr>
+					<tr>
+						<td>Batsman</td>
+						<td>Egon Spengler, PhD</td>
+						<td>90</td>
+					</tr>
+					<tr>
+						<td>Bowler</td>
+						<td>Ray Stantz</td>
+						<td>87</td>
+					</tr>
+					<tr>
+						<td>Bowler</td>
+						<td>Winston Zeddemore</td>
+						<td>60</td>
+					</tr>
+				</table>
 			</div>
 	</div>
 </div> <!-- /.ng-controller -->
