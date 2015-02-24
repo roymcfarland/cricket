@@ -14,18 +14,18 @@
 	</table> /.table-striped -->
 <!--/div> /.jumbotron text-center --> 
 
-<div class="border shim-left">
+<div class="box shim-left">
 	<h4>
 		Step 1. 
 		<button class="btn btn-default type="submit>Register</button>
 		<h4>Create your own account by registering with CricketDuel.</h4>
 	</h4>
 </div>
-<div class="border shim-left">
+<div class="box shim-left">
 	<h4>Step 2. Pick your league.</h4>
 	<img class="sample-image-padding" src="/images/Leagues.png">
 </div>
-<div class="border shim-left">
+<div class="box shim-left">
 	<h4>Step 3.  Choose your team based on this format.</h4>
 	<img class="sample-image-padding" src="/images/Teams.png">
 	<table class="table table-bordered">
@@ -38,17 +38,17 @@
 		<tbody>
 			<tr ng-repeat="teamFormat in gameRules.teamFormat">
 				<td>{{teamFormat.batsman}}</td>
-				<td>{{teamFormat.allrounders}}</td>
-				<td>{{teamFormat.wicketkeeper}}</td>
+				<td>{{teamFormat.allRounders}}</td>
+				<td>{{teamFormat.wicketKeeper}}</td>
 				<td>{{teamFormat.bowlers}}</td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-<div class="border shim-left">
+<div class="box shim-left">
 	<h4>Step 4.  Watch the game and have fun!  Check back after each match to see your score.</h4>
 </div>
-<div class="border shim-left">
+<div class="box shim-left">
 	<h5>Core Scoring:</h5>
 	<ul>
 		<li>{{gameRules.points.coreScoring.run}} point per run scored.</li>
@@ -65,31 +65,25 @@
 		<li>{{gameRules.points.bonus.manOfTheMatch}} points for player winning man of the match award</li>
 	</ul>
 	<h5>Run rate bonus (for players scoring 20 runs or more or facing 15 balls or more)</h5> <!-- replace #s?? -->
-	<h5>Between {{}} and {{}} runs per {{}} balls			- {{}} points</h5>
-	<h5>Between {{}} and {{}} runs per {{}} balls			- {{}} points</h5>
-	<h5>Between {{}} and {{}} runs per {{}} balls			- {{}} points</h5>
-	<h5>Between {{}} and {{}} runs per {{}} balls			- {{}} points</h5>
-	<h5>{{}} runs per {{}} balls and over			15 points</h5>
+	<div ng-repeat="subrunRate in gameRules.points.bonus.runRate">
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{subrunRate.description}} &nbsp;&nbsp;&nbsp;&nbsp; {{subrunRate.value}} points</p>
+	</div>
 	<h5>Negative Bonus Points</h5>
 	<ul>
-		<li>- {{}} (nagative twenty) points for every non-bowlder who is dismissed for a duck = {{}} runs</li>
-		<li>- {{}} (negative ten) for a bowlder who is dismissed for a duck = 0 runs</li>
-		<li>- {{}} (negative five) points for every non-bowler that gets out</li>
+		<li>{{gameRules.points.bonus.dismissedForDuck.nonBowler}} (nagative twenty) points for every non-bowlder who is dismissed for a duck = {{}} runs</li>
+		<li>{{gameRules.points.bonus.dismissedForDuck.bowler}} (negative ten) for a bowlder who is dismissed for a duck = 0 runs</li>
+		<li>{{gameRules.points.bonus.nonBowlerOut}} (negative five) points for every non-bowler that gets out</li>
 	</ul>
 	<h5>Bonus Points for Bowling</h5>
 	<ul>
-		<li>+ {{}} points for players who get a three-wicket haul</li>
-		<li>+ {{}} points for players who get a five-wicket haul</li>
-		<li>+ {{}} points for players who take a hat-trick</li>
-		<li>+ {{}} points for players winning man of the match award</li>
+		<li>+ {{gameRules.points.bonus.bowling.threeWicketHaul}} points for players who get a three-wicket haul</li>
+		<li>+ {{gameRules.points.bonus.bowling.fiveWicketHaul}} points for players who get a five-wicket haul</li>
+		<li>+ {{gameRules.points.bonus.bowling.hatTrick}} points for players who take a hat-trick</li>
+		<li>+ {{gameRules.points.bonus.manOfTheMatch}} points for players winning man of the match award</li>
 	</ul>
 	<h5>Economy rate bonus (for players bowling two overs or more)</h5>
 	<div ng-repeat="bowlingEconomyRate in gameRules.points.bonus.BowlingEconomyRate">
-		<div ng-repeat="(key,value) in bowlingEconomyRate">
-			<h5>Between {{key | limitTo: 4}} and {{key | limitTo: -4}} runs per over 	{{value}} points</h5>
-		</div>
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{bowlingEconomyRate.description}} &nbsp;&nbsp;&nbsp;&nbsp; {{bowlingEconomyRate.value}} points</p>
 	</div>
-	<h5>{{}} runs per over and over 		- {{}} points</h5>
-
 
 </div>
