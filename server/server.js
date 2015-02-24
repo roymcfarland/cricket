@@ -8,10 +8,7 @@ app.use(bodyParser());
 
 var userRoutes = require('./routes/user')(app);
 var rulesRoutes = require('./routes/rules')(app);
-<<<<<<< HEAD
-=======
 var leagueRoutes = require('./routes/league')(app);
->>>>>>> remotes/origin/bp-route-to-get-leagues-created-by-me
 var webRoutes = require('./routes/web')(app);
 
 var port = process.env.PORT || 3000;
