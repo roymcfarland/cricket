@@ -1,14 +1,11 @@
 <!-- Begin ng-view -->
 <!-- ng-controller="dashboardController as dashboard" -->
 
-<div class="jumbotron text-center">
-	<h2>Welcome {{ dashboard.username }}! This is your dashboard.</h2>
-</div>
-
 <div class="list-group" ng-controller="panelController as panel">
 	<div class="list-group-item">
-		<h3>My CricketDuel Leagues</h3>
-			<ul class="nav nav-pills">
+		<a class="btn btn-default pull-right" href="/admin">Admin Controls</a>
+		<h3>Current Leagues for {{ dashboard.username }}</h3>
+			<ul class="nav nav-tabs">
 				<li ng-class="{ active: panel.isSelected(1) }">
 					<a href="" ng-click="panel.selectTab(1)">Led Zeppelin</a>
 				</li>

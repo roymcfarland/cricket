@@ -18,7 +18,7 @@ dashboardCtrl.controller("dashboardController", [ "$location", "$scope", "$http"
 	})
 	.error(function(error) {
 		alert("Sorry - there was an error. Try again.");
-		$location.path("/");
+		$location.path("/dashboard");
 	});
 	*/
 

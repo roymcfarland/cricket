@@ -3,7 +3,7 @@ var registerCtrl = angular.module("registerCtrl", []);
 registerCtrl.controller("registerController", function() {
 	// Bind view-model
 	var vm = this;
-	vm.heading = "Joining a league is easy! Use this form to open an account:"
+	vm.heading = "Joining a league is easy! Use this form to open an account"
 	vm.doRegister = function() {
 		
 		// CREATE NEW USER

@@ -3,7 +3,7 @@ var loginCtrl = angular.module("loginCtrl", []);
 loginCtrl.controller("loginController", ['$location', '$scope', function($location, $scope) {
 	// Bind view-model
 	var vm = this;
-	vm.heading = "Please login by using the form below!";
+	vm.heading = "Login";
 	vm.doLogin = function() {
 		Parse.User.logIn(vm.loginData.username, vm.loginData.password)
 			.then(function(user){
