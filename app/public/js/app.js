@@ -23,5 +23,7 @@ var cricketDuel = angular.module("cricketDuel", [
 	"tradesCtrl",
 	"termsCtrl",
 	"contactCtrl",
-	"adminCtrl"
+	"adminCtrl",
+	"leaderboardService",
+	"leagueService"
 ]);

@@ -9,6 +9,20 @@ leaderboardCtrl.controller("leaderboardController", ["$location", "$scope", "$ht
 	// For authenticated users
 	this.username = user.getUsername();
 	this.testMessage = "This is the leaderboard.";
+	
+	var vm = this;
+	// GET leaderboard.json from logic in leaderboardService.js
+	Leaderboard.all();
+		// Promise object
+		.success(function(data) {
+			// Bind data to controller variable
+			vm.leaderboard = data; // ?according to book?
+			// $scope.leaderboard = data;
+		})
+		.error(function(error) {
+			alert("Sorry - there was an error. Please try again!");
+			$location.path("/");
+		});
 
 	/*
 	// GET request for leaderboard.json from server
