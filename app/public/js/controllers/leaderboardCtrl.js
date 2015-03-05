@@ -12,7 +12,7 @@ leaderboardCtrl.controller("leaderboardController", ["$location", "$scope", "$ht
 	
 	var vm = this;
 	// GET leaderboard.json from logic in leaderboardService.js
-	Leaderboard.all();
+	Leaderboard.all()
 		// Promise object
 		.success(function(data) {
 			// Bind data to controller variable
