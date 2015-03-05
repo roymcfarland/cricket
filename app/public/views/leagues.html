@@ -1,0 +1,23 @@
+<!-- Begin ng-view -->
+<!-- ng-controller="leaguesController as leagues" -->
+<div class="container">
+	<a class="btn btn-default" href="/dashboard">Back to Dashboard</a>
+</div>
+<div class="container">
+	<table class="table">
+		<thead>
+			<th>createdAt</th>
+			<th>Name</th>
+			<th>objectId</th>
+			<th>updatedAt</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="league in leagues">
+				<td>{{league.createdAt}}</td>
+				<td>{{league.name}}</td>
+				<td>{{league.objectId}}</td>
+				<td>{{league.updatedAt}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

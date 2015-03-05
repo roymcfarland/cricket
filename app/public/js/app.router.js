@@ -73,6 +73,13 @@ appRouter.config(function($routeProvider, $locationProvider) {
 			controllerAs: "contact"
 		})
 
+		// route for leagues page
+		.when("/leagues", {
+			templateUrl: "../views/leagues.html",
+			controller: "leaguesController",
+			controllerAs: "leagues"
+		})
+
 		// catch all route
 		.otherwise({
 			redirectTo: "/"

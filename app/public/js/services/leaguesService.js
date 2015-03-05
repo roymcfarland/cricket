@@ -1,13 +1,13 @@
-var leagueService = angular.module("leagueService", []);
+var leaguesService = angular.module("leaguesService", []);
 
-leagueService.factory("Leagues", function($http) {
+leaguesService.factory("Leagues", function($http) {
 	// Create object
-	var myLeagues = {};
+	var leagues = {};
 	// GET request for myleagues.json from server
-	myLeagues.all = function() {
+	leagues.all = function() {
 		return $http.get("/api/leagues");
 	};
-	return myLeagues;
+	return leagues;
 });
 
 /*
