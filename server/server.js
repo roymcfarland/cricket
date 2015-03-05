@@ -4,7 +4,8 @@ var bodyParser = require('body-parser');
 var app = express();
 
 app.use(express.static(__dirname + '/../app/public'));
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 var userRoutes = require('./routes/user')(app);
 var rulesRoutes = require('./routes/rules')(app);
