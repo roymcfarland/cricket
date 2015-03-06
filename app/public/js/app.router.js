@@ -74,14 +74,14 @@ appRouter.config(function($routeProvider, $locationProvider) {
 		})
 
 		// route for leagues page
-		.when("/dashboard/join-leagues", {
-			templateUrl: "../views/join-leagues.html",
+		.when("/dashboard/join-league", {
+			templateUrl: "../views/join-league.html",
 			controller: "leaguesController",
 			controllerAs: "leagues"
 		})
 
 		// route for team-builder page
-		.when("/dashboard/join-leagues/team-builder", {
+		.when("/dashboard/join-league/team-builder", {
 			templateUrl: "../views/team-builder.html",
 			controller: "teamBuilderController",
 			controllerAs: "teamBuilder"

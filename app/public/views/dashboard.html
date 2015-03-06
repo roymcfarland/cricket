@@ -4,18 +4,18 @@
 <div class="list-group" ng-controller="panelController as panel">
 	<div class="list-group-item">
 		<a class="btn btn-default pull-right" href="/admin">Admin Controls</a>
-		<a class="btn btn-default pull-right" href="/dashboard/join-leagues">Join New League</a>
+		<a class="btn btn-default pull-right" href="/dashboard/join-league">Join New League</a>
 		<button type="button" class="btn btn-primary pull-right" bs-aside="aside">Toggle Aside</button>
 		<h3>Current Leagues for {{ dashboard.username }}</h3>
 			<ul class="nav nav-tabs">
 				<li ng-class="{ active: panel.isSelected(1) }">
-					<a href="" ng-click="panel.selectTab(1)">Led Zeppelin</a>
+					<a href="" ng-click="panel.selectTab(1)">Little League</a>
 				</li>
 				<li ng-class="{ active: panel.isSelected(2) }">
-					<a href="" ng-click="panel.selectTab(2)">TMNT</a>
+					<a href="" ng-click="panel.selectTab(2)">Big League</a>
 				</li>
 				<li ng-class="{ active: panel.isSelected(3) }">
-					<a href="" ng-click="panel.selectTab(3)">Ghostbusters</a>
+					<a href="" ng-click="panel.selectTab(3)">High Stakes League</a>
 				</li>
 			</ul>
 			<!-- Panel #1 -->
