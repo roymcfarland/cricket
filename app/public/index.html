@@ -35,9 +35,9 @@
               <li><a href="/myteam">My Team</a></li>
               <li><a href="/trades">Trades</a></li>
               <li><a href="/rules">Rules</a></li>
-              <li><a href="/register">Register</a></li>
-              <li><a href="/login">Login</a></li>
-              <li><a href="/" ng-click="index.doLogout()">Logout</a></li>
+              <li><a href="/register" ng-if="index.logoutCheck()">Register</a></li>
+              <li><a href="/login" ng-if="index.logoutCheck()">Login</a></li>
+              <li><a href="/" ng-click="index.doLogout()" ng-if="index.loginCheck()">Logout</a></li>
             </ul> <!-- /.navbar-right -->
           </div> <!-- /.navbar-collapse -->
       </nav> <!-- /.navbar-default -->
