@@ -144,6 +144,7 @@ describe('Getting all leagues owned by the user', function(){
 	});
 });
 
+/*
 describe('Getting all of the leagues', function(){
 	it('should be able to get an array of all leagues', function(done){
 		requestLocal
@@ -158,6 +159,7 @@ describe('Getting all of the leagues', function(){
 			});
 	});
 });
+*/
 
 describe('Cleaning up', function(){
 	it('by removing the test user', function(done) {
