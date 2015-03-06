@@ -74,8 +74,8 @@ appRouter.config(function($routeProvider, $locationProvider) {
 		})
 
 		// route for leagues page
-		.when("/leagues", {
-			templateUrl: "../views/leagues.html",
+		.when("/dashboard/join-leagues", {
+			templateUrl: "../views/join-leagues.html",
 			controller: "leaguesController",
 			controllerAs: "leagues"
 		})
