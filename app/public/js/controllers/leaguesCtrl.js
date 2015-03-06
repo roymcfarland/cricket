@@ -10,7 +10,7 @@ dashboardCtrl.controller("leaguesController", function($location, $scope, $http,
 	this.username = user.getUsername();
 	this.testMessage = "This is the page where you can join a league. Coming soon!";
 
-	// GET request for rules.json from server
+	// AJAX request for leagues.json from server
 	$http.get("/api/leagues")
 	.success(function(response) {
 		$scope.leagues = response;
@@ -20,22 +20,27 @@ dashboardCtrl.controller("leaguesController", function($location, $scope, $http,
 		$location.path("/");
 	});
 
+	// ngTable
 	var data = [];
 	$scope.data = data;
 
 	$scope.tableParams = new ngTableParams({
-	    page: 1,            // show first page
-	    count: 10,          // count per page
+	    // Show first page
+	    page: 1,
+	    // Show 10 results per page
+	    count: 10,
 	    filter: {
-	        //name: 'M'       // initial filter
+	        // Establish initial filter
+	        // name: 'M'
 	    },
 	    sorting: {
-	        //name: 'asc'     // initial sorting
+	        // Establish initial sorting
+	        //name: 'asc'
 	    }
 	}, {
 	    total: data.length, // length of data
 	    getData: function ($defer, params) {
-	        // use build-in angular filter
+	        // Angular filter
 	        var filteredData = params.filter() ?
 	                $filter('filter')(data, params.filter()) :
 	                data;

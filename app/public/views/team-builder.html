@@ -1,5 +1,11 @@
 <!-- Begin ng-view -->
 <!-- ng-controller="teamBuilderController as teamBuilder" -->
-<div class="jumbotron text-center">
+<div class="jumbotron">
+	<div class="row">
+		<a class="btn btn-default pull-right" href="/dashboard/join-leagues">Go Back</a>
+	</div>
+	<div class="row">
+		<strong>Selected Players:</strong> {{ leagues | filter:{"$selected": true} }}
+	</div>
 	<h2>{{teamBuilder.testMessage}}</h2>
-</div>
+</div> <!-- /.jumbotron -->
