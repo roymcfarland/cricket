@@ -1,9 +1,6 @@
 <!-- Begin ng-view -->
 <!-- ng-controller="leaguesController as leagues" -->
-<div class="container text-center">
-	<a class="btn btn-default" href="/dashboard">Return to My Dashboard</a>
-</div>
-<div class="container">
+<div class="jumbotron">
 	<div>
 		<strong>Selected Leagues:</strong> {{ leagues | filter:{"$selected": true} }}
 	</div>
@@ -31,4 +28,8 @@
 		</tbody>
 		</tr>
 	</table>
+	<div class="row">
+		<a class="btn btn-default pull-right" href="/dashboard">Return to Dashboard</a>
+		<a class="btn btn-default pull-right" href="/dashboard/join-leagues/team-builder" ng-click="">Join Selected League</a>
+	</div>
 </div>

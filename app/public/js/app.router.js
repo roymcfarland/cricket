@@ -80,6 +80,13 @@ appRouter.config(function($routeProvider, $locationProvider) {
 			controllerAs: "leagues"
 		})
 
+		// route for team-builder page
+		.when("/dashboard/join-leagues/team-builder", {
+			templateUrl: "../views/team-builder.html",
+			controller: "teamBuilderController",
+			controllerAs: "teamBuilder"
+		})
+
 		// catch all route
 		.otherwise({
 			redirectTo: "/"
