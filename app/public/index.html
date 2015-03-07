@@ -31,13 +31,12 @@
           </div> <!-- ./navbar-header -->
           <div class="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="/leaderboard">Leaderboard</a></li>
-              <li><a href="/myteam">My Team</a></li>
-              <li><a href="/trades">Trades</a></li>
+              <li><a href="/leaderboard" ng-if="index.loginChecker()">Leaderboard</a></li>
+              <li><a href="/dashboard" ng-if="index.loginChecker()">Dashboard</a></li>
               <li><a href="/rules">Rules</a></li>
-              <li><a href="/register" ng-if="index.logoutCheck()">Register</a></li>
-              <li><a href="/login" ng-if="index.logoutCheck()">Login</a></li>
-              <li><a href="/" ng-click="index.doLogout()" ng-if="index.loginCheck()">Logout</a></li>
+              <li><a href="/register" ng-if="index.logoutChecker()">Register</a></li>
+              <li><a href="/login" ng-if="index.logoutChecker()">Login</a></li>
+              <li><a href="/" ng-click="index.doLogout()" ng-if="index.loginChecker()">Logout</a></li>
             </ul> <!-- /.navbar-right -->
           </div> <!-- /.navbar-collapse -->
       </nav> <!-- /.navbar-default -->
@@ -83,8 +82,6 @@
     <script src="/js/controllers/loginCtrl.js"></script>
     <script src="/js/controllers/registerCtrl.js"></script>
     <script src="/js/controllers/dashboardCtrl.js"></script>
-    <script src="/js/controllers/myteamCtrl.js"></script>
-    <script src="/js/controllers/tradesCtrl.js"></script>
     <script src="/js/controllers/termsCtrl.js"></script>
     <script src="/js/controllers/contactCtrl.js"></script>
     <script src="/js/controllers/adminCtrl.js"></script>

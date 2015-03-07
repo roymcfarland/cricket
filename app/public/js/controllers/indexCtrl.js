@@ -9,7 +9,7 @@ indexCtrl.controller("indexController", function($location, $scope, $http) {
 		$location.path("/");
 	};
 
-	this.loginCheck = function() {
+	this.loginChecker = function() {
 		if (Parse.User.current() == null) {
 			return false;
 		} else {
@@ -17,7 +17,7 @@ indexCtrl.controller("indexController", function($location, $scope, $http) {
 		}
 	};
 
-	this.logoutCheck = function() {
+	this.logoutChecker = function() {
 		if (Parse.User.current() == null) {
 			return true;
 		} else {

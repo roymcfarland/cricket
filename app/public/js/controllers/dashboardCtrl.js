@@ -12,8 +12,8 @@ dashboardCtrl.controller("dashboardController", function($location, $scope, $htt
 
 	// Aside
 	$scope.aside = {
-		"title": "Title",
-		"content": "Hello from aside!"
+		"title": "Easter Egg",
+		"content": "Testing Angular Strap!"
 	};
 
 });

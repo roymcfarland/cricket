@@ -2,10 +2,39 @@
 <!-- ng-controller="teamBuilderController as teamBuilder" -->
 <div class="jumbotron">
 	<div class="row">
-		<a class="btn btn-default pull-right" href="/dashboard/join-leagues">Go Back</a>
+		<a class="btn btn-default pull-right" href="/dashboard/join-league">Go Back</a>
 	</div>
-	<div class="row">
+	<div>
+		<h3>Step 2: Draft Players</h3>
+		<table ng-table="tableParams" show-filter="true" class="table ng-table-rowselected">
+			<thead>
+				<th>Name</th>
+				<th>Position</th>
+				<th>Team</th>
+				<th>Cost</th>
+			</thead>
+			<!--
+			<tbody class="text-center">
+				<tr ng-repeat="player in players" ng-click="player.$selected = !player.$selected; changeSelection(player)" ng-class="{'active': player.$selected}">
+					<td data-title="'name'" sortable="'name'" filter="{ 'name': 'text' }">
+						{{player.name}}
+					</td>
+					<td data-title="'CricketPlayerType'" sortable="'CricketPlayerType'" filter="{ 'CricketPlayerType': 'text' }">
+						{{player.CricketPlayerType}}
+					</td>
+					<td data-title="'team'" sortable="'team'" filter="{ 'team': 'text' }">
+						{{player.team}}
+					</td>
+					<td data-title="'cost'" sortable="'cost'" filter="{ 'cost': 'text' }">
+						{{player.cost}}
+					</td>
+				</tr>
+			</tbody>
+			-->
+		</table>
 		<strong>Selected Players:</strong> {{ leagues | filter:{"$selected": true} }}
 	</div>
-	<h2>{{teamBuilder.testMessage}}</h2>
+	<div class="row">
+		<a class="btn btn-default pull-right disabled" href="#" ng-click="">Add Players to Team</a>
+	</div>
 </div> <!-- /.jumbotron -->

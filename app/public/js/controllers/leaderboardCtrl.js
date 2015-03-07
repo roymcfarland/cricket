@@ -1,6 +1,6 @@
 var leaderboardCtrl = angular.module("leaderboardCtrl", []);
 
-leaderboardCtrl.controller("leaderboardController", ["$location", "$scope", "$http", function($location, $scope, $http) {
+leaderboardCtrl.controller("leaderboardController", function($location, $scope, $http) {
 
 	// First screen user authentication
 	var user = Parse.User.current();
@@ -36,4 +36,4 @@ leaderboardCtrl.controller("leaderboardController", ["$location", "$scope", "$ht
 	});
 	*/
 	
-}]);
+});

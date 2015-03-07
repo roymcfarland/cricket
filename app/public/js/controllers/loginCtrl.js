@@ -1,6 +1,6 @@
 var loginCtrl = angular.module("loginCtrl", []);
 
-loginCtrl.controller("loginController", ['$location', '$scope', function($location, $scope) {
+loginCtrl.controller("loginController", function($location, $scope) {
 	// Bind view-model
 	var vm = this;
 	vm.heading = "Login";
@@ -18,7 +18,7 @@ loginCtrl.controller("loginController", ['$location', '$scope', function($locati
 				});
 			});
 	};
-}]);
+});
 
 loginCtrl.controller("fcbkLoginController", function() {
 	// Bind view-model
