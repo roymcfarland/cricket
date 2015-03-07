@@ -2,9 +2,10 @@
 <!-- ng-controller="leaguesController as leagues" -->
 <div class="jumbotron">
 	<div class="row">
-		<a class="btn btn-default pull-right" href="/dashboard">Return to Dashboard</a>
+		<a class="btn btn-default pull-right" href="/dashboard">Go Back</a>
 	</div>
 	<div>
+		<h3>Step 1: Select League</h3>
 		<table ng-table="tableParams" show-filter="true" class="table ng-table-rowselected">
 			<thead>
 				<th>Name</th>
@@ -37,11 +38,9 @@
 				</tr>
 			</tbody>	
 		</table> <!-- /.ng-table -->
-	</div>
-	<div class="row">
 		<strong>Selected Leagues:</strong> {{ leagues | filter:{"$selected": true} }}
 	</div>
 	<div class="row">
 		<a class="btn btn-default pull-right" href="/dashboard/join-league/team-builder" ng-click="">Join Selected League</a>
-	</div> <!-- /.row -->
+	</div>
 </div> <!-- /.jumbotron -->

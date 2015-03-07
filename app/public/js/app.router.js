@@ -38,20 +38,6 @@ appRouter.config(function($routeProvider, $locationProvider) {
 			controllerAs: "leaderboard"
 		})
 
-		// route for my team dashboard
-		.when("/myteam", {
-			templateUrl: "../views/myteam.html",
-			controller: "myteamController",
-			controllerAs: "myteam"
-		})
-
-		// route for trades
-		.when("/trades", {
-			templateUrl: "../views/trades.html",
-			controller: "tradesController",
-			controllerAs: "trades"
-		})
-
 		// route for rules
 		.when("/rules", {
 			templateUrl: "../views/rules.html",
