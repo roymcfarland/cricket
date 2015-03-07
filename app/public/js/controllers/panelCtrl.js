@@ -1,6 +1,6 @@
 var panelCtrl = angular.module("panelCtrl", []);
 
-panelCtrl.controller("panelController", ["$location", "$scope", "$http", function($location, $scope, $http) {
+panelCtrl.controller("panelController", function($location, $scope, $http) {
 
 	this.tab = 1;
 
@@ -12,4 +12,4 @@ panelCtrl.controller("panelController", ["$location", "$scope", "$http", functio
 		return this.tab === checkTab;
 	};
 
-}]);
+});

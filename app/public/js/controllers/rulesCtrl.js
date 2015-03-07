@@ -1,6 +1,6 @@
 var rulesCtrl = angular.module("rulesCtrl", []);
 
-rulesCtrl.controller("rulesController", ["$location", "$scope", "$http", function($location, $scope, $http) {
+rulesCtrl.controller("rulesController", function($location, $scope, $http) {
 
 	this.testMessage = "Rules of CricketDuel"
 
@@ -14,4 +14,4 @@ rulesCtrl.controller("rulesController", ["$location", "$scope", "$http", functio
 		$location.path("/");
 	});
 	
-}]);
+});

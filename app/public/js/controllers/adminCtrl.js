@@ -1,6 +1,6 @@
 var adminCtrl = angular.module("adminCtrl", []);
 
-adminCtrl.controller("adminController", ["$location", "$scope", "$http", function($location, $scope, $http) {
+adminCtrl.controller("adminController", function($location, $scope, $http) {
 
 	// First screen for user authentication
 	var user = Parse.User.current();
@@ -10,4 +10,4 @@ adminCtrl.controller("adminController", ["$location", "$scope", "$http", functio
 	this.username = user.getUsername();
 	this.testMessage = "This is the admin user page."
 
-}]);
+});
