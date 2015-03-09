@@ -12,7 +12,21 @@ describe('Sending a GET', function(){
 				.end(function(err, res){
 					if(err) return done(err);
 
-					res.body.results.length.should.be.above(0);
+					res.body.players.length.should.be.above(0);
+					done();
+				});
+		});
+	});
+
+	describe('to /api/v1/players/<objectId>', function(){
+		it('should get one player', function(done){
+			request
+				.get('/api/v1/players/a9evEz7N08')
+				.expect(200)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.player.name.should.have.type('string');
 					done();
 				});
 		});
