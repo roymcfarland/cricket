@@ -1,28 +1,32 @@
 var leaguesCtrl = angular.module("leaguesCtrl", []);
 
-dashboardCtrl.controller("leaguesController", function($location, $scope, $http, $filter, ngTableParams) {
-	
-	///////////////////////////////
-	///// USER AUTHENTICATION /////
-	///////////////////////////////
+leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $filter, ngTableParams) {
+
+	/////////////////////////////////
+	////// USER AUTHENTICATION //////
+	/////////////////////////////////
 	var user = Parse.User.current();
 	if(!user) return $location.path("/");
 
-	// For authenticated users
+	
+	/////////////////////////////////
+	/// ACQUIRE CURRENT USER INFO ///
+	/////////////////////////////////
 	this.username = user.getUsername();
-	this.testMessage = "This is the page where you can join a league. Coming soon!";
+	this.userId = user.id;
+	this.userScore = user.attributes.totalScore;
 
 
-	///////////////////////////////
-	/////////// AJAX GET //////////
-	///////////////////////////////
+	/////////////////////////////////
+	/////////// AJAX GET ////////////
+	/////////////////////////////////
 	$http.get("/api/leagues")
 	.success(function(response) {
 		$scope.leagues = response;
 	})
 	.error(function(error) {
 		alert("Sorry - there was an error. Try again.");
-		$location.path("/");
+		$location.path("/dashboard");
 	});
 
 	
@@ -68,6 +72,6 @@ dashboardCtrl.controller("leaguesController", function($location, $scope, $http,
 	////////////////////////////////
 	////////// AJAX POST ///////////
 	////////////////////////////////
-	$http.post("")
+	// $http.post("")
 
 });
