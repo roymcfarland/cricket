@@ -13,6 +13,8 @@ Parse.initialize("GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD", "tiAbB7WfaIdHr4RKfd
 var cricketDuel = angular.module("cricketDuel", [
 	"ngRoute",
 	"ngAnimate",
+	"ngAria",
+	"ngResource",
 	"mgcrea.ngStrap",
 	"mgcrea.ngStrap.modal",
 	"mgcrea.ngStrap.aside",
