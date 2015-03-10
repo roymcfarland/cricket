@@ -2,7 +2,9 @@ var leaguesCtrl = angular.module("leaguesCtrl", []);
 
 dashboardCtrl.controller("leaguesController", function($location, $scope, $http, $filter, ngTableParams) {
 	
-	// First screen for user authentication
+	///////////////////////////////
+	///// USER AUTHENTICATION /////
+	///////////////////////////////
 	var user = Parse.User.current();
 	if(!user) return $location.path("/");
 
@@ -10,7 +12,10 @@ dashboardCtrl.controller("leaguesController", function($location, $scope, $http,
 	this.username = user.getUsername();
 	this.testMessage = "This is the page where you can join a league. Coming soon!";
 
-	// AJAX request for leagues.json from server
+
+	///////////////////////////////
+	/////////// AJAX GET //////////
+	///////////////////////////////
 	$http.get("/api/leagues")
 	.success(function(response) {
 		$scope.leagues = response;
@@ -20,7 +25,10 @@ dashboardCtrl.controller("leaguesController", function($location, $scope, $http,
 		$location.path("/");
 	});
 
-	// ngTable
+	
+	////////////////////////////////
+	/////////// NG-TABLE ///////////
+	////////////////////////////////
 	var data = [];
 	$scope.data = data;
 
@@ -56,5 +64,10 @@ dashboardCtrl.controller("leaguesController", function($location, $scope, $http,
 	$scope.changeSelection = function(user) {
 	    // console.info(user);
 	}
+
+	////////////////////////////////
+	////////// AJAX POST ///////////
+	////////////////////////////////
+	$http.post("")
 
 });
