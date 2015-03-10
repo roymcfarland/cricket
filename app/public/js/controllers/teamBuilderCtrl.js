@@ -11,9 +11,11 @@ teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, 
 	this.testMessage = "This is the team builder page.";
 
 	// AJAX request for players.json from server
-	$http.get("/api/players")
+	$http.get("/api/v1/players")
 	.success(function(response) {
 		$scope.players = response;
+		// console.log(typeof(response));
+		// console.log(response);
 	})
 	.error(function(error) {
 		alert("Sorry - there was an error. Try again.");
