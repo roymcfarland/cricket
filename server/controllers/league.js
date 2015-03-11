@@ -91,4 +91,21 @@ LeagueController.prototype.getAll = function(req, res) {
 	}
 };
 
+LeagueController.prototype.addToLeague = function(req, res) {
+	var leagueId = req.params.leagueId;
+	var addUser = req.query.addUser;
+	
+	if(!'objectId' in req.body.user) return res.status(428).send({error: 'user object not passed in'});
+
+	superagent
+		.get('https://api.parse.com/1/classes/League/' + leagueId)
+		.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+		.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+		.end(function(result){
+			if(result.body.code) return res.status(500).send(result.body);
+
+			if(result.body.noOfEntries <= result.body.maxEntries) return res.sendStatus(518);
+		});
+};
+
 module.exports = LeagueController;
