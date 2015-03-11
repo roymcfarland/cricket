@@ -5,6 +5,7 @@
 		<a class="btn btn-default pull-right" href="/dashboard/join-league">Go Back</a>
 	</div>
 	<div>
+		<h5 class="pull-right">Current Balance: {{teamBuilder.userScore | currency}}</h5>
 		<h3>Step 2: Draft Players</h3>
 		<table ng-table="tableParams" show-filter="true" class="table ng-table-rowselected">
 			<thead>

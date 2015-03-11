@@ -2,15 +2,24 @@ var teamBuilderCtrl = angular.module("teamBuilderCtrl", []);
 
 teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, $http, $filter, ngTableParams) {
 
-	// First screen for user authentication
+	/////////////////////////////////
+	////// USER AUTHENTICATION //////
+	/////////////////////////////////
 	var user = Parse.User.current();
 	if(!user) return $location.path("/");
 
-	// For authenticated users
-	this.username = user.getUsername();
-	this.testMessage = "This is the team builder page.";
 
-	// AJAX request for players.json from server
+	/////////////////////////////////
+	/// ACQUIRE CURRENT USER INFO ///
+	/////////////////////////////////
+	this.username = user.getUsername();
+	this.userId = user.id;
+	this.userScore = user.attributes.totalScore;
+
+
+	/////////////////////////////////
+	/////////// AJAX GET ////////////
+	/////////////////////////////////
 	$http.get("/api/v1/players")
 	.success(function(response) {
 		$scope.players = response;
@@ -22,7 +31,10 @@ teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, 
 		$location.path("/");
 	});
 
-	// ngTable
+
+	////////////////////////////////
+	/////////// NG-TABLE ///////////
+	////////////////////////////////
 	var data = [];
 	$scope.data = data;
 
@@ -55,8 +67,8 @@ teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, 
 	    }
 	});
 
-	$scope.changeSelection = function(user) {
-	    // console.info(user);
-	}
+	// $scope.changeSelection = function(user) {
+	//     // console.info(user);
+	// }
 
 });

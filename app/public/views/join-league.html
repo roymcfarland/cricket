@@ -5,6 +5,7 @@
 		<a class="btn btn-default pull-right" href="/dashboard">Go Back</a>
 	</div>
 	<div>
+		<h5 class="pull-right">Current Balance: {{leagues.userScore | currency}}</h5>
 		<h3>Step 1: Select League</h3>
 		<table ng-table="tableParams" show-filter="true" class="table ng-table-rowselected">
 			<thead>
@@ -16,7 +17,7 @@
 				<th>Winning Prize</th>
 			</thead>
 			<tbody class="text-center">
-				<tr ng-repeat="league in leagues" ng-click="league.$selected = !league.$selected; changeSelection(league)" ng-class="{'active': league.$selected}">
+				<tr ng-repeat="league in leaguesInfo" ng-click="league.$selected = !league.$selected; changeSelection(league)" ng-class="{'active': league.$selected}">
 					<td data-title="'name'" sortable="'name'" filter="{ 'name': 'text' }">
 						{{league.name}}
 					</td>
@@ -38,7 +39,7 @@
 				</tr>
 			</tbody>	
 		</table> <!-- /.ng-table -->
-		<strong>Selected Leagues:</strong> {{ leagues | filter:{"$selected": true} }}
+		<strong>Selected Leagues:</strong> {{ leaguesInfo | filter:{"$selected": true} }}
 	</div>
 	<div class="row">
 		<a class="btn btn-default pull-right" href="/dashboard/join-league/team-builder" ng-click="">Join Selected League</a>

@@ -22,7 +22,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	/////////////////////////////////
 	$http.get("/api/leagues")
 	.success(function(response) {
-		$scope.leagues = response;
+		$scope.leaguesInfo = response;
 	})
 	.error(function(error) {
 		alert("Sorry - there was an error. Try again.");
@@ -65,9 +65,9 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	    }
 	});
 
-	$scope.changeSelection = function(user) {
+	// $scope.changeSelection = function(user) {
 	    // console.info(user);
-	}
+	// }
 
 	////////////////////////////////
 	////////// AJAX POST ///////////

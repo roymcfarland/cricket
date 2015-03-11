@@ -7,7 +7,7 @@
 		<a class="btn btn-default pull-right" href="/dashboard/join-league">Join New League</a>
 		<button type="button" class="btn btn-primary pull-right" bs-aside="aside">Toggle Aside</button>
 		<h3>Dashboard</h3>
-		<h3>{{dashboard.userScore | currency}}</h3>
+		<h5 class="pull-right">Current Balance: {{dashboard.userScore | currency}}</h5>
 			<ul class="nav nav-tabs">
 				<li ng-class="{ active: panel.isSelected(1) }">
 					<a href="" ng-click="panel.selectTab(1)">Little League</a>
