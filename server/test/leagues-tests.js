@@ -4,6 +4,7 @@ var should = require('should');
 var requestLocal = supertest('http://localhost:3000');
 var requestParse = supertest('https://api.parse.com');
 var leagueWithNoRoom;
+var leagueWithRoom;
 var testUser;
 
 describe('Preparing for the tests', function(){
@@ -27,6 +28,29 @@ describe('Preparing for the tests', function(){
 					if(err) return done(err);
 
 					leagueWithNoRoom = res.body;
+					done();
+				});
+		});
+
+		it('that has room for new users', function(done){
+			requestParse
+				.post('/1/classes/League')
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.set('Content-Type', 'application/json')
+				.send({
+					entryFee: 10,
+					guaranteedPrize: 3,
+					maxEntries: 5,
+					multiEntry: false,
+					name: 'Test League with room',
+					noOfEntries: 10,
+					winningPrize: 10
+				})
+				.end(function(err, res){
+					if(err) return done(err);
+
+					leagueWithRoom = res.body;
 					done();
 				});
 		});
@@ -63,6 +87,16 @@ describe('Sending a POST to /api/v1/leagues/<objectId>', function(){
 					user: testUser
 				})
 				.expect(518)
+				.end(done);
+		});
+
+		it('should succeed', function(done){
+			requestLocal
+				.post('/api/v1/leagues/' + leagueWithRoom.objectId + '?addUser=true')
+				.send({
+					user: testUser
+				})
+				.expect(200)
 				.end(done);
 		});
 	});
