@@ -6,6 +6,7 @@ var requestParse = supertest('https://api.parse.com');
 var leagueWithNoRoom;
 var leagueWithRoom;
 var testUser;
+var userLeague;
 
 describe('Preparing for the tests', function(){
 	describe('by creating a league', function(){
@@ -97,7 +98,12 @@ describe('Sending a POST to /api/v1/leagues/<objectId>', function(){
 					user: testUser
 				})
 				.expect(200)
-				.end(done);
+				.end(function(err, res){
+					if(err) return done(err);
+
+					userLeague = res.body;
+					done();
+				});
 		});
 
 		it('should fail if the user tries to get added to the league again', function(done){
@@ -121,6 +127,14 @@ describe('Cleaning up after the leagues tests', function(){
 				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 				.end(done);
 		});
+
+		it('with room for new users', function(done){
+			requestParse
+				.del('/1/classes/League/' + leagueWithRoom.objectId)
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.end(done);
+		});
 	});
 
 	describe('by removing the user', function(){
@@ -133,4 +147,14 @@ describe('Cleaning up after the leagues tests', function(){
 				.end(done);
 		});
 	});
+
+	describe('by removing the test league relationship', function(){
+		it('userLeague', function(done){
+			requestParse
+				.del('/1/classes/UserLeague/' + userLeague.objectId)
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.end(done);
+		});
+	})
 });
