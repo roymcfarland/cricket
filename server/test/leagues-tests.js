@@ -99,6 +99,16 @@ describe('Sending a POST to /api/v1/leagues/<objectId>', function(){
 				.expect(200)
 				.end(done);
 		});
+
+		it('should fail if the user tries to get added to the league again', function(done){
+			requestLocal
+				.post('/api/v1/leagues/' + leagueWithRoom.objectId + '?addUser=true')
+				.send({
+					user: testUser
+				})
+				.expect(519)
+				.end(done);
+		});
 	});
 });
 

@@ -106,29 +106,63 @@ LeagueController.prototype.addToLeague = function(req, res) {
 
 			if(result.body.noOfEntries <= result.body.maxEntries) return res.sendStatus(518);
 
+			var query = {
+				LeagueID: {
+					__type: 'Pointer',
+					className: 'League',
+					objectId: leagueId
+				},
+				UserID: {
+					__type: 'Pointer',
+					className: '_User',
+					objectId: req.body.user.objectId
+				}
+			};
+			var queryJson = JSON.stringify(query);
+
 			superagent
-				.post('https://api.parse.com/1/classes/UserLeague')
+				.get('https://api.parse.com/1/classes/UserLeague')
 				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
 				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
-				.set('Content-Type', 'application/json')
-				.send({
-					LeagueID: {
-						__type: "Pointer",
-						className: "League",
-						objectId: leagueId
-					},
-					UserID: {
-						__type: "Pointer",
-						className: "_User",
-						objectId: req.body.user.objectId
-					}
-				})
-				.end(function(result){
-					console.log(result.body);
+				.query('where=' + queryJson)
+				.end(function(queryResult){
 					if(result.body.code) return res.status(500).send(result.body);
 
-					res.send(result.body);
+					superagent
+						.get('https://api.parse.com/1/classes/League/' + leagueId)
+						.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+						.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+						.end(function(result){
+							if(result.body.code) return res.status(500).send(result.body);
+
+							if(!result.body.multiEntry && queryResult.body.results.length > 0) return res.sendStatus(519);
+						
+						superagent
+							.post('https://api.parse.com/1/classes/UserLeague')
+							.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+							.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+							.set('Content-Type', 'application/json')
+							.send({
+								LeagueID: {
+									__type: "Pointer",
+									className: "League",
+									objectId: leagueId
+								},
+								UserID: {
+									__type: "Pointer",
+									className: "_User",
+									objectId: req.body.user.objectId
+								}
+							})
+							.end(function(result){
+								if(result.body.code) return res.status(500).send(result.body);
+
+								res.send(result.body);
+							});
+						});
+
 				});
+
 		});
 };
 
