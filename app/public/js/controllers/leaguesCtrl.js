@@ -29,6 +29,8 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		$location.path("/dashboard");
 	});
 
+	// console.log(leaguesInfo.objectId)
+
 	
 	////////////////////////////////
 	/////////// NG-TABLE ///////////
