@@ -42,7 +42,7 @@ describe('Preparing for the tests', function(){
 				.send({
 					entryFee: 10,
 					guaranteedPrize: 3,
-					maxEntries: 5,
+					maxEntries: 50,
 					multiEntry: false,
 					name: 'Test League with room',
 					noOfEntries: 10,
@@ -67,7 +67,8 @@ describe('Preparing for the tests', function(){
 				.send({
 					username: 'testUser',
 					password: 'password',
-					email: 'testUser@latitude40.com'
+					email: 'testUser@latitude40.com',
+					Money: 50
 				})
 				.end(function(err, res){
 					if(err) return done(err);
@@ -106,6 +107,19 @@ describe('Sending a POST to /api/v1/leagues/<objectId>', function(){
 				});
 		});
 
+		it('should have increased the number of entries for the league in question', function(done){
+			requestParse
+				.get('/1/classes/League/' + leagueWithRoom.objectId)
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.noOfEntries.should.be.exactly(11);
+					done();
+				});
+		});
+
 		it('should fail if the user tries to get added to the league again', function(done){
 			requestLocal
 				.post('/api/v1/leagues/' + leagueWithRoom.objectId + '?addUser=true')
@@ -114,6 +128,21 @@ describe('Sending a POST to /api/v1/leagues/<objectId>', function(){
 				})
 				.expect(519)
 				.end(done);
+		});
+
+		it('should have decremented the amount of money from the users account', function(done){
+			requestParse
+				.get('/1/users/' + testUser.objectId)
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.end(function(err, res){
+					if(err) return done(err);
+
+					if(res.body.code) return done(res.body.code);
+
+					res.body.Money.should.be.exactly(40);
+					done();
+				});
 		});
 	});
 });
