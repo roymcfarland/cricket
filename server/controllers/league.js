@@ -101,10 +101,10 @@ LeagueController.prototype.addToLeague = function(req, res) {
 		.get('https://api.parse.com/1/classes/League/' + leagueId)
 		.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
 		.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
-		.end(function(result){
-			if(result.body.code) return res.status(500).send(result.body);
+		.end(function(leagueResult){
+			if(leagueResult.body.code) return res.status(500).send(leagueResult.body);
 
-			if(result.body.noOfEntries <= result.body.maxEntries) return res.sendStatus(518);
+			if(leagueResult.body.noOfEntries >= leagueResult.body.maxEntries) return res.sendStatus(518);
 
 			var query = {
 				LeagueID: {
@@ -126,7 +126,7 @@ LeagueController.prototype.addToLeague = function(req, res) {
 				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 				.query('where=' + queryJson)
 				.end(function(queryResult){
-					if(result.body.code) return res.status(500).send(result.body);
+					if(queryResult.body.code) return res.status(500).send(queryResult.body);
 
 					superagent
 						.get('https://api.parse.com/1/classes/League/' + leagueId)
@@ -154,10 +154,46 @@ LeagueController.prototype.addToLeague = function(req, res) {
 									objectId: req.body.user.objectId
 								}
 							})
-							.end(function(result){
-								if(result.body.code) return res.status(500).send(result.body);
+							.end(function(userLeagueResult){
+								if(userLeagueResult.body.code) return res.status(500).send(userLeagueResult.body);
 
-								res.send(result.body);
+								superagent
+									.put('https://api.parse.com/1/classes/League/' + leagueId)
+									.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+									.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+									.set('Content-Type', 'application/json')
+									.send({
+										noOfEntries: {
+											__op: 'Increment',
+											amount: 1
+										}
+									})
+									.end(function(result){
+										if(result.body.code){
+											console.log('error updating League noOfEntries');
+											console.log(result.body);
+											return res.status(500).send(result.body);
+										}
+
+										superagent
+											.put('https://api.parse.com/1/users/' + req.body.user.objectId)
+											.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+											.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+											.set('X-Parse-Session-Token', req.body.user.sessionToken)
+											.set('Content-Type', 'application/json')
+											.send({
+												Money: {
+													__op: 'Increment',
+													amount: leagueResult.body.entryFee * -1
+												}
+											})
+											.end(function(userResult){
+												console.log(userResult.body);
+												if(userResult.body.code) return res.status(500).send(userResult.body);
+
+												res.send(userLeagueResult.body);
+											});
+									});
 							});
 						});
 
