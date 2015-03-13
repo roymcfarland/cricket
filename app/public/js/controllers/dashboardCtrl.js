@@ -2,6 +2,8 @@ var dashboardCtrl = angular.module("dashboardCtrl", []);
 
 dashboardCtrl.controller("dashboardController", function($location, $scope, $http) {
 	
+	var vm = this;
+
 	/////////////////////////////////
 	////// USER AUTHENTICATION //////
 	/////////////////////////////////
@@ -12,10 +14,10 @@ dashboardCtrl.controller("dashboardController", function($location, $scope, $htt
 	/////////////////////////////////
 	/// ACQUIRE CURRENT USER INFO ///
 	/////////////////////////////////
-	this.username = user.getUsername();
+	vm.username = user.getUsername();
 	// console.log(user);
-	this.userId = user.id;
-	this.userScore = user.attributes.totalScore;
+	vm.userId = user.id;
+	vm.userScore = user.attributes.Money;
 
 
 	/////////////////////////////////
