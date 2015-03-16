@@ -28,9 +28,10 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		var leagueId = $scope.leagueId;
 		console.log(leagueId);
 		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true")
-		.success(function(res) {
-			$location.path("/dashboard/join-league/team-builder");
-		})
+		.success(function(response) {
+			if (response.status == 200) {
+				$location.path("/dashboard/join-league/team-builder");
+		}})
 		.error(function(error) {
 			// alert("Sorry - there was an error. Please try again.");
 			if (error.status == 518) {
