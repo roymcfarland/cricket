@@ -13,8 +13,8 @@ leaguesService.factory("Leagues", function($http, $q) {
 			deferred.resolve(response);
 		})
 		.error(function(error) {
-			alert("Sorry - there was an error. Try again.");
 			deferred.reject(error);
+			alert("Sorry - there was an error. Try again.");
 			$location.path("/dashboard");
 		});
 

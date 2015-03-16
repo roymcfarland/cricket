@@ -24,8 +24,22 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	console.log('User: ', vm.user.attributes);
 
 	$scope.addLeague = function() {
-		vm.user.attributes.leagueId = $scope.leagueId;
-		console.log('User: ', vm.user.attributes);
+		// vm.user.attributes.leagueId = $scope.leagueId;
+		var leagueId = $scope.leagueId;
+		console.log(leagueId);
+		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true")
+		.success(function(res) {
+			$location.path("/dashboard/join-league/team-builder");
+		})
+		.error(function(error) {
+			// alert("Sorry - there was an error. Please try again.");
+			if (error.status == 518) {
+				alert("Sorry! This league is full.")
+			} else if (error.status == 519) {
+				alert("You have already joined this league.")
+			} else {
+			$location.path("/dashboard/");
+		}})
 	};
 
 
@@ -56,13 +70,11 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		$scope.leaguesInfo = data;
 	});
 
-	// console.log(leaguesInfo.objectId)
-
 	
 	////////////////////////////////
 	/////////// NG-TABLE ///////////
 	////////////////////////////////
-	// var data = [];
+	var data = [];
 	
 
 	setTimeout(function(){
@@ -98,16 +110,5 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		    }
 		});
 	}, 500);
-
-
-
-	// $scope.changeSelection = function(user) {
-	    // console.info(user);
-	// }
-
-	////////////////////////////////
-	////////// AJAX POST ///////////
-	////////////////////////////////
-	// $http.post("")
 
 });
