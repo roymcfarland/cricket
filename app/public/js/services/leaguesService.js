@@ -1,18 +1,10 @@
 var leaguesService = angular.module("leaguesService", []);
 
 leaguesService.factory("Leagues", function($http, $q) {
-	// // Create object
-	// var leagues = {};
-	// // GET request for myleagues.json from server
-	// leagues.all = function() {
-	// 	return $http.get("/api/leagues");
-	// };
-	// return leagues;
 
-
-	////////////////////
-	// WITH PROMISES //
-	////////////////////
+	////////////////////////
+	/////// AJAX GET ///////
+	////////////////////////
 
 	var deferred = $q.defer();
 
@@ -28,15 +20,4 @@ leaguesService.factory("Leagues", function($http, $q) {
 
 	return deferred.promise;
 
-
 });
-
-/*
-leagueService.factory("Leagues", ["$location", "$scope", "$http", function($location, $scope, $http) {
-	var thisFactory = {};
-	thisFactory.all = function() {
-		return $http.get("/api/leagues");
-	};
-	return thisFactory;
-}]);
-*/

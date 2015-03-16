@@ -3,12 +3,12 @@ var leaguesCtrl = angular.module("leaguesCtrl", []);
 leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $filter, ngTableParams, Leagues) {
 
 	var vm = this;
-
-	console.log($scope);
+	// console.log($scope);
 
 	/////////////////////////////////
 	////// USER AUTHENTICATION //////
 	/////////////////////////////////
+	
 	vm.user = Parse.User.current();
 	if(!vm.user) return $location.path("/");
 
@@ -16,9 +16,10 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	/////////////////////////////////
 	/// ACQUIRE CURRENT USER INFO ///
 	/////////////////////////////////
+	
 	vm.username = vm.user.getUsername();
 	vm.userId = vm.user.id;
-	vm.userScore = vm.user.attributes.totalScore;
+	vm.userMoney = vm.user.attributes.Money;
 
 	console.log('User: ', vm.user.attributes);
 
