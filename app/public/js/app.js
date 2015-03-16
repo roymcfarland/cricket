@@ -15,6 +15,7 @@ var cricketDuel = angular.module("cricketDuel", [
 	"ngAnimate",
 	"ngAria",
 	"ngResource",
+	"ui.bootstrap",
 	"mgcrea.ngStrap",
 	"mgcrea.ngStrap.modal",
 	"mgcrea.ngStrap.aside",
