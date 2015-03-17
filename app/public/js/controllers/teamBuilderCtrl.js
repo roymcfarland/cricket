@@ -21,9 +21,8 @@ teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, 
 	vm.username = vm.user.getUsername();
 	// vm.userId = vm.user.id;
 	vm.userMoney = vm.user.attributes.Money;
-
-	console.log("vm.user.attributes: ", vm.user.attributes);
-	console.log("vm.user: ", vm.user);
+	// console.log("vm.user.attributes: ", vm.user.attributes);
+	// console.log("vm.user: ", vm.user);
 
 
 
@@ -43,6 +42,8 @@ teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, 
 	
 	$scope.playerId = null;
 	$scope.playerName = null;
+	$scope.playerType = null;
+	$scope.playerTeam = null;
 
 	// Attached to ng-click
 	$scope.selectId = function(id) {
@@ -95,7 +96,7 @@ teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, 
 			$scope.data = data;
 			$scope.status = status;
 			if (status == 404) {
-				alert("Sorry! There was an error. Please try again.");
+				alert("Sorry! There was an error. Please try again. (Error 404)");
 				$location.path("/dashboard/join-league/team-builder");
 			}
 		})

@@ -21,9 +21,11 @@
 				<td data-title="'Contract Price'" sortable="'cost'" filter="{ 'cost': 'text' }">
 					{{player.cost | currency}}
 				</td>
-			</tr>
-		</table>
+			</tr> <!-- /.ng-repeat -->
+		</table> <!-- /.ng-table -->
+		<!-- 
 		<strong>Selected Players:</strong> {{ players.players | filter:{"$selected": true} }}
+		-->
 	</div>
 	<div class="row">
 		<a class="btn btn-default pull-right" ng-click="addPlayerToTeam()">Add Player</a>
