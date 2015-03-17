@@ -109,9 +109,18 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 
 	// Attached to ng-click
 	$scope.selectLeague = function(id, name, entryFee) {
-		$scope.leagueId = id;
-		$scope.leagueName = name;
-		$scope.leagueEntryFee = entryFee;
+		if ($scope.leagueId === id) {
+			$scope.leagueId = null;
+			$scope.leagueName = null;
+			$scope.leagueEntryFee = null;
+		} else {
+			$scope.leagueId = id;
+			$scope.leagueName = name;
+			$scope.leagueEntryFee = entryFee;
+		}
+		console.log('League ID: ', $scope.leagueId);
+		console.log('League name: ', $scope.leagueName);
+		console.log('League entry free: ', $scope.leagueEntryFee);
 	};
 
 
