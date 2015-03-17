@@ -30,9 +30,72 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	/////// leaguesService.js ///////
 	/////////////////////////////////
 
-	Leagues.then(function(data) {
-		$scope.leaguesInfo = data;
+	Leagues.then(function(result) {
+		var data = result;
+		$scope.data = data;
+
+		$scope.tableParams = new ngTableParams({
+		    // Show first page
+		    page: 1,
+		    // Show 10 results per page
+		    count: 10,
+		    filter: {
+		        // Establish initial filter
+		        // name: 'M'
+		    },
+		    sorting: {
+		        // Establish initial sorting
+		        //name: 'asc'
+		    }
+		}, {
+		    total: data.length, // length of data
+		    getData: function ($defer, params) {
+		        var orderedData = params.sorting() ?
+		                $filter('orderBy')(data, params.orderBy()) :
+		                data;
+
+		        // params.total(orderedData.length); // set total for recalc pagination
+		        $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+		    }
+		});
 	});
+
+	$scope.disabled = true;
+
+	$scope.changeSelection = function(league) {
+        console.info(league);
+        var obj = $scope.data;
+        for(var key in obj) {
+        	var obj2 = obj[key];
+        	for (var key2 in obj2) {
+        		if(key2 === '$selected') {
+        			if(obj2[key2] === true) {
+        				obj2[key2] = false;
+        				league.$selected = true;
+        				$scope.disabled = false;
+        			}
+        		}
+        	}
+        }
+        console.log($scope.data);
+	};
+
+	$scope.checkSelected = function() {
+		var obj = $scope.data;
+		for(var key in obj) {
+			var obj2 = obj[key];
+			for (var key2 in obj2) {
+				if(key2 === '$selected') {
+					if(obj2[key2] === true) {
+						$scope.disabled = false;
+						break;
+					} else {
+						$scope.disabled = true;
+					}
+				}
+			}
+		}
+	};
 
 
 
@@ -45,15 +108,11 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	$scope.leagueEntryFee = null;
 
 	// Attached to ng-click
-	$scope.selectId = function(id) {
+	$scope.selectLeague = function(id, name, entryFee) {
 		$scope.leagueId = id;
-	}
-	$scope.selectName = function(name) {
 		$scope.leagueName = name;
-	}
-	$scope.selectEntryFee = function(fee) {
-		$scope.leagueEntryFee = fee;
-	}
+		$scope.leagueEntryFee = entryFee;
+	};
 
 
 
@@ -79,67 +138,26 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		/// AJAX POST ///
 		/////////////////
 		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true", {user: user}, [])
-		.success(function(data, status) {
-			$scope.data = data;
-			$scope.status = status;
-			if (status == 200) {
-				alert("Congratulations! You have joined " + leagueName + ".");
-				$location.path("/dashboard/join-league/team-builder");
-		}})
-		.error(function(data, status) {
-			$scope.data = data;
-			$scope.status = status;
-			if (status == 518) {
-				alert("Sorry! This league is full. Please join another league. (Error 518)");
-				$location.path("/dashboard");
-			} else if (status == 519) {
-				alert("You have already joined this league. Please join another. (Error 519)");
-				$location.path("/dashboard");
-			} else if (status == 500) {
-				alert("Sorry! There was an error. Please try again. (Error 500)");
-				$location.path("/dashboard");
-		}})
+			.success(function(data, status) {
+				$scope.data = data;
+				$scope.status = status;
+				if (status == 200) {
+					alert("Congratulations! You have joined " + leagueName + ".");
+					$location.path("/dashboard/join-league/team-builder");
+			}})
+			.error(function(data, status) {
+				$scope.data = data;
+				$scope.status = status;
+				if (status == 518) {
+					alert("Sorry! This league is full. Please join another league. (Error 518)");
+					$location.path("/dashboard");
+				} else if (status == 519) {
+					alert("You have already joined this league. Please join another. (Error 519)");
+					$location.path("/dashboard");
+				} else if (status == 500) {
+					alert("Sorry! There was an error. Please try again. (Error 500)");
+					$location.path("/dashboard");
+			}});
 
 	};
-
-
-	
-	////////////////////////////////
-	/////////// NG-TABLE ///////////
-	////////////////////////////////
-	var data = []; // **** SOMEHOW LEAGUESINFO NEEDS TO BE INSERTED HERE (I THINK) ****
-	// var data = [$scope.data];
-	setTimeout(function() {
-		// var data = $scope.leaguesInfo
-		// $scope.data = data;
-
-		$scope.tableParams = new ngTableParams({
-		    // Show first page
-		    page: 1,
-		    // Show 10 results per page
-		    count: 10,
-		    filter: {
-		        // Establish initial filter
-		        // name: 'M'
-		    },
-		    sorting: {
-		        // Establish initial sorting
-		        //name: 'asc'
-		    }
-		}, {
-		    total: data.length, // length of data
-		    getData: function ($defer, params) {
-		        // Angular filter
-		        var filteredData = params.filter() ?
-		                $filter('filter')(data, params.filter()) :
-		                data;
-		        var orderedData = params.sorting() ?
-		                $filter('orderBy')(filteredData, params.orderBy()) :
-		                data;
-
-		        params.total(orderedData.length); // set total for recalc pagination
-		        $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-		    }
-		});
-	}, 500);
 });
