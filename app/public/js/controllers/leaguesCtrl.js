@@ -12,6 +12,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	vm.user = Parse.User.current();
 	if(!vm.user) return $location.path("/");
 
+
 	
 	/////////////////////////////////
 	/// ACQUIRE CURRENT USER INFO ///
@@ -24,29 +25,40 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	console.log("vm.user.attributes: ", vm.user.attributes);
 	console.log("vm.user: ", vm.user);
 
+
+
+	/////////////////////////////////
+	/////// addUserToLeague() ///////
+	/////////////////////////////////
+
 	$scope.addUserToLeague = function() {
 		// vm.user.attributes.leagueId = $scope.leagueId;
 		var leagueId = $scope.leagueId;
-		console.log(leagueId);
+		console.log("leagueId: ", leagueId);
+		var leagueName = $scope.leagueName;
+		console.log("leagueName: ", leagueName);
+
+
 		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true", vm.user, [])
-		
 		.success(function(data, status) {
 			$scope.data = data;
-			// $scope.status = status;
-			if ($scope.status == 200) {
+			$scope.status = status;
+			if (status == 200) {
+				alert("Congratulations! You have joined " + leagueName + ".");
 				$location.path("/dashboard/join-league/team-builder");
 		}})
-		
 		.error(function(data, status) {
 			$scope.data = data;
 			$scope.status = status;
-			// alert("Sorry - there was an error. Please try again.");
 			if (status == 518) {
-				alert("Sorry! This league is full.")
+				alert("Sorry! This league is full. Please join another league.");
+				$location.path("/dashboard");
 			} else if (status == 519) {
-				alert("You have already joined this league.")
-			} else {
-			$location.path("/dashboard/");
+				alert("You have already joined this league. Please join another.");
+				$location.path("/dashboard");
+			} else if (status == 500) {
+				alert("Sorry. There was an error. Please try again.");
+				$location.path("/dashboard");
 		}})
 
 	};
@@ -70,9 +82,14 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	////////////////////
 
 	$scope.leagueId = null;
+	$scope.leagueName = null;
 
 	$scope.selectId = function(id) {
 		$scope.leagueId = id;
+	}
+
+	$scope.selectName = function(name) {
+		$scope.leagueName = name;
 	}
 
 	Leagues.then(function(data) {

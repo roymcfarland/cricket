@@ -8,7 +8,7 @@
 		<h5 class="pull-right">Current Balance: {{leaguesCtrl.userMoney | currency}}</h5>
 		<h3>Step 1: Select League</h3>
 		<table ng-table="tableParams" class="table ng-table-rowselected">
-			<tr ng-repeat="league in leaguesInfo" ng-click="league.$selected = !league.$selected; changeSelection(league); selectId(league.objectId)" ng-class="{'active': league.$selected}">
+			<tr ng-repeat="league in leaguesInfo" ng-click="league.$selected = !league.$selected; changeSelection(league); selectId(league.objectId); selectName(league.name)" ng-class="{'active': league.$selected}">
 			<!-- <tr ng-repeat="league in leaguesInfo" ng-click="league.$selected = !league.$selected; changeSelection(league)" ng-class="{'active': league.$selected}"> -->
 				<td data-title="'Name'" sortable="'name'" filter="{ 'name': 'text' }">
 					{{league.name}}
