@@ -21,26 +21,34 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	vm.userId = vm.user.id;
 	vm.userMoney = vm.user.attributes.Money;
 
-	console.log('User: ', vm.user.attributes);
+	console.log("vm.user.attributes: ", vm.user.attributes);
+	console.log("vm.user: ", vm.user);
 
-	$scope.addLeague = function() {
+	$scope.addUserToLeague = function() {
 		// vm.user.attributes.leagueId = $scope.leagueId;
 		var leagueId = $scope.leagueId;
 		console.log(leagueId);
-		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true")
-		.success(function(response) {
-			if (response.status == 200) {
+		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true", vm.user, [])
+		
+		.success(function(data, status) {
+			$scope.data = data;
+			// $scope.status = status;
+			if ($scope.status == 200) {
 				$location.path("/dashboard/join-league/team-builder");
 		}})
-		.error(function(error) {
+		
+		.error(function(data, status) {
+			$scope.data = data;
+			$scope.status = status;
 			// alert("Sorry - there was an error. Please try again.");
-			if (error.status == 518) {
+			if (status == 518) {
 				alert("Sorry! This league is full.")
-			} else if (error.status == 519) {
+			} else if (status == 519) {
 				alert("You have already joined this league.")
 			} else {
 			$location.path("/dashboard/");
 		}})
+
 	};
 
 
@@ -76,8 +84,6 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	/////////// NG-TABLE ///////////
 	////////////////////////////////
 	var data = [];
-	
-
 	setTimeout(function(){
 		// var data = $scope.leaguesInfo
 		// $scope.data = data;
@@ -112,4 +118,4 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		});
 	}, 500);
 
-});
+	});
