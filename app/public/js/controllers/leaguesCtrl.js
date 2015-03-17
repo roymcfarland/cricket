@@ -19,7 +19,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	/////////////////////////////////
 	
 	vm.username = vm.user.getUsername();
-	vm.userId = vm.user.id;
+	// vm.userId = vm.user.id;
 	vm.userMoney = vm.user.attributes.Money;
 
 	console.log("vm.user.attributes: ", vm.user.attributes);
@@ -64,12 +64,15 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		console.log("leagueId: ", leagueId);
 		var leagueName = $scope.leagueName;
 		console.log("leagueName: ", leagueName);
-		// Apparently the parse user object is not being sent to the server correctly, specifically the session token and the object id. That is why I created it here manually.
+		// BP: Apparently the parse user object is not being sent to the server correctly, specifically the session token and the object id. That is why I created it here manually.
 		var user = {
 			sessionToken: vm.user._sessionToken,
 			objectId: vm.user.id
 		};
 
+		/////////////////
+		/// AJAX POST ///
+		/////////////////
 		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true", {user: user}, [])
 		.success(function(data, status) {
 			$scope.data = data;
@@ -88,7 +91,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 				alert("You have already joined this league. Please join another.");
 				$location.path("/dashboard");
 			} else if (status == 500) {
-				alert("Sorry. There was an error. Please try again.");
+				alert("Sorry! There was an error. Please try again.");
 				$location.path("/dashboard");
 		}})
 
@@ -133,5 +136,4 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		    }
 		});
 	}, 500);
-
-	});
+});

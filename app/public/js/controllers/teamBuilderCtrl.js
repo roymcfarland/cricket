@@ -3,7 +3,7 @@ var teamBuilderCtrl = angular.module("teamBuilderCtrl", []);
 teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, $http, $filter, ngTableParams, Players) {
 
 	var vm = this;
-	console.log($scope);
+	// console.log($scope);
 
 	/////////////////////////////////
 	////// USER AUTHENTICATION //////
@@ -19,7 +19,7 @@ teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, 
 	/////////////////////////////////
 	
 	vm.username = vm.user.getUsername();
-	vm.userId = vm.user.id;
+	// vm.userId = vm.user.id;
 	vm.userMoney = vm.user.attributes.Money;
 
 	console.log("vm.user.attributes: ", vm.user.attributes);
@@ -48,27 +48,88 @@ teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, 
 	$scope.selectId = function(id) {
 		$scope.playerId = id;
 	}
-	$scope.playerName = function(name) {
+	$scope.selectName = function(name) {
 		$scope.playerName = name;
+	}
+	$scope.selectPlayerType = function(playerType) {
+		$scope.playerType = playerType;
+	}
+	$scope.selectPlayerTeam = function(playerTeam) {
+		$scope.playerTeam = playerTeam;
 	}
 
 
 
 	/////////////////////////////////
-	/////////// AJAX GET ////////////
+	////// addPlayerToTeam() ////////
 	/////////////////////////////////
-	/*
-	$http.get("/api/v1/players")
-	.success(function(response) {
-		$scope.players = response;
-		// console.log(typeof(response));
-		// console.log(response);
-	})
-	.error(function(error) {
-		alert("Sorry - there was an error. Try again.");
-		$location.path("/");
-	});
-*/
+	
+	$scope.addPlayerToTeam = function() {
+		var playerId = $scope.playerId;
+		console.log("playerId: ", playerId);
+		var playerName = $scope.playerName;
+		console.log("playerName: ", playerName);
+		var playerType = $scope.playerType;
+		console.log("playerType: ", playerType);
+		var playerTeam = $scope.playerTeam;
+		console.log("playerTeam: ", playerTeam);
+
+		// See BP comment in leaguesCtrl.js
+		var user = {
+			sessionToken: vm.user._sessionToken,
+			objectId: vm.user.id
+		};
+
+		/////////////////
+		/// AJAX POST ///
+		/////////////////
+		$http.post("/api/v1/players" + playerId + "?addUser=true", {user: user}, [])
+		.success(function(data, status) {
+			$scope.data = data;
+			$scope.status = status;
+			if (status == 200) {
+				alert("Congratulations! You have added " + playerName + "to your team!");
+				$location.path("/dashboard/join-league/team-builder");
+		}})
+		.error(function(data, status) {
+			$scope.data = data;
+			$scope.status = status;
+			if (status == 404) {
+				alert("Sorry! There was an error. Please try again.");
+				$location.path("/dashboard/join-league/team-builder");
+			}
+		})
+	};
+
+
+
+	////////////////////////////////
+	//// removePlayerFromTeam() ////
+	////////////////////////////////
+	
+	$scope.removePlayerFromTeam = function() {
+		var playerId = $scope.playerId;
+		console.log("playerId: ", playerId);
+		var playerName = $scope.playerName;
+		console.log("playerName: ", playerName);
+		var playerType = $scope.playerType;
+		console.log("playerType: ", playerType);
+		var playerTeam = $scope.playerTeam;
+		console.log("playerTeam: ", playerTeam);
+
+		// See BP comment in leaguesCtrl.js
+		var user = {
+			sessionToken: vm.user._sessionToken,
+			objectId: vm.user.id
+		}
+
+		////////////////
+		/// AJAX PUT ///
+		////////////////
+
+
+	};
+
 
 
 	////////////////////////////////
@@ -107,9 +168,4 @@ teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, 
 	    	}
 		});
 	}, 500);
-
-	// $scope.changeSelection = function(user) {
-	//     // console.info(user);
-	// }
-
 });
