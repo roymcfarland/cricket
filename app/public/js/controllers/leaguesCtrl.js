@@ -28,6 +28,33 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 
 
 	/////////////////////////////////
+	/////// leaguesService.js ///////
+	/////////////////////////////////
+
+	Leagues.then(function(data) {
+		$scope.leaguesInfo = data;
+	});
+
+
+
+	/////////////////////////////////
+	//////// join-league.html ///////
+	/////////////////////////////////
+
+	$scope.leagueId = null;
+	$scope.leagueName = null;
+
+	// Attached to ng-click
+	$scope.selectId = function(id) {
+		$scope.leagueId = id;
+	}
+	$scope.selectName = function(name) {
+		$scope.leagueName = name;
+	}
+
+
+
+	/////////////////////////////////
 	/////// addUserToLeague() ///////
 	/////////////////////////////////
 
@@ -67,38 +94,6 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 
 	};
 
-
-	/////////////////////////////////
-	/////////// AJAX GET ////////////
-	/////////////////////////////////
-	// $http.get("/api/leagues")
-	// .success(function(response) {
-	// 	$scope.leaguesInfo = response;
-	// })
-	// .error(function(error) {
-	// 	alert("Sorry - there was an error. Try again.");
-	// 	$location.path("/dashboard");
-	// });
-
-
-	////////////////////
-	// WITH PROMISES //
-	////////////////////
-
-	$scope.leagueId = null;
-	$scope.leagueName = null;
-
-	$scope.selectId = function(id) {
-		$scope.leagueId = id;
-	}
-
-	$scope.selectName = function(name) {
-		$scope.leagueName = name;
-	}
-
-	Leagues.then(function(data) {
-		$scope.leaguesInfo = data;
-	});
 
 	
 	////////////////////////////////
