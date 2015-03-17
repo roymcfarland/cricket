@@ -120,7 +120,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		}
 		console.log('League ID: ', $scope.leagueId);
 		console.log('League name: ', $scope.leagueName);
-		console.log('League entry free: ', $scope.leagueEntryFee);
+		console.log('League entry fee: ', $scope.leagueEntryFee);
 	};
 
 
