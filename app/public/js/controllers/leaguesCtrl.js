@@ -37,9 +37,13 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		console.log("leagueId: ", leagueId);
 		var leagueName = $scope.leagueName;
 		console.log("leagueName: ", leagueName);
+		// Apparently the parse user object is not being sent to the server correctly, specifically the session token and the object id. That is why I created it here manually.
+		var user = {
+			sessionToken: vm.user._sessionToken,
+			objectId: vm.user.id
+		};
 
-
-		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true", vm.user, [])
+		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true", {user: user}, [])
 		.success(function(data, status) {
 			$scope.data = data;
 			$scope.status = status;
