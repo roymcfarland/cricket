@@ -19,11 +19,10 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	/////////////////////////////////
 	
 	vm.username = vm.user.getUsername();
-	vm.userId = vm.user.id;
+	// vm.userId = vm.user.id;
 	vm.userMoney = vm.user.attributes.Money;
-
-	console.log("vm.user.attributes: ", vm.user.attributes);
-	console.log("vm.user: ", vm.user);
+	// console.log("vm.user.attributes: ", vm.user.attributes);
+	// console.log("vm.user: ", vm.user);
 
 
 
@@ -43,6 +42,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 
 	$scope.leagueId = null;
 	$scope.leagueName = null;
+	$scope.leagueEntryFee = null;
 
 	// Attached to ng-click
 	$scope.selectId = function(id) {
@@ -50,6 +50,9 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	}
 	$scope.selectName = function(name) {
 		$scope.leagueName = name;
+	}
+	$scope.selectEntryFee = function(fee) {
+		$scope.leagueEntryFee = fee;
 	}
 
 
@@ -64,12 +67,17 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		console.log("leagueId: ", leagueId);
 		var leagueName = $scope.leagueName;
 		console.log("leagueName: ", leagueName);
-		// Apparently the parse user object is not being sent to the server correctly, specifically the session token and the object id. That is why I created it here manually.
+		var leagueEntryFee = $scope.leagueEntryFee;
+		console.log("leagueEntryFee: ", leagueEntryFee);
+		// BP: Apparently the parse user object is not being sent to the server correctly, specifically the session token and the object id. That is why I created it here manually.
 		var user = {
 			sessionToken: vm.user._sessionToken,
 			objectId: vm.user.id
 		};
 
+		/////////////////
+		/// AJAX POST ///
+		/////////////////
 		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true", {user: user}, [])
 		.success(function(data, status) {
 			$scope.data = data;
@@ -82,13 +90,13 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 			$scope.data = data;
 			$scope.status = status;
 			if (status == 518) {
-				alert("Sorry! This league is full. Please join another league.");
+				alert("Sorry! This league is full. Please join another league. (Error 518)");
 				$location.path("/dashboard");
 			} else if (status == 519) {
-				alert("You have already joined this league. Please join another.");
+				alert("You have already joined this league. Please join another. (Error 519)");
 				$location.path("/dashboard");
 			} else if (status == 500) {
-				alert("Sorry. There was an error. Please try again.");
+				alert("Sorry! There was an error. Please try again. (Error 500)");
 				$location.path("/dashboard");
 		}})
 
@@ -100,7 +108,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	/////////// NG-TABLE ///////////
 	////////////////////////////////
 	var data = [];
-	setTimeout(function(){
+	setTimeout(function() {
 		// var data = $scope.leaguesInfo
 		// $scope.data = data;
 
@@ -133,5 +141,4 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		    }
 		});
 	}, 500);
-
-	});
+});

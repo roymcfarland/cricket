@@ -1,6 +1,6 @@
-var leaguesService = angular.module("leaguesService", []);
+var teamBuilderService = angular.module("teamBuilderService", []);
 
-leaguesService.factory("Leagues", function($http, $q, $location) {
+teamBuilderService.factory("Players", function($http, $q, $location) {
 
 	////////////////////////
 	/////// AJAX GET ///////
@@ -8,7 +8,7 @@ leaguesService.factory("Leagues", function($http, $q, $location) {
 
 	var deferred = $q.defer();
 
-	$http.get("/api/leagues")
+	$http.get("/api/v1/players")
 		.success(function(response) {
 			deferred.resolve(response);
 		})
