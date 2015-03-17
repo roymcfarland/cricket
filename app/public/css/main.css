@@ -9,15 +9,110 @@ Fixes functionality for ui-bootstrap
   display: none !important;
 }
 
+body {
+	font-family: 'Roboto Condensed', sans-serif;
+}
+
+.navbar {
+	margin-bottom: 0;
+}
+
+#main-div {
+	height: 1020px;
+}
+
+#nav-container {	
+	background: linear-gradient(to bottom, rgba(222,230,214,1) 0%, rgba(159,168,151,1) 19%, rgba(55,89,26,1) 100%);
+}
+
 #top-jumbotron {
 	color: #fff;
-	background: url("/images/stadium.jpg") no-repeat center center;
+	background: url("/images/batsman02.jpg") no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	padding: 150px 0px;
-	opacity: 0.75;
+	padding: 150px 0px 0px;
+	margin-bottom: 0;
+	opacity: 0.99;
+	height: 424px;
+	border-radius: 0;
+}
+
+#top-jumbotron h2 {
+	text-align: left;
+	margin-top: .25%;
+	margin-left: 12%;
+	margin-bottom: 1%;
+	font-size: 4em;
+	font-weight: 900;
+}
+
+#top-jumbotron h1 {
+	text-align: left;
+	margin-bottom: .25%;
+	margin-left: 12.5%;
+	font-size: 2em;
+}
+
+#home-buttons {
+	position: relative;
+	left: -295px;
+}
+
+
+#btn-game-rules {
+	border-radius: 34px; 
+	-moz-border-radius: 34px; 
+	-webkit-border-radius: 34px; 
+	
+	padding-top: 5px;
+	padding-bottom: 5px;
+	position: relative;
+	
+	
+	background-color: rgb(255, 255, 255);
+	background-image:linear-gradient(90deg, rgb(238, 238, 238), rgb(0, 0, 0) 30%,rgb(102, 102, 0) 0%, rgb(204, 204, 204));
+	background-image:-webkit-gradient(linear, 50% 100%, 50% 0%, from(rgb(238, 238, 238)), color-stop(0.3, rgb(0, 0, 0)),color-stop(0, rgb(102, 102, 0)), to(rgb(204, 204, 204)));
+	background-image:-moz-linear-gradient(90deg, rgb(238, 238, 238), rgb(0, 0, 0) 30%,rgb(102, 102, 0) 0%, rgb(204, 204, 204));
+
+}
+
+
+#btn-join-league {
+	border-radius: 34px; 
+	-moz-border-radius: 34px; 
+	-webkit-border-radius: 34px; 
+	
+	padding-top: 5px;
+	padding-bottom: 5px;
+	position: relative;
+	left: 50px;
+	
+	
+	background-color: rgb(255, 255, 255);
+	background-image:linear-gradient(90deg, rgb(238, 238, 238), rgb(255, 102, 0) 19%,rgb(255, 153, 51) 0%, rgb(204, 204, 204));
+	background-image:-webkit-gradient(linear, 50% 100%, 50% 0%, from(rgb(238, 238, 238)), color-stop(0.19, rgb(255, 102, 0)),color-stop(0, rgb(255, 153, 51)), to(rgb(204, 204, 204)));
+	background-image:-moz-linear-gradient(90deg, rgb(238, 238, 238), rgb(255, 102, 0) 19%,rgb(255, 153, 51) 0%, rgb(204, 204, 204))
+}
+
+.content {
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0, #6C9479),
+		color-stop(0.11, #E5F6FF),
+		color-stop(1, #FFFFFF)
+	);
+		background-image: -o-linear-gradient(bottom, #6C9479 0%, #E5F6FF 11%, #FFFFFF 100%);
+		background-image: -moz-linear-gradient(bottom, #6C9479 0%, #E5F6FF 11%, #FFFFFF 100%);
+		background-image: -webkit-linear-gradient(bottom, #6C9479 0%, #E5F6FF 11%, #FFFFFF 100%);
+		background-image: -ms-linear-gradient(bottom, #6C9479 0%, #E5F6FF 11%, #FFFFFF 100%);
+		background-image: linear-gradient(to bottom, #6C9479 0%, #E5F6FF 11%, #FFFFFF 100%);
+		height: 424px;
+		margin-top: 0;
+		padding-top: 0;
 }
 
 .ng-invalid.ng-dirty {
