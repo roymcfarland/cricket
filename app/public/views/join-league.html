@@ -9,7 +9,6 @@
 		<h3>Step 1: Select League</h3>
 		<table ng-table="tableParams" class="table ng-table-rowselected">
 			<tr ng-repeat="league in leaguesInfo" ng-click="league.$selected = !league.$selected; changeSelection(league); selectId(league.objectId); selectName(league.name)" ng-class="{'active': league.$selected}">
-			<!-- <tr ng-repeat="league in leaguesInfo" ng-click="league.$selected = !league.$selected; changeSelection(league)" ng-class="{'active': league.$selected}"> -->
 				<td data-title="'Name'" sortable="'name'" filter="{ 'name': 'text' }">
 					{{league.name}}
 				</td>
@@ -33,7 +32,6 @@
 		<strong>Selected Leagues:</strong> {{ leaguesInfo | filter:{"$selected": true} }}
 	</div>
 	<div class="row">
-		<!-- <a class="btn btn-default pull-right" href="/dashboard/join-league/team-builder" ng-disabled="leaguesInfo.$selected === undefined" ng-click="">Join Selected League</a> -->
 		<a class="btn btn-default pull-right" ng-click="addUserToLeague()">Join Selected League</a>
 	</div>
 	<pre>{{leaguesInfo | json}}</pre>

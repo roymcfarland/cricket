@@ -1,6 +1,6 @@
 var leaguesService = angular.module("leaguesService", []);
 
-leaguesService.factory("Leagues", function($http, $q) {
+leaguesService.factory("Leagues", function($http, $q, $location) {
 
 	////////////////////////
 	/////// AJAX GET ///////
@@ -14,7 +14,7 @@ leaguesService.factory("Leagues", function($http, $q) {
 		})
 		.error(function(error) {
 			deferred.reject(error);
-			alert("Sorry - there was an error. Try again.");
+			alert("Sorry - there was an error. Please try again.");
 			$location.path("/dashboard");
 		});
 

@@ -100,7 +100,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	/////////// NG-TABLE ///////////
 	////////////////////////////////
 	var data = [];
-	setTimeout(function(){
+	setTimeout(function() {
 		// var data = $scope.leaguesInfo
 		// $scope.data = data;
 
