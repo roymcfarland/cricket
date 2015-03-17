@@ -107,7 +107,8 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	////////////////////////////////
 	/////////// NG-TABLE ///////////
 	////////////////////////////////
-	var data = [];
+	var data = []; // **** SOMEHOW LEAGUESINFO NEEDS TO BE INSERTED HERE (I THINK) ****
+	// var data = [$scope.data];
 	setTimeout(function() {
 		// var data = $scope.leaguesInfo
 		// $scope.data = data;
