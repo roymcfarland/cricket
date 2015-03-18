@@ -30,88 +30,9 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	/////// leaguesService.js ///////
 	/////////////////////////////////
 
-	Leagues.then(function(data) {
-		$scope.leaguesInfo = data;
-	});
-
-
-
-	/////////////////////////////////
-	//////// join-league.html ///////
-	/////////////////////////////////
-
-	$scope.leagueId = null;
-	$scope.leagueName = null;
-	$scope.leagueEntryFee = null;
-
-	// Attached to ng-click
-	$scope.selectId = function(id) {
-		$scope.leagueId = id;
-	}
-	$scope.selectName = function(name) {
-		$scope.leagueName = name;
-	}
-	$scope.selectEntryFee = function(fee) {
-		$scope.leagueEntryFee = fee;
-	}
-
-
-
-	/////////////////////////////////
-	/////// addUserToLeague() ///////
-	/////////////////////////////////
-
-	$scope.addUserToLeague = function() {
-		// vm.user.attributes.leagueId = $scope.leagueId;
-		var leagueId = $scope.leagueId;
-		console.log("leagueId: ", leagueId);
-		var leagueName = $scope.leagueName;
-		console.log("leagueName: ", leagueName);
-		var leagueEntryFee = $scope.leagueEntryFee;
-		console.log("leagueEntryFee: ", leagueEntryFee);
-		// BP: Apparently the parse user object is not being sent to the server correctly, specifically the session token and the object id. That is why I created it here manually.
-		var user = {
-			sessionToken: vm.user._sessionToken,
-			objectId: vm.user.id
-		};
-
-		/////////////////
-		/// AJAX POST ///
-		/////////////////
-		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true", {user: user}, [])
-		.success(function(data, status) {
-			$scope.data = data;
-			$scope.status = status;
-			if (status == 200) {
-				alert("Congratulations! You have joined " + leagueName + ".");
-				$location.path("/dashboard/join-league/team-builder");
-		}})
-		.error(function(data, status) {
-			$scope.data = data;
-			$scope.status = status;
-			if (status == 518) {
-				alert("Sorry! This league is full. Please join another league. (Error 518)");
-				$location.path("/dashboard");
-			} else if (status == 519) {
-				alert("You have already joined this league. Please join another. (Error 519)");
-				$location.path("/dashboard");
-			} else if (status == 500) {
-				alert("Sorry! There was an error. Please try again. (Error 500)");
-				$location.path("/dashboard");
-		}})
-
-	};
-
-
-	
-	////////////////////////////////
-	/////////// NG-TABLE ///////////
-	////////////////////////////////
-	var data = []; // **** SOMEHOW LEAGUESINFO NEEDS TO BE INSERTED HERE (I THINK) ****
-	// var data = [$scope.data];
-	setTimeout(function() {
-		// var data = $scope.leaguesInfo
-		// $scope.data = data;
+	Leagues.then(function(result) {
+		var data = result;
+		$scope.data = data;
 
 		$scope.tableParams = new ngTableParams({
 		    // Show first page
@@ -129,17 +50,123 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		}, {
 		    total: data.length, // length of data
 		    getData: function ($defer, params) {
-		        // Angular filter
-		        var filteredData = params.filter() ?
-		                $filter('filter')(data, params.filter()) :
-		                data;
 		        var orderedData = params.sorting() ?
-		                $filter('orderBy')(filteredData, params.orderBy()) :
+		                $filter('orderBy')(data, params.orderBy()) :
 		                data;
 
-		        params.total(orderedData.length); // set total for recalc pagination
+		        // params.total(orderedData.length); // set total for recalc pagination
 		        $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
 		    }
 		});
-	}, 500);
+	});
+
+	$scope.disabled = true;
+
+	$scope.changeSelection = function(league) {
+        // console.info(league);
+        var obj = $scope.data;
+        for(var key in obj) {
+        	var obj2 = obj[key];
+        	for (var key2 in obj2) {
+        		if(key2 === '$selected') {
+        			if(obj2[key2] === true) {
+        				obj2[key2] = false;
+        				league.$selected = true;
+        				$scope.disabled = false;
+        			}
+        		}
+        	}
+        }
+        // console.log($scope.data);
+	};
+
+	$scope.checkSelected = function() {
+		var obj = $scope.data;
+		for(var key in obj) {
+			var obj2 = obj[key];
+			for (var key2 in obj2) {
+				if(key2 === '$selected') {
+					if(obj2[key2] === true) {
+						$scope.disabled = false;
+						break;
+					} else {
+						$scope.disabled = true;
+					}
+				}
+			}
+		}
+	};
+
+
+
+	/////////////////////////////////
+	//////// join-league.html ///////
+	/////////////////////////////////
+
+	$scope.leagueId = null;
+	$scope.leagueName = null;
+	$scope.leagueEntryFee = null;
+
+	// Attached to ng-click
+	$scope.selectLeague = function(id, name, entryFee) {
+		if ($scope.leagueId === id) {
+			$scope.leagueId = null;
+			$scope.leagueName = null;
+			$scope.leagueEntryFee = null;
+		} else {
+			$scope.leagueId = id;
+			$scope.leagueName = name;
+			$scope.leagueEntryFee = entryFee;
+		}
+		console.log('League ID: ', $scope.leagueId);
+		console.log('League name: ', $scope.leagueName);
+		console.log('League entry fee: ', $scope.leagueEntryFee);
+	};
+
+
+
+	/////////////////////////////////
+	/////// addUserToLeague() ///////
+	/////////////////////////////////
+
+	$scope.addUserToLeague = function() {
+		// vm.user.attributes.leagueId = $scope.leagueId;
+		var leagueId = $scope.leagueId;
+		// console.log("leagueId: ", leagueId);
+		var leagueName = $scope.leagueName;
+		// console.log("leagueName: ", leagueName);
+		var leagueEntryFee = $scope.leagueEntryFee;
+		// console.log("leagueEntryFee: ", leagueEntryFee);
+		// BP: Apparently the parse user object is not being sent to the server correctly, specifically the session token and the object id. That is why I created it here manually.
+		var user = {
+			sessionToken: vm.user._sessionToken,
+			objectId: vm.user.id
+		};
+
+		/////////////////
+		/// AJAX POST ///
+		/////////////////
+		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true", {user: user}, [])
+			.success(function(data, status) {
+				$scope.data = data;
+				$scope.status = status;
+				if (status == 200) {
+					alert("Congratulations! You have joined " + leagueName + ".");
+					$location.path("/dashboard/join-league/team-builder");
+			}})
+			.error(function(data, status) {
+				$scope.data = data;
+				$scope.status = status;
+				if (status == 518) {
+					alert("Sorry! This league is full. Please join another league. (Error 518)");
+					$location.path("/dashboard");
+				} else if (status == 519) {
+					alert("You have already joined this league. Please join another. (Error 519)");
+					$location.path("/dashboard");
+				} else if (status == 500) {
+					alert("Sorry! There was an error. Please try again. (Error 500)");
+					$location.path("/dashboard");
+			}});
+
+	};
 });
