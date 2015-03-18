@@ -63,7 +63,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	$scope.disabled = true;
 
 	$scope.changeSelection = function(league) {
-        console.info(league);
+        // console.info(league);
         var obj = $scope.data;
         for(var key in obj) {
         	var obj2 = obj[key];
@@ -77,7 +77,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
         		}
         	}
         }
-        console.log($scope.data);
+        // console.log($scope.data);
 	};
 
 	$scope.checkSelected = function() {
@@ -132,11 +132,11 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	$scope.addUserToLeague = function() {
 		// vm.user.attributes.leagueId = $scope.leagueId;
 		var leagueId = $scope.leagueId;
-		console.log("leagueId: ", leagueId);
+		// console.log("leagueId: ", leagueId);
 		var leagueName = $scope.leagueName;
-		console.log("leagueName: ", leagueName);
+		// console.log("leagueName: ", leagueName);
 		var leagueEntryFee = $scope.leagueEntryFee;
-		console.log("leagueEntryFee: ", leagueEntryFee);
+		// console.log("leagueEntryFee: ", leagueEntryFee);
 		// BP: Apparently the parse user object is not being sent to the server correctly, specifically the session token and the object id. That is why I created it here manually.
 		var user = {
 			sessionToken: vm.user._sessionToken,

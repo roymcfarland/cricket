@@ -3,21 +3,26 @@ var dashboardCtrl = angular.module("dashboardCtrl", []);
 dashboardCtrl.controller("dashboardController", function($location, $scope, $http) {
 	
 	var vm = this;
+	// console.log($scope);
 
 	/////////////////////////////////
 	////// USER AUTHENTICATION //////
 	/////////////////////////////////
-	var user = Parse.User.current();
-	if(!user) return $location.path("/");
+	
+	vm.user = Parse.User.current();
+	if(!vm.user) return $location.path("/");
+
 
 
 	/////////////////////////////////
 	/// ACQUIRE CURRENT USER INFO ///
 	/////////////////////////////////
-	vm.username = user.getUsername();
-	// console.log(user);
-	vm.userId = user.id;
-	vm.userScore = user.attributes.Money;
+	vm.username = vm.user.getUsername();
+	console.log("vm.user: ", vm.user);
+	vm.userId = vm.user.id;
+	vm.userMoney = vm.user.attributes.Money;
+	console.log("vm.userMoney: ", vm.userMoney);
+
 
 
 	/////////////////////////////////
