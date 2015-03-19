@@ -162,9 +162,6 @@ describe('Sending a POST to /api/v1/lineupPlayers', function(){
 				.post('/api/v1/lineupPlayers')
 				.send({
 					// user: testUser,
-					user: {
-						sessionToken: testUser.sessionToken
-					},
 					LineupID: testLineup.objectId,
 					CricketPlayerID: testCricketPlayer.objectId
 				})
