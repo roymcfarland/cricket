@@ -4,7 +4,8 @@ var async = require('async');
 
 var createRules = {
 	user: 'objectId|sessionToken',
-	LineupID: 'required|alpha_num'
+	LineupID: 'required|alpha_num',
+	CricketPlayerID: 'required'
 };
 
 Validatorjs.register('objectId', function(value){
