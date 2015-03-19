@@ -424,4 +424,14 @@ describe('Cleaning up after the tests', function(){
 				.end(done);
 		});
 	});
+
+	describe('by deleting the Lineup Player', function(){
+		it('testLineupPlayer', function(done){
+			requireParse
+				.del('/1/classes/LineupPlayer/' + testLineupPlayer.objectId)
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.end(done);
+		});
+	});
 });
