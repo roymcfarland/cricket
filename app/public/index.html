@@ -29,15 +29,14 @@
       <!-- Navbar Header -->
       <nav class="navbar navbar-default">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/"><i class="fa fa-diamond"></i> CricketDuel</a>
+          <!--<a class="navbar-brand" href="/"><i class="fa fa-diamond"></i> CricketDuel</a>-->
+          <a class="navbar-brand" href="/"></a>
           </div> <!-- ./navbar-header -->
           <div class="navbar-collapse" id="nav-container">
             <ul class="nav navbar-nav navbar-right">
               <li><a href="/leaderboard" ng-if="index.loginChecker()">Leaderboard</a></li>
               <li><a href="/dashboard" ng-if="index.loginChecker()">Dashboard</a></li>
-              <li><a href="/rules">Rules</a></li>
-              <li><a href="/register" ng-if="index.logoutChecker()">Register</a></li>
-              <li><a href="/login" ng-if="index.logoutChecker()">Login</a></li>
+              <li><a href="/rules" ng-if="index.loginChecker()">Rules</a></li>
               <li><a href="/" ng-click="index.doLogout()" ng-if="index.loginChecker()">Logout</a></li>
             </ul> <!-- /.navbar-right -->
           </div> <!-- /.navbar-collapse -->
@@ -49,8 +48,8 @@
       	<h1>WELCOME TO</h1>
         <h2>CRICKETDUEL</h2>
         <span id="home-buttons">
-        <button class="btn-lg" id="btn-game-rules">GAME RULES</button>
-        <button class="btn-lg" id="btn-join-league">JOIN A LEAGUE</button>
+        <button class="btn-lg" id="btn-game-rules" onclick="location.href='/rules'">GAME RULES</button>
+        <button class="btn-lg" id="btn-join-league" onclick="location.href='/register'">JOIN A LEAGUE</button>
         </span>
       </div>
       <div class="content">
