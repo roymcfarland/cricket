@@ -9,6 +9,7 @@ var testLeague;
 var testMatch;
 var testLineup;
 var testCricketPlayer;
+var testLineupPlayer;
 
 describe('Preparing for the tests', function(){
 	describe('by creating a', function(){
@@ -339,6 +340,27 @@ describe('Sending a POST to /api/v1/lineupPlayers', function(){
 				});
 		});
 	});
+
+	describe('should succeed', function(){
+		it('when creating a new LineupPlayer', function(done){
+			requireLocal
+				.post('/api/v1/lineupPlayers')
+				.send({
+					user: testUser,
+					LineupID: testLineup.objectId,
+					CricketPlayerID: testCricketPlayer.objectId
+				})
+				.expect(201)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
+
+					res.body.objectId.should.be.type('string');
+					testLineupPlayer = res.body;
+					done();
+				});
+		});
+	});
 });
 
 describe('Cleaning up after the tests', function(){
@@ -387,6 +409,16 @@ describe('Cleaning up after the tests', function(){
 		it('testLineup', function(done){
 			requireParse
 				.del('/1/classes/Lineup/' + testLineup.objectId)
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.end(done);
+		});
+	});
+
+	describe('by deleting the Cricket Player', function(){
+		it('testCricketPlayer', function(done){
+			requireParse
+				.del('/1/classes/CricketPlayer/' + testCricketPlayer.objectId)
 				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
 				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 				.end(done);

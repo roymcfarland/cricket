@@ -36,14 +36,40 @@ LineupPlayerController.prototype.create = function(req, res) {
 				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
 				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 				.set('X-Parse-Session-Token', req.body.user.sessionToken)
-				.end(function(verifyUserIsLoggedInResult){
-					if(verifyUserIsLoggedInResult.body.code) return done({code: 520, error: verifyUserIsLoggedInResult.body});
+				.end(function(checkIfUserIsLoggedInResult){
+					if(checkIfUserIsLoggedInResult.body.code) return done({code: 520, error: checkIfUserIsLoggedInResult.body});
 
 					done();
+				});
+		},
+		createLineupPlayer: function(done){
+			console.log(req.body);
+			superagent
+				.post('https://api.parse.com/1/classes/LineupPlayer')
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.send({
+					LineupID: {
+						__type: 'Pointer',
+						className: 'Lineup',
+						objectId: req.body.LineupID
+					},
+					CricketPlayerID: {
+						__type: 'Pointer',
+						className: 'CricketPlayer',
+						objectId: req.body.CricketPlayerID
+					}
+				})
+				.end(function(createLineupPlayerResult){
+					if(createLineupPlayerResult.body.code) return done({code: 500, error: createLineupPlayerResult.body});
+
+					done(null, createLineupPlayerResult.body);
 				});
 		}
 	}, function(err, success){
 		if(err && err.code) return res.status(err.code).send({error: err.error});
+
+		return res.status(201).send(success.createLineupPlayer);
 	});
 };
 
