@@ -4,12 +4,16 @@ Status Codes
 ==Success Codes==
 200 - General success
 
+201 - Created
+
 ==Error Codes==
 404 - User not found on parse
 
 427 - Object ID not included when searching for leagues created by the user
 
 428 - Validation failed
+
+429 - User must be an admin
 
 512 - Populating a new user with default data - but the user passed in the route could not be found on Parse
 
@@ -26,3 +30,5 @@ Status Codes
 518 - User cannot join league, not enough open spaces
 
 519 - User cannot join league, already joined
+
+520 - User not authenticated
