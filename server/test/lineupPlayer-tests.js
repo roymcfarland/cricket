@@ -260,6 +260,25 @@ describe('Sending a POST to /api/v1/lineupPlayers', function(){
 					done();
 				});
 		});
+
+		it('when the LineupID is not alphanumeric.', function(done){
+			requireLocal
+				.post('/api/v1/lineupPlayers')
+				.send({
+					user: testUser,
+					LineupID: '=',
+					// LineupID: testLineup.objectId,
+					CricketPlayerID: testCricketPlayer.objectId
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
+
+					res.body.errors.LineupID[0].should.be.exactly('The LineupID field must be alphanumeric.');
+					done();
+				});
+		});
 	});
 });
 
