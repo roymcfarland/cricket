@@ -178,6 +178,28 @@ describe('Sending a POST to /api/v1/lineupPlayers', function(){
 				});
 		});
 
+		it('when the users objectId is not alphanumeric.', function(done){
+			requireLocal
+				.post('/api/v1/lineupPlayers')
+				.send({
+					// user: testUser,
+					user: {
+						objectId: '=',
+						sessionToken: testUser.sessionToken
+					},
+					LineupID: testLineup.objectId,
+					CricketPlayerID: testCricketPlayer.objectId
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
+
+					res.body.errors.user[0].should.be.exactly('The user objectId must be included.');
+					done();
+				});
+		});
+
 		it('when the users sessionToken is not sent in.', function(done){
 			requireLocal
 				.post('/api/v1/lineupPlayers')
@@ -195,6 +217,46 @@ describe('Sending a POST to /api/v1/lineupPlayers', function(){
 					if(res.body.code) return done(res.body.code);
 
 					res.body.errors.user[0].should.be.exactly('The user sessionToken must be included.');
+					done();
+				});
+		});
+
+		it('when the users sessionToken is not alphanumeric.', function(done){
+			requireLocal
+				.post('/api/v1/lineupPlayers')
+				.send({
+					// user: testUser,
+					user: {
+						objectId: testUser.objectId,
+						sessionToken: '='
+					},
+					LineupID: testLineup.objectId,
+					CricketPlayerID: testCricketPlayer.objectId
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
+
+					res.body.errors.user[0].should.be.exactly('The user sessionToken must be included.');
+					done();
+				});
+		});
+
+		it('when the LineupID is not included.', function(done){
+			requireLocal
+				.post('/api/v1/lineupPlayers')
+				.send({
+					user: testUser,
+					// LineupID: testLineup.objectId,
+					CricketPlayerID: testCricketPlayer.objectId
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
+
+					res.body.errors.LineupID[0].should.be.exactly('The LineupID field is required.');
 					done();
 				});
 		});

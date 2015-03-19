@@ -3,7 +3,8 @@ var Validatorjs = require('validatorjs');
 var async = require('async');
 
 var createRules = {
-	user: 'objectId|sessionToken'
+	user: 'objectId|sessionToken',
+	LineupID: 'required'
 };
 
 Validatorjs.register('objectId', function(value){
