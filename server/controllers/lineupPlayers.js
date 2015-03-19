@@ -28,6 +28,23 @@ LineupPlayerController.prototype.create = function(req, res) {
 	var validation = new Validatorjs(req.body, createRules);
 
 	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
+
+	async.series({
+		checkIfUserIsLoggedIn: function(done){
+			superagent
+				.get('https://api.parse.com/1/users/me')
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.set('X-Parse-Session-Token', req.body.user.sessionToken)
+				.end(function(verifyUserIsLoggedInResult){
+					if(verifyUserIsLoggedInResult.body.code) return done({code: 520, error: verifyUserIsLoggedInResult.body});
+
+					done();
+				});
+		}
+	}, function(err, success){
+		if(err && err.code) return res.status(err.code).send({error: err.error});
+	});
 };
 
 module.exports = LineupPlayerController;

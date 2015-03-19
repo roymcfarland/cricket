@@ -316,6 +316,28 @@ describe('Sending a POST to /api/v1/lineupPlayers', function(){
 					done();
 				});
 		});
+
+		it('when the user sessionToken is not accepted by parse.', function(done){
+			requireLocal
+				.post('/api/v1/lineupPlayers')
+				.send({
+					user: {
+						objectId: testUser.objectId,
+						sessionToken: 'ytdlj890r7'
+					},
+					// user: testUser,
+					LineupID: testLineup.objectId,
+					CricketPlayerID: testCricketPlayer.objectId
+				})
+				.expect(520)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.error.code.should.be.exactly(101);
+					res.body.error.error.should.be.exactly('invalid session');
+					done();
+				});
+		});
 	});
 });
 
