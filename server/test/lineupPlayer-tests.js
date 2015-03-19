@@ -162,6 +162,9 @@ describe('Sending a POST to /api/v1/lineupPlayers', function(){
 				.post('/api/v1/lineupPlayers')
 				.send({
 					// user: testUser,
+					user: {
+						sessionToken: testUser.sessionToken
+					},
 					LineupID: testLineup.objectId,
 					CricketPlayerID: testCricketPlayer.objectId
 				})
@@ -171,6 +174,27 @@ describe('Sending a POST to /api/v1/lineupPlayers', function(){
 					if(res.body.code) return done(res.body.code);
 
 					res.body.errors.user[0].should.be.exactly('The user objectId must be included.');
+					done();
+				});
+		});
+
+		it('when the users sessionToken is not sent in.', function(done){
+			requireLocal
+				.post('/api/v1/lineupPlayers')
+				.send({
+					// user: testUser,
+					user: {
+						objectId: testUser.objectId
+					},
+					LineupID: testLineup.objectId,
+					CricketPlayerID: testCricketPlayer.objectId
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
+
+					res.body.errors.user[0].should.be.exactly('The user sessionToken must be included.');
 					done();
 				});
 		});

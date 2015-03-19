@@ -3,15 +3,22 @@ var Validatorjs = require('validatorjs');
 var async = require('async');
 
 var createRules = {
-	user: 'objectId'
+	user: 'objectId|sessionToken'
 };
 
 Validatorjs.register('objectId', function(value){
-	if(!value || ! value.objectId) return false;
+	if(!value || !value.objectId) return false;
 	if(value.objectId.match(/\W/g)) return false;
 
 	return true;
 }, 'The :attribute objectId must be included.');
+
+Validatorjs.register('sessionToken', function(value){
+	if(!value || !value.sessionToken) return false;
+	if(value.sessionToken.match(/\W/g)) return false;
+
+	return true;
+}, 'The :attribute sessionToken must be included.');
 
 var LineupPlayerController = function(){};
 
