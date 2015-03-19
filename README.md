@@ -30,3 +30,5 @@ Status Codes
 518 - User cannot join league, not enough open spaces
 
 519 - User cannot join league, already joined
+
+520 - User not authenticated
