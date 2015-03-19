@@ -280,7 +280,7 @@ describe('Sending a POST to /api/v1/lineupPlayers', function(){
 				});
 		});
 
-		it('when the CricketPlayerID is not alphanumeric.', function(done){
+		it('when the CricketPlayerID is not included.', function(done){
 			requireLocal
 				.post('/api/v1/lineupPlayers')
 				.send({
@@ -294,6 +294,25 @@ describe('Sending a POST to /api/v1/lineupPlayers', function(){
 					if(res.body.code) return done(res.body.code);
 
 					res.body.errors.CricketPlayerID[0].should.be.exactly('The CricketPlayerID field is required.');
+					done();
+				});
+		});
+
+		it('when the CricketPlayerID is not alphanumeric.', function(done){
+			requireLocal
+				.post('/api/v1/lineupPlayers')
+				.send({
+					user: testUser,
+					LineupID: testLineup.objectId,
+					CricketPlayerID: '='
+					// CricketPlayerID: testCricketPlayer.objectId
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
+
+					res.body.errors.CricketPlayerID[0].should.be.exactly('The CricketPlayerID field must be alphanumeric.');
 					done();
 				});
 		});
