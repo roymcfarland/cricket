@@ -14,6 +14,24 @@ UserController.prototype.create = function(req, res) {
 	var validation = new Validatorjs(req.body, createRules);
 
 	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
+
+	superagent
+		.post('https://api.parse.com/1/users')
+		.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+		.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+		.send({
+			username: req.body.username,
+			password: req.body.password,
+			email: req.body.email,
+			totalScore: 0,
+			Money: 0,
+			admin: false
+		})
+		.end(function(createUserResult){
+			if(createUserResult.body.code) res.status(500).send(createUserResult.body);
+
+			res.status(201).send(createUserResult.body);
+		});
 };
 
 UserController.prototype.populateWithDefaultData = function(req, res) {

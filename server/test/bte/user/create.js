@@ -4,6 +4,8 @@ var should = require('should');
 var requestLocal = supertest('http://localhost:3000');
 var requestParse = supertest('https://api.parse.com');
 
+var testuser;
+
 describe('--------------------User Create BTE Tests----------------------', function(){});
 
 describe('Sending a POST to /api/v1/users', function(){
@@ -94,5 +96,25 @@ describe('Sending a POST to /api/v1/users', function(){
 					done();
 				});
 		});
+	});
+	describe('should succeed', function(){
+		it('when the correct information is passed in.', function(done){
+			requestLocal
+				.post('/api/v1/users')
+				.send({
+					username: 'testuser',
+					password: 'password',
+					email: 'testuser@latitude40.com'
+				})
+				.expect(201)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.objectId.should.be.type('string');
+					
+					testuser = res.body;
+					done();
+				});
+			});
 	});
 });
