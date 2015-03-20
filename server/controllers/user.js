@@ -3,7 +3,7 @@ var Validatorjs = require('validatorjs');
 var config = require('../config/config');
 
 var createRules = {
-	username: 'required'
+	username: 'required|alpha_num'
 };
 
 var UserController = function() {};

@@ -24,5 +24,23 @@ describe('Sending a POST to /api/v1/users', function(){
 					done();
 				});
 		});
+
+		it('when the username is not alphanumeric.', function(done){
+			requestLocal
+				.post('/api/v1/users')
+				.send({
+					username: '00asnet=',
+					// username: 'testuser',
+					password: 'password',
+					email: 'testuser@latitude40.com'
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.errors.username[0].should.be.exactly('The username field must be alphanumeric.');
+					done();
+				});
+		});
 	});
 });
