@@ -4,8 +4,6 @@ var should = require('should');
 var requestLocal = supertest('http://localhost:3000');
 var requestParse = supertest('https://api.parse.com');
 
-var testuser;
-
 describe('--------------------User Create BTE Tests----------------------', function(){});
 
 describe('Sending a POST to /api/v1/users', function(){
@@ -112,7 +110,6 @@ describe('Sending a POST to /api/v1/users', function(){
 
 					res.body.objectId.should.be.type('string');
 					
-					testuser = res.body;
 					done();
 				});
 			});
