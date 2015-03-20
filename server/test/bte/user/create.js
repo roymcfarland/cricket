@@ -42,5 +42,22 @@ describe('Sending a POST to /api/v1/users', function(){
 					done();
 				});
 		});
+
+		it('when the password is not passed in.', function(done){
+			requestLocal
+				.post('/api/v1/users')
+				.send({
+					username: 'testuser',
+					// password: 'password',
+					email: 'testuser@latitude40.com'
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.errors.password[0].should.be.exactly('The password field is required.');
+					done();
+				});
+		});
 	});
 });
