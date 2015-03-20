@@ -1,7 +1,18 @@
 var superagent = require('superagent');
+var Validatorjs = require('validatorjs');
 var config = require('../config/config');
 
+var createRules = {
+	username: 'required'
+};
+
 var UserController = function() {};
+
+UserController.prototype.create = function(req, res) {
+	var validation = new Validatorjs(req.body, createRules);
+
+	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
+};
 
 UserController.prototype.populateWithDefaultData = function(req, res) {
 	var objectId = req.params.objectId;
