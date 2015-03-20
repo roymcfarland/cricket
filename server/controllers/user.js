@@ -4,7 +4,8 @@ var config = require('../config/config');
 
 var createRules = {
 	username: 'required|alpha_num',
-	password: 'required'
+	password: 'required',
+	email: 'required'
 };
 
 var UserController = function() {};
