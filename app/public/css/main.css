@@ -9,8 +9,13 @@ Fixes functionality for ui-bootstrap
   display: none !important;
 }
 
+lu.nod {
+ list-style-type: none;
+}
+
 body {
 	font-family: 'Roboto Condensed', sans-serif;
+	background-color: #010101;
 }
 
 .navbar {
@@ -44,7 +49,7 @@ body {
 
 #top-jumbotron {
 	color: #fff;
-	background: url("/images/BrianLaraUkexpatv04.jpg") no-repeat center center;
+	background: url("/images/BrianLaraUkexpatv05.jpg") no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -56,13 +61,6 @@ body {
 	border-radius: 0;
 }
 
-.login-box {
-	float: right;
-	width: 200px;
-	height: 400px;
-	border: 1px solid white ;
-}
-
 #top-jumbotron h2 {
 	text-align: left;
 	margin-top: .25%;
@@ -70,7 +68,7 @@ body {
 	margin-bottom: 1%;
 	font-size: 4em;
 	font-weight: 900;
-	width: 400px;
+	width: 200px;
 }
 
 #top-jumbotron h1 {
@@ -78,13 +76,86 @@ body {
 	margin-bottom: .25%;
 	margin-left: 12.5%;
 	font-size: 2em;
+	width: 200px;
+	margin-right: 0;
 }
 
 #home-buttons {
-	position: absolute;
-	left: 22.5%;	
+	position: relative;
+	left: 3.5%;
+	}
+
+.box-login {
+	float: right;
+	width: 350px;
+	height: 200px;
+  	margin: 1em;
+	border: 2px solid white;
+	left: -10%;
+	opacity: 0.8;
+	background-color: #010101;
+	position: relative;
 }
 
+#btn-login {
+	
+	color: white;
+	border-radius: 34px; 
+	-moz-border-radius: 34px; 
+	-webkit-border-radius: 34px; 
+	
+	padding: 5px 50px 5px 50px;
+	position: relative;	
+	
+	background-color: rgb(255, 255, 255);
+	background-image:linear-gradient(90deg, rgb(238, 238, 238), rgb(0, 0, 0) 30%,rgb(102, 102, 0) 0%, rgb(204, 204, 204));
+	background-image:-webkit-gradient(linear, 50% 100%, 50% 0%, from(rgb(238, 238, 238)), color-stop(0.3, rgb(0, 0, 0)),
+		color-stop(0, rgb(102, 102, 0)), to(rgb(204, 204, 204)));
+	background-image:-moz-linear-gradient(90deg, rgb(238, 238, 238), rgb(0, 0, 0) 30%,rgb(102, 102, 0) 0%, rgb(204, 204, 204));
+}
+
+#spn-next-game {
+	float: right;
+	font-size: 24px;
+	border: 1px solid #ccc;
+	left: 250px;
+	top: 185px;
+	width: 300px;
+	position: relative;
+	opacity: 0.9;
+
+	
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		right bottom,
+		color-stop(0, #7D807F),
+		color-stop(0.3, #050505),
+		color-stop(0.69, #050505),
+		color-stop(1, #0C0D0D)
+	);
+	background-image: -o-linear-gradient(right bottom, #7D807F 0%, #050505 30%, #050505 69%, #0C0D0D 100%);
+	background-image: -moz-linear-gradient(right bottom, #7D807F 0%, #050505 30%, #050505 69%, #0C0D0D 100%);
+	background-image: -webkit-linear-gradient(right bottom, #7D807F 0%, #050505 30%, #050505 69%, #0C0D0D 100%);
+	background-image: -ms-linear-gradient(right bottom, #7D807F 0%, #050505 30%, #050505 69%, #0C0D0D 100%);
+	background-image: linear-gradient(to right bottom, #7D807F 0%, #050505 30%, #050505 69%, #0C0D0D 100%);
+}
+
+#spn-match-teams {
+	float: left;
+	postion: relative;
+	top: 25px;
+}
+
+#spn-match-teams img {
+	height: 50px;
+	width: 50px;
+	margin: 0 0 0 15px;
+}
+
+.form-inline {
+	display:inline-block;
+}
 
 #btn-game-rules {
 	
@@ -109,7 +180,6 @@ body {
 	color:#78A3B8;
 }
 
-
 #btn-join-league {
 	color: white;
 	
@@ -121,6 +191,7 @@ body {
 	padding-bottom: 5px;
 	position: relative;
 	left: 50px;
+	
 	
 	
 	background-color: rgb(255, 255, 255);
