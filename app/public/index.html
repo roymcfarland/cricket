@@ -21,10 +21,30 @@
     <!-- ANGULAR JS (inserted in <head> for ngCloak optimization) -->
     <script src="/js/bower_components/angular/angular.min.js"></script>
     <script src="/js/bower_components/angular-route/angular-route.min.js"></script>
+    
+    <link rel="stylesheet" href="/css/jquery.countdown.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/js/jquery.plugin.js"></script>
+    <script src="/js/jquery.countdown.js"></script>
+    <script>
+    $(function () {
+			var gameDay = new Date(2015, 4 - 1, 16);
+			$('#defaultCountdown').countdown({
+				until: gameDay,
+				padZeroes: true, 
+				format: 'yDHMS', 
+				layout: '<ul>{y<}<li>{yn} {yl}</li>{y>}' + 
+					'{d<}<li>{dnn} {dl}</li>{d>}{h<}<li>{hnn} {hl}</li>{h>}' + 
+					'{m<}<li>{mnn} {ml}</li>{m>}{s<}<li>{snn} {sl}</li>{s>}</ul>'
+			});
+		});
+    </script>
+        
   </head>
   <!-- End </head> Start <body> --> 
   <div class="ng-cloak" id="main-div" ng-cloak ng-app="cricketDuel" ng-controller="indexController as index">
   <body class="container"> 
+
     <header>
       <!-- Navbar Header -->
       <nav class="navbar navbar-default">
@@ -45,12 +65,45 @@
     <main>
       <!-- Main content where angular templating will be injected -->
       <div class="jumbotron text-center" id="top-jumbotron">
+      	<div class="box-login">
+        	<br><p>Already Created a Team?</p>
+            <span id="login-buttons">
+            	<form action="login" method="get" class="form-inline">
+                	<button class="btn-lg" id="btn-login"><span class="glyphicon glyphicon-user"></span>  LOGIN</button>
+                </form>
+            </span>
+        
+         </div>
       	<h1>WELCOME TO</h1>
         <h2>CRICKETDUEL</h2>
-        <span id="home-buttons">
-        <button class="btn-lg" id="btn-game-rules" onclick="location.href='/rules'">GAME RULES</button>
-        <button class="btn-lg" id="btn-join-league" onclick="location.href='/register'">JOIN A LEAGUE</button>
+        <span id="home-buttons">        
+            <form action="/rules" method="get" class="form-inline">
+                <button class="btn-lg" id="btn-game-rules">GAME RULES</button>
+            </form>
+            <form action="/register" method="get" class="form-inline">
+                <button class="btn-lg" id="btn-join-league">JOIN A LEAGUE</button>
+            </form>
         </span>
+       
+       
+        <span id="spn-next-game">
+	       <p>Next Game Starts</p>
+           <div>
+    	    <div id="defaultCountdown"></div>
+            </div>
+            
+            <span id="spn-match-teams">
+            	 KKR<br>
+            	<img src="/images/kkr.png" alt="KKR"><br>
+            	vs<br>
+            	<img src="images/MI.png" alt"MI"><br>
+                  MI
+        	</span>
+            
+        </span>
+        
+
+        
       </div>
       <div class="content">
       Some text
