@@ -1,2 +1,22 @@
 <!-- Begin ng-view -->
 <!-- ng-controller="matchesController as matchesCtrl" -->
+
+<div class="jumbotron">
+	<div class="row">
+		<a class="btn btn-default pull-right" href="/dashboard">Go Back</a>
+	</div>
+	<h3>Set Lineup</h3>
+	<h5 class="pull-right">Current Balance: {{matchesCtrl.userMoney | currency}}</h5>
+		<table>
+			<tr ng-repeat="match in matches.matches">
+				<td>
+					Name: {{match.Name}}
+				</td>
+				<td>
+					objectId: {{match.objectId}}
+				</td>
+			</tr>
+		</table>
+
+	
+</div> <!-- /.jumbotron -->
