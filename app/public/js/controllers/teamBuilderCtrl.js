@@ -125,7 +125,7 @@ teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, 
 		}
 
 		////////////////
-		/// AJAX PUT ///
+		///// AJAX  ////
 		////////////////
 
 

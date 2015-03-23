@@ -73,6 +73,13 @@ appRouter.config(function($routeProvider, $locationProvider) {
 			controllerAs: "teamBuilder"
 		})
 
+		// route for selecting match (MatchID)
+		.when("/dashboard/matches", {
+			templateUrl: "../views/matches.html",
+			controller: "matchesController",
+			controllerAs: "matchesCtrl"
+		})
+
 		// catch all route
 		.otherwise({
 			redirectTo: "/"
