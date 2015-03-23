@@ -28,7 +28,7 @@ UserController.prototype.create = function(req, res) {
 			admin: false
 		})
 		.end(function(createUserResult){
-			if(createUserResult.body.code) res.status(500).send(createUserResult.body);
+			if(createUserResult.body.code) return res.status(500).send(createUserResult.body);
 
 			res.status(201).send(createUserResult.body);
 		});

@@ -188,7 +188,6 @@ LeagueController.prototype.addToLeague = function(req, res) {
 												}
 											})
 											.end(function(userResult){
-												console.log(userResult.body);
 												if(userResult.body.code) return res.status(500).send(userResult.body);
 
 												res.send(userLeagueResult.body);
