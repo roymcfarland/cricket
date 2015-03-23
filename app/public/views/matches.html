@@ -5,23 +5,17 @@
 	<div class="row">
 		<a class="btn btn-default pull-right" href="/dashboard">Go Back</a>
 	</div>
-	<h3>Set Lineup for {league.name}</h3>
+	<h3>Set Lineup for Matches in {league.name}</h3>
 	<h5 class="pull-right">Current Balance: {{matchesCtrl.userMoney | currency}}</h5>
-		<table>
-			<tr ng-repeat="match in matches.matches">
-				<td>
-					Name: {{match.Name}}
-				</td>
-				<td>
-					objectId: {{match.objectId}}
-				</td>
-			</tr>
-		</table>
 		<ul class="nav nav-tabs" ng-controller="panelController as panel" ng-repeat="match in matches.matches">
-			<li ng-class="{active: panelisSelected}">
-				<a href="" ng-click="panel.selectTab">{{match.Name}}</a>
+			<li ng-class="{active: panel.isSelected}">
+				<a href="" ng-click="panel.selectTab">{{match.Name}} (objectId: {{match.objectId}})</a>
 			</li>
 		</ul>
+		<!-- Panels for each match -->
+		<div class="panel" ng-show="panel.isSelected">
+			<h1>Hello from {{match.Name}}!</h1>
+		</div>
 
 	
 </div> <!-- /.jumbotron -->
