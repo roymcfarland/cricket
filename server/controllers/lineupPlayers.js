@@ -43,7 +43,6 @@ LineupPlayerController.prototype.create = function(req, res) {
 				});
 		},
 		createLineupPlayer: function(done){
-			console.log(req.body);
 			superagent
 				.post('https://api.parse.com/1/classes/LineupPlayer')
 				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')

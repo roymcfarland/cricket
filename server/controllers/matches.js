@@ -68,4 +68,16 @@ MatchesController.prototype.create = function(req, res) {
 	});
 };
 
+MatchesController.prototype.getAll = function(req, res) {
+	superagent
+		.get('https://api.parse.com/1/classes/Match')
+		.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+		.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+		.end(function(getAllMatchesResult){
+			if(getAllMatchesResult.body.code) return res.status(500).send(getAllMatchesResult.body);
+
+			return res.send({matches: getAllMatchesResult.body.results});
+		});
+};
+
 module.exports = MatchesController;
