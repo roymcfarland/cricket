@@ -32,7 +32,6 @@ teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, 
 	
 	Players.then(function(data) {
 		$scope.players = data;
-		$scope.status = status;
 	});
 
 
