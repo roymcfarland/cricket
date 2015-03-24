@@ -76,7 +76,13 @@ matchesCtrl.controller("matchesController", function($location, $scope, $http, $
 		.error(function(data, status) {
 			$scope.data = data;
 			$scope.status = status;
-		});
+			if (status == 428) {
+				alert("Sorry! There was an error. Please try again. (Error 428)");
+				$location.path("/dashboard");
+			} else if (status == 404) {
+				alert("Sorry! There was an error. Please try again. (Error 404)");
+				$location.path("/dashboard");
+		}});
 		
 	};
 
