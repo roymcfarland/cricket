@@ -3,7 +3,7 @@ var matchesCtrl = angular.module("matchesCtrl", []);
 matchesCtrl.controller("matchesController", function($location, $scope, $http, $filter, ngTableParams, Matches) {
 
 	var vm = this;
-	console.log($scope);
+	// console.log($scope);
 
 	/////////////////////////////////
 	////// USER AUTHENTICATION //////
@@ -21,7 +21,7 @@ matchesCtrl.controller("matchesController", function($location, $scope, $http, $
 	vm.username = vm.user.getUsername();
 	// vm.userId = vm.user.id;
 	vm.userMoney = vm.user.attributes.Money;
-	// console.log("vm.user.attributes: ", vm.user.attributes);
+	// console.log("vm.userMoney: ", vm.user.attributes.Money);
 	// console.log("vm.user: ", vm.user);
 	
 
@@ -39,7 +39,9 @@ matchesCtrl.controller("matchesController", function($location, $scope, $http, $
 	/////////////////////////////////
 	////////// matches.html /////////
 	/////////////////////////////////
-	
+
+	$scope.matchId = null;
+
 	$scope.selectId = function(id) {
 		$scope.matchId = id;
 	}
@@ -50,8 +52,37 @@ matchesCtrl.controller("matchesController", function($location, $scope, $http, $
 	/////////////////////////////////
 	
 	$scope.createNewLineup = function() {
+		var userLeagueId = "{{vm.user.leagueId}}"; // Come back and change this to atone for your sins!
 		var matchId = $scope.matchId;
+		var user = {
+			sessionToken: vm.user._sessionToken,
+			objectId: vm.user.id
+		};
+		console.log("userLeagueId: ", userLeagueId);
 		console.log("matchId: ", matchId);
+		console.log(user);
+
+		/////////////////
+		/// AJAX POST ///
+		/////////////////
+		$http.post("/api/v1/lineups", {UserLeagueId: userLeagueId, MatchId: matchId, Locked: false, user: user}, [])
+		.success(function(data, status) {
+			$scope.data = data;
+			$scope.status = status;
+			if (status == 200) {
+				alert("Match selection confirmed. Please set your lineup.");
+				$location.path("/dashboard/join-league/team-builder");
+		}})
+		.error(function(data, status) {
+			$scope.data = data;
+			$scope.status = status;
+			if (status == 428) {
+				alert("Sorry! There was an error. Please try again. (Error 428)");
+				$location.path("/dashboard");
+			} else if (status == 404) {
+				alert("Sorry! There was an error. Please try again. (Error 404)");
+				$location.path("/dashboard");
+		}});
 		
 	};
 

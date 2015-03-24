@@ -8,7 +8,7 @@ matchService.factory("Matches", function($http, $q, $location) {
 
 	var deferred = $q.defer();
 
-	$http.get("/api/matches")
+	$http.get("/api/v1/matches")
 		.success(function(response) {
 			deferred.resolve(response);
 		})
