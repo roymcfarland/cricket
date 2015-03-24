@@ -52,8 +52,24 @@ matchesCtrl.controller("matchesController", function($location, $scope, $http, $
 	/////////////////////////////////
 	
 	$scope.createNewLineup = function() {
+		var userLeagueId = vm.username + "'s League"; // This needs to be changed!
 		var matchId = $scope.matchId;
+		var user = {
+			sessionToken: vm.user._sessionToken,
+			objectId: vm.user.id
+		};
+		console.log("userLeagueId: ", userLeagueId);
 		console.log("matchId: ", matchId);
+		console.log(user);
+
+		/////////////////
+		/// AJAX POST ///
+		/////////////////
+		$http.post("/api/v1/lineups", {UserLeagueId: userLeagueId, MatchId: matchId, Locked: false, user: user}, [])
+		.success(function(data, status) {
+			$scope.data = data;
+			$scope.status = status;
+		})
 		
 	};
 
