@@ -69,7 +69,14 @@ matchesCtrl.controller("matchesController", function($location, $scope, $http, $
 		.success(function(data, status) {
 			$scope.data = data;
 			$scope.status = status;
-		})
+			if (status == 200) {
+				alert("Match selection confirmed. Please set your lineup.");
+				$location.path("/dashboard/join-league/team-builder");
+		}})
+		.error(function(data, status) {
+			$scope.data = data;
+			$scope.status = status;
+		});
 		
 	};
 
