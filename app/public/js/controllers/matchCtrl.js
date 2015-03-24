@@ -52,7 +52,7 @@ matchesCtrl.controller("matchesController", function($location, $scope, $http, $
 	/////////////////////////////////
 	
 	$scope.createNewLineup = function() {
-		var userLeagueId = vm.username + "'s League"; // This needs to be changed!
+		var userLeagueId = "{{vm.user.leagueId}}"; // Come back and change this to atone for your sins!
 		var matchId = $scope.matchId;
 		var user = {
 			sessionToken: vm.user._sessionToken,
