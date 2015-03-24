@@ -3,7 +3,7 @@ var matchesCtrl = angular.module("matchesCtrl", []);
 matchesCtrl.controller("matchesController", function($location, $scope, $http, $filter, ngTableParams, Matches) {
 
 	var vm = this;
-	console.log($scope);
+	// console.log($scope);
 
 	/////////////////////////////////
 	////// USER AUTHENTICATION //////
@@ -21,7 +21,7 @@ matchesCtrl.controller("matchesController", function($location, $scope, $http, $
 	vm.username = vm.user.getUsername();
 	// vm.userId = vm.user.id;
 	vm.userMoney = vm.user.attributes.Money;
-	console.log("vm.userMoney: ", vm.user.attributes.Money);
+	// console.log("vm.userMoney: ", vm.user.attributes.Money);
 	// console.log("vm.user: ", vm.user);
 	
 
@@ -39,7 +39,9 @@ matchesCtrl.controller("matchesController", function($location, $scope, $http, $
 	/////////////////////////////////
 	////////// matches.html /////////
 	/////////////////////////////////
-	
+
+	$scope.matchId = null;
+
 	$scope.selectId = function(id) {
 		$scope.matchId = id;
 	}

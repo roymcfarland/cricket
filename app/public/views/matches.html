@@ -9,7 +9,7 @@
 	<h5 class="pull-right">Current Balance: {{matchesCtrl.userMoney | currency}}</h5>
 		<ul class="nav nav-tabs" ng-controller="panelController as panel">
 			<li ng-repeat="match in matches.matches" ng-class="{active: panel.isSelected}">
-				<a href="" ng-click="panel.selectTab">{{match.Name}}<br>(objectId: {{match.objectId}})</a>
+				<a href="" ng-click="panel.selectTab; selectId(match.objectId); createNewLineup()">{{match.Name}}<br>(objectId: {{match.objectId}})</a>
 			</li>
 		</ul>
 		<!-- Panels for each match -->
