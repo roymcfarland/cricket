@@ -63,4 +63,17 @@ UserController.prototype.populateWithDefaultData = function(req, res) {
 		});
 };
 
+UserController.prototype.getAll = function(req, res) {
+	superagent
+		.get('https://api.parse.com/1/users')
+		.set('X-Parse-Application-Id', config.parse.applicationId)
+		.set('X-Parse-REST-API-Key', config.parse.apiKey)
+		.end(function(result){
+			if(result.body.code) return res.status(500).send(result.body);
+
+			console.log(result.body);
+			return res.send({users: result.body.results});
+		});
+};
+
 module.exports = UserController;

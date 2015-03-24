@@ -4,7 +4,7 @@ var should = require('should');
 var requestLocal = supertest('http://localhost:3000');
 var requestParse = supertest('https://api.parse.com');
 
-describe('--------------------User Create BTE Tests----------------------', function(){});
+var testUser;
 
 describe('Sending a POST to /api/v1/users', function(){
 	describe('should fail', function(){
@@ -109,9 +109,42 @@ describe('Sending a POST to /api/v1/users', function(){
 					if(err) return done(err);
 
 					res.body.objectId.should.be.type('string');
-					
+					testUser = res.body;
 					done();
 				});
 			});
+	});
+});
+
+describe('Sending a GET to /api/v1/users', function(){
+	describe('should fail', function(){
+		it('when a user is not passed in.', function(done){
+			requestLocal
+				.get('/api/v1/users')
+				.expect(404)
+				.end(done);
+		});
+		it('when the wrong sessionToken is passed in.', function(done){
+			requestLocal
+				.get('/api/v1/users')
+				.query('sessionToken=badToken')
+				.expect(404)
+				.end(done);
+		});
+	});
+	describe('should succeed', function(){
+		it('when the correct user token is passed in.', function(done){
+			requestLocal
+				.get('/api/v1/users')
+				.query('sessionToken=' + testUser.sessionToken)
+				.expect(200)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
+
+					res.body.users[0].objectId.should.be.type('string');
+					done();
+				});
+		});
 	});
 });
