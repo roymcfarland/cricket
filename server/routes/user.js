@@ -7,6 +7,7 @@ var userRoutes = function(app) {
 	app.post('/api/v1/users', userController.create);
 	app.post('/api/users/:objectId', userController.populateWithDefaultData);
 	app.get('/api/v1/users', protectGetRoutes, userController.getAll);
+	app.get('/api/v1/users/:objectId', protectGetRoutes, userController.getOne);
 };
 
 module.exports = userRoutes;

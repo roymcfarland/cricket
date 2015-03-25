@@ -148,3 +148,20 @@ describe('Sending a GET to /api/v1/users', function(){
 		});
 	});
 });
+
+describe('Sending a GET to /api/v1/users/:objectId', function(){
+	describe('should succeed', function(){
+		it('when getting a test user.', function(done){
+			requestLocal
+				.get('/api/v1/users/' + testUser.objectId + '?sessionToken=' + testUser.sessionToken)
+				.expect(200)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
+
+					res.body.user.objectId.should.be.type('string');
+					done();
+				});
+		});
+	});
+});
