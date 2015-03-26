@@ -60,17 +60,17 @@ appRouter.config(function($routeProvider, $locationProvider) {
 		})
 
 		// route for leagues page
-		.when("/dashboard/join-league", {
-			templateUrl: "../views/join-league.html",
+		.when("/dashboard/leagues", {
+			templateUrl: "../views/leagues.html",
 			controller: "leaguesController",
 			controllerAs: "leaguesCtrl"
 		})
 
-		// route for team-builder page
-		.when("/dashboard/join-league/team-builder", {
-			templateUrl: "../views/team-builder.html",
-			controller: "teamBuilderController",
-			controllerAs: "teamBuilder"
+		// route for createLineup page
+		.when("/dashboard/leagues/createLineup/:leagueId", {
+			templateUrl: "../views/createLineup.html",
+			controller: "createLineupController",
+			controllerAs: "createLineup"
 		})
 
 		// route for selecting match (MatchID)

@@ -1,9 +1,15 @@
-var teamBuilderCtrl = angular.module("teamBuilderCtrl", []);
+var createLineupCtrl = angular.module("createLineupCtrl", []);
 
-teamBuilderCtrl.controller("teamBuilderController", function($location, $scope, $http, $filter, ngTableParams, Players) {
+createLineupCtrl.controller("createLineupController", function($location, $scope, $http, $filter, $routeParams, ngTableParams, Players) {
 
 	var vm = this;
 	// console.log($scope);
+	
+	var init = function() {
+		alert("The leagueId is" + $routeParams.leagueId);
+	};
+
+	init();
 
 	/////////////////////////////////
 	////// USER AUTHENTICATION //////

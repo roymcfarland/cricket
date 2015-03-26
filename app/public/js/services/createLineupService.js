@@ -1,6 +1,6 @@
-var teamBuilderService = angular.module("teamBuilderService", []);
+var createLineupService = angular.module("createLineupService", []);
 
-teamBuilderService.factory("Players", function($http, $q, $location) {
+createLineupService.factory("Players", function($http, $q, $location) {
 
 	////////////////////////
 	/////// AJAX GET ///////
