@@ -17,5 +17,16 @@ describe('Sending a GET to /api/v1/userLeagues', function(){
 					done();
 				});
 		});
+		it('when the userId is not alphanumeric.', function(done){
+			requestLocal
+				.get('/api/v1/userLeagues?userId=LUJG!!!')
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.errors.userId[0].should.be.exactly('The userId field must be alphanumeric.');
+					done();
+				});
+		});
 	});
 });

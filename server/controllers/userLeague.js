@@ -1,7 +1,8 @@
 var Validatorjs = require('validatorjs');
 
 var getAllRules = {
-	leagueId: 'alpha_num'
+	leagueId: 'alpha_num',
+	userId: 'alpha_num'
 };
 
 var UserLeagueController = function(){};
