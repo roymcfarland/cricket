@@ -170,8 +170,6 @@ LeagueController.prototype.addToLeague = function(req, res) {
 									})
 									.end(function(result){
 										if(result.body.code){
-											console.log('error updating League noOfEntries');
-											console.log(result.body);
 											return res.status(500).send(result.body);
 										}
 
