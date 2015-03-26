@@ -5,6 +5,7 @@ var config = require('../config/config');
 var requestLocal = supertest('http://localhost:3000');
 var requestParse = supertest('https://api.parse.com');
 var testUser;
+var testAdmin;
 
 describe('Preparing for the GET userLeagues tests', function(){
 	describe('by creating', function(){
@@ -31,6 +32,32 @@ describe('Preparing for the GET userLeagues tests', function(){
 					res.body.objectId.should.have.type('string');
 					res.body.sessionToken.should.have.type('string');
 					testUser = res.body;
+					done();
+				});
+		});
+		it('a testAdmin.', function(done){
+			requestParse
+				.post('/1/users')
+				.set('Content-Type', 'application/json')
+				.set('X-Parse-Application-Id', config.parse.applicationId)
+				.set('X-Parse-Master-Key', config.parse.masterKey)
+				.send({
+					"username": "testAdmin",
+					"password": "password",
+					"email": "testAdmin@latitude40.com",
+					totalScore: 0,
+					Money: 0,
+					admin: true
+				})
+				.expect(201)
+				.end(function(err, res) {
+					if(err) return done(err);
+					if(res.body.code) return done(res.body);
+
+					res.body.createdAt.should.have.type('string');
+					res.body.objectId.should.have.type('string');
+					res.body.sessionToken.should.have.type('string');
+					testAdmin = res.body;
 					done();
 				});
 		});
@@ -68,6 +95,22 @@ describe('Sending a GET to /api/v1/userLeagues', function(){
 				.end(done);
 		});
 	});
+	describe('should succeed', function(){
+		it('when getting all user leagues as an admin.', function(done){
+			requestLocal
+				.get('/api/v1/userLeagues?sessionToken=' + testAdmin.sessionToken)
+				.expect(200)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body);
+
+					res.body[0].objectId.should.be.type('string');
+					res.body[0].LeagueID.name.should.be.type('string');
+					res.body[0].UserID.username.should.be.type('string');
+					done();
+				});
+		});
+	});
 });
 
 describe('Cleaning up after the user league tests', function(){
@@ -75,6 +118,13 @@ describe('Cleaning up after the user league tests', function(){
 		it('testUser from Parse.', function(done){
 			requestParse
 				.del('/1/users/' + testUser.objectId)
+				.set('X-Parse-Application-Id', config.parse.applicationId)
+				.set('X-Parse-Master-Key', config.parse.masterKey)
+				.end(done);
+		});
+		it('testAdmin from Parse.', function(done){
+			requestParse
+				.del('/1/users/' + testAdmin.objectId)
 				.set('X-Parse-Application-Id', config.parse.applicationId)
 				.set('X-Parse-Master-Key', config.parse.masterKey)
 				.end(done);
