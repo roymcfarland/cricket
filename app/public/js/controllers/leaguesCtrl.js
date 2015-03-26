@@ -152,7 +152,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 				$scope.status = status;
 				if (status == 200) {
 					alert("Congratulations! You have joined " + leagueName + ".");
-					$location.path("/dashboard/join-league/team-builder");
+					$location.path("/dashboard/leagues/createLineup/" + leagueId);
 			}})
 			.error(function(data, status) {
 				$scope.data = data;
