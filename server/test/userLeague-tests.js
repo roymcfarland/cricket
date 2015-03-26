@@ -1,14 +1,47 @@
 var supertest = require('supertest');
 var should = require('should');
+var config = require('../config/config');
 
 var requestLocal = supertest('http://localhost:3000');
 var requestParse = supertest('https://api.parse.com');
+var testUser;
+
+describe('Preparing for the GET userLeagues tests', function(){
+	describe('by creating', function(){
+		it('a testUser.', function(done){
+			requestParse
+				.post('/1/users')
+				.set('Content-Type', 'application/json')
+				.set('X-Parse-Application-Id', config.parse.applicationId)
+				.set('X-Parse-Master-Key', config.parse.masterKey)
+				.send({
+					"username": "testUser",
+					"password": "password",
+					"email": "testUser@latitude40.com",
+					totalScore: 0,
+					Money: 0,
+					admin: false
+				})
+				.expect(201)
+				.end(function(err, res) {
+					if(err) return done(err);
+					if(res.body.code) return done(res.body);
+
+					res.body.createdAt.should.have.type('string');
+					res.body.objectId.should.have.type('string');
+					res.body.sessionToken.should.have.type('string');
+					testUser = res.body;
+					done();
+				});
+		});
+	});
+});
 
 describe('Sending a GET to /api/v1/userLeagues', function(){
 	describe('should fail', function(){
 		it('when the leagueId is not alphanumeric.', function(done){
 			requestLocal
-				.get('/api/v1/userLeagues?leagueId=LUJG!!!')
+				.get('/api/v1/userLeagues?leagueId=LUJG!!!&sessionToken=' + testUser.sessionToken)
 				.expect(428)
 				.end(function(err, res){
 					if(err) return done(err);
@@ -19,7 +52,7 @@ describe('Sending a GET to /api/v1/userLeagues', function(){
 		});
 		it('when the userId is not alphanumeric.', function(done){
 			requestLocal
-				.get('/api/v1/userLeagues?userId=LUJG!!!')
+				.get('/api/v1/userLeagues?userId=LUJG!!!&sessionToken=' + testUser.sessionToken)
 				.expect(428)
 				.end(function(err, res){
 					if(err) return done(err);
@@ -27,6 +60,24 @@ describe('Sending a GET to /api/v1/userLeagues', function(){
 					res.body.errors.userId[0].should.be.exactly('The userId field must be alphanumeric.');
 					done();
 				});
+		});
+		it('when getting all userLeagues when the user is not an admin.', function(done){
+			requestLocal
+				.get('/api/v1/userLeagues?sessionToken=' + testUser.sessionToken)
+				.expect(403)
+				.end(done);
+		});
+	});
+});
+
+describe('Cleaning up after the user league tests', function(){
+	describe('by removing', function(){
+		it('testUser from Parse.', function(done){
+			requestParse
+				.del('/1/users/' + testUser.objectId)
+				.set('X-Parse-Application-Id', config.parse.applicationId)
+				.set('X-Parse-Master-Key', config.parse.masterKey)
+				.end(done);
 		});
 	});
 });
