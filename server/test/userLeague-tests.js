@@ -124,6 +124,20 @@ describe('Sending a GET to /api/v1/userLeagues', function(){
 					done();
 				});
 		});
+		it('when getting certain user leagues.', function(done){
+			requestLocal
+				.get('/api/v1/userLeagues?sessionToken=' + testUser.sessionToken + '&userId=TZuZi1EJ1K')
+				.expect(200)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body);
+
+					res.body[0].objectId.should.be.type('string');
+					res.body[0].LeagueID.name.should.be.type('string');
+					res.body[0].UserID.username.should.be.type('string');
+					done();
+				});
+		});
 	});
 });
 
