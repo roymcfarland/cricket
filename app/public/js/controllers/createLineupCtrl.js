@@ -3,32 +3,62 @@ var createLineupCtrl = angular.module("createLineupCtrl", []);
 createLineupCtrl.controller("createLineupController", function($location, $scope, $http, $filter, $routeParams, ngTableParams, Players) {
 
 	var vm = this;
-	// console.log($scope);
+	vm.user = Parse.User.current();
+	vm.username = vm.user.getUsername();
+	vm.userMoney = vm.user.attributes.Money;
 	
+	// init() confirming user authentication & league membership 
 	var init = function() {
-		alert("The leagueId is" + $routeParams.leagueId);
+		
+		alert("The leagueId is " + $routeParams.leagueId);
+
+		// Is the user logged in?
+		if(!vm.user) return $location.path("/");
+
+		// Is the user a member of this league?
+		var leagueId = $routeParams.leagueId;
+		var user = Parse.User.current();
+		var userId = user.id;
+		var sessionToken = user._sessionToken;
+		/*
+		console.log("leagueId: ", leagueId);
+		console.log("userId: ", userId);
+		console.log("sessionToken: ", sessionToken);
+		*/
+
+			// AJAX GET //
+			$http.get("/api/v1/userLeagues?leagueId=" + leagueId + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
+				.success(function(data, status) {
+					$scope.data = data;
+					$scope.status = status;
+					console.log ("League membership confirmed!");
+				})
+				.error(function(data, status) {
+					$scope.data = data;
+					$scope.status = status;
+					if (status == 428) {
+						alert("Sorry! There was an error. (428)");
+						$location.path("/dashboard/leagues");
+					}
+				});
+
+
 	};
 
 	init();
-
-	/////////////////////////////////
-	////// USER AUTHENTICATION //////
-	/////////////////////////////////
-	
-	vm.user = Parse.User.current();
-	if(!vm.user) return $location.path("/");
-
 
 
 	/////////////////////////////////
 	/// ACQUIRE CURRENT USER INFO ///
 	/////////////////////////////////
 	
+	/*
 	vm.username = vm.user.getUsername();
 	// vm.userId = vm.user.id;
 	vm.userMoney = vm.user.attributes.Money;
 	// console.log("vm.user.attributes: ", vm.user.attributes);
 	// console.log("vm.user: ", vm.user);
+	*/
 
 
 

@@ -2,10 +2,10 @@
 <!-- ng-controller="teamBuilderController as teamBuilder" -->
 <div class="jumbotron">
 	<div class="row">
-		<a class="btn btn-default pull-right" href="/dashboard/join-league">Go Back</a>
+		<a class="btn btn-default pull-right" href="/dashboard/leagues">Go Back</a>
 	</div>
 	<div>
-		<h5 class="pull-right">Current Balance: {{teamBuilder.userMoney | currency}}</h5>
+		<h5 class="pull-right">Current Balance: {{createLineupCtrl.userMoney | currency}}</h5>
 		<h3>Step 2: Draft Players</h3>
 		<table ng-table="tableParams" class="table ng-table-rowselected">
 			<tr ng-repeat="player in players.players" ng-click="player.$selected = !player.$selected; changeSelection(player); selectId(player.objectId); selectName(player.name); selectPlayerType(player.CricketPlayerType.name); selectPlayerTeam(player.team)" ng-class="{'active': player.$selected}">

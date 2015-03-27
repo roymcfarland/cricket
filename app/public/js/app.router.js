@@ -70,7 +70,7 @@ appRouter.config(function($routeProvider, $locationProvider) {
 		.when("/dashboard/leagues/createLineup/:leagueId", {
 			templateUrl: "../views/createLineup.html",
 			controller: "createLineupController",
-			controllerAs: "createLineup"
+			controllerAs: "createLineupCtrl"
 		})
 
 		// route for selecting match (MatchID)
