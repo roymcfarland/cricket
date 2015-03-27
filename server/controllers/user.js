@@ -71,7 +71,6 @@ UserController.prototype.getAll = function(req, res) {
 		.end(function(result){
 			if(result.body.code) return res.status(500).send(result.body);
 
-			console.log(result.body);
 			return res.send({users: result.body.results});
 		});
 };
@@ -84,7 +83,6 @@ UserController.prototype.getOne = function(req, res) {
 		.end(function(result){
 			if(result.body.code) return res.status(500).send(result.body);
 
-			console.log(result.body);
 			return res.send({user: result.body});
 		});
 };

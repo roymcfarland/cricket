@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mocha -t 15000 server/test
+mocha -t 20000 server/test
