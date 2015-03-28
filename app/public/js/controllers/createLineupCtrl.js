@@ -20,24 +20,21 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		var user = Parse.User.current();
 		var userId = user.id;
 		var sessionToken = user._sessionToken;
-		/*
-		console.log("leagueId: ", leagueId);
-		console.log("userId: ", userId);
-		console.log("sessionToken: ", sessionToken);
-		*/
 
 			// AJAX GET //
 			$http.get("/api/v1/userLeagues?leagueId=" + leagueId + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
 				.success(function(data, status) {
 					$scope.data = data;
 					$scope.status = status;
-					console.log ("League membership confirmed!");
-				})
+					if (status == 200) {
+					alert("League membership confirmed!");
+				}})
 				.error(function(data, status) {
 					$scope.data = data;
 					$scope.status = status;
 					if (status == 428) {
-						alert("Sorry! There was an error. (428)");
+						console.log(data);
+						alert("Error: " + data.errors.leagueId[0] + " (428)");
 						$location.path("/dashboard/leagues");
 					}
 				});
@@ -46,19 +43,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	};
 
 	init();
-
-
-	/////////////////////////////////
-	/// ACQUIRE CURRENT USER INFO ///
-	/////////////////////////////////
-	
-	/*
-	vm.username = vm.user.getUsername();
-	// vm.userId = vm.user.id;
-	vm.userMoney = vm.user.attributes.Money;
-	// console.log("vm.user.attributes: ", vm.user.attributes);
-	// console.log("vm.user: ", vm.user);
-	*/
 
 
 
@@ -126,14 +110,14 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			$scope.status = status;
 			if (status == 200) {
 				alert("Congratulations! You have added " + playerName + "to your team!");
-				$location.path("/dashboard/join-league/team-builder");
+				$location.path("/dashboard/leagus/createLineup/:leagueId");
 		}})
 		.error(function(data, status) {
 			$scope.data = data;
 			$scope.status = status;
 			if (status == 404) {
 				alert("Sorry! There was an error. Please try again. (Error 404)");
-				$location.path("/dashboard/join-league/team-builder");
+				$location.path("/dashboard/leagues/createLineup/:leagueId");
 			}
 		})
 	};
