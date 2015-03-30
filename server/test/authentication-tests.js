@@ -12,5 +12,17 @@ describe('Sending a GET request to a protected route', function(){
 				.expect(430)
 				.end(done);
 		});
+		it('when the session token is not alphanumeric.', function(done){
+			requestLocal
+				.get('/api/v1/users')
+				.query('sessionToken=asurltj#@')
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.errors.sessionToken[0].should.be.exactly('The sessionToken field must be alphanumeric.');
+					done();
+				});
+		});
 	});
 });

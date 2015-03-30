@@ -1,10 +1,16 @@
 var superagent = require('superagent');
+var Validatorjs = require('validatorjs');
 var config = require('../config/config');
 
 var protectGetRoutes = function(req, res, next){
 	var sessionToken = req.query.sessionToken;
+	var rules = {
+		sessionToken: 'alpha_num'
+	};
+	var validation = new Validatorjs(req.query, rules);
 
 	if(!sessionToken) return res.sendStatus(430);
+	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
 
 	superagent
 		.get('https://api.parse.com/1/users/me')
