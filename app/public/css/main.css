@@ -235,15 +235,15 @@ body {
 }
 
 /* Rules page */
-.box{
+.box {
 	border: 1px solid grey;
 	margin-bottom: 5px;
 }
 
-.shim-left{
+.shim-left {
 	padding-left: 20px;
 }
 
-.sample-image-padding{
+.sample-image-padding {
 	padding: 0 40px 20px 40px;
 }

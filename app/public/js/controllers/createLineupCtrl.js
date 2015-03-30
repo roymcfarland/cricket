@@ -101,6 +101,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			objectId: vm.user.id
 		};
 
+
 		/////////////////
 		/// AJAX POST ///
 		/////////////////
