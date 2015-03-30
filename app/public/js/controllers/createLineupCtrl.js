@@ -7,7 +7,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	vm.username = vm.user.getUsername();
 	vm.userMoney = vm.user.attributes.Money;
 	
-	// init() confirming user authentication & league membership 
+	// init() to confirm user authentication & league membership 
 	var init = function() {
 		
 		alert("The leagueId is " + $routeParams.leagueId);
@@ -104,6 +104,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		/////////////////
 		/// AJAX POST ///
 		/////////////////
+		/*
 		$http.post("/api/v1/players" + playerId + "?addUser=true", {user: user}, [])
 		.success(function(data, status) {
 			$scope.data = data;
@@ -118,8 +119,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			if (status == 404) {
 				alert("Sorry! There was an error. Please try again. (Error 404)");
 				$location.path("/dashboard/leagues/createLineup/:leagueId");
-			}
-		})
+		}})
+		*/
 	};
 
 
@@ -156,6 +157,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	////////////////////////////////
 	/////////// NG-TABLE ///////////
 	////////////////////////////////
+	/*
 	var data = [];
 	// $scope.data = data;
 	setTimeout(function() {
@@ -189,4 +191,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	    	}
 		});
 	}, 500);
+	*/
+
 });

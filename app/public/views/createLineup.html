@@ -1,37 +1,65 @@
 <!-- Begin ng-view -->
-<!-- ng-controller="teamBuilderController as teamBuilder" -->
+<!-- ng-controller="createLineupController as createLineupCtrl" -->
 <div class="jumbotron">
-	<div class="row">
-		<a class="btn btn-default pull-right" href="/dashboard/leagues">Go Back</a>
+	
+	<!-- Display amount of money user has to purchase players -->
+	<div class="box shim-left">
+		<h5 class="pull-right">
+			Current Balance: {{createLineupCtrl.userMoney | currency}}
+		</h5>
 	</div>
-	<div>
-		<h5 class="pull-right">Current Balance: {{createLineupCtrl.userMoney | currency}}</h5>
-		<h3>Step 2: Draft Players</h3>
-		<table ng-table="tableParams" class="table ng-table-rowselected">
-			<tr ng-repeat="player in players.players" ng-click="player.$selected = !player.$selected; changeSelection(player); selectId(player.objectId); selectName(player.name); selectPlayerType(player.CricketPlayerType.name); selectPlayerTeam(player.team)" ng-class="{'active': player.$selected}">
-				<td data-title="'Name'" sortable="'name'" filter="{ 'name': 'text' }">
-					{{player.name}}
-				</td>
-				<td data-title="'Position'" sortable="'CricketPlayerTypeID'" filter="{ 'CricketPlayerTypeID': 'text' }">
-					{{player.CricketPlayerType.name}}
-				</td>
-				<td data-title="'Team'" sortable="'team'" filter="{ 'team': 'text' }">
-					{{player.team}}
-				</td>
-				<td data-title="'Contract Price'" sortable="'cost'" filter="{ 'cost': 'text' }">
-					{{player.cost | currency}}
-				</td>
-			</tr> <!-- /.ng-repeat -->
-		</table> <!-- /.ng-table -->
-		<!-- 
-		<strong>Selected Players:</strong> {{ players.players | filter:{"$selected": true} }}
-		-->
+
+	<!-- Create lineup module -->
+	<div class="box shim-left">
+		<h3>Step 2: Select Lineup</h3>
+		<div class="container">
+			<div class="col-sm-6">
+				<div class="text-center">MY TEAM</div>
+				<table class="table table-striped">
+					<thead>
+						<th></th>
+						<th>Name</th>
+						<th>Position</th>
+						<th>Team</th>
+						<th>Cost</th>
+					</thead>
+					<tbody>
+						<tr ng-click="selectId(player.objectId); selectName(player.name); selectPlayerType(player.CricketPlayerType.name); selectPlayerTeam(player.team)">
+							<td><a class="btn btn-danger" ng-click="removePlayerFromTeam()">-</a></td>
+							<td>{{player.name}}</td>
+							<td>{{player.CricketPlayerType.name}}</td>
+							<td>{{player.team}}</td>
+							<td>{{player.cost | currency}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-sm-6">
+				<div class="text-center">AVAILABLE PLAYERS</div>
+				<table class="table table-striped">
+					<thead>
+						<th></th>
+						<th>Name</th>
+						<th>Position</th>
+						<th>Team</th>
+						<th>Cost</th>
+					</thead>
+					<tbody>
+						<tr ng-repeat="player in players.players" ng-click="selectId(player.objectId); selectName(player.name); selectPlayerType(player.CricketPlayerType.name); selectPlayerTeam(player.team)">
+							<td><a class="btn btn-success" ng-click="addPlayerToTeam()">+</a></td>
+							<td>{{player.name}}</td>
+							<td>{{player.CricketPlayerType.name}}</td>
+							<td>{{player.team}}</td>
+							<td>{{player.cost | currency}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
-	<div class="row">
-		<a class="btn btn-default pull-right" ng-click="addPlayerToTeam()">Add Player</a>
-		<a class="btn btn-default pull-right" ng-click="removePlayerFromTeam()">Remove Player</a>
-	</div>
+	
 	<!-- 
 	<pre>{{players.players | json }}</pre>
 	-->
+
 </div> <!-- /.jumbotron -->
