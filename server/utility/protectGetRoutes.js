@@ -18,7 +18,7 @@ var protectGetRoutes = function(req, res, next){
 		.set('X-Parse-REST-API-Key', config.parse.apiKey)
 		.set('X-Parse-Session-Token', sessionToken)
 		.end(function(validateSessionTokenResult){
-			if(validateSessionTokenResult.body.code) return res.sendStatus(404);
+			if(validateSessionTokenResult.body.code) return res.status(500).send(validateSessionTokenResult.body);
 
 			req.user = validateSessionTokenResult.body;
 			next();

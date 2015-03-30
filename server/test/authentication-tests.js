@@ -24,5 +24,17 @@ describe('Sending a GET request to a protected route', function(){
 					done();
 				});
 		});
+		it('when the session token is not accepted by Parse.', function(done){
+			requestLocal
+				.get('/api/v1/users')
+				.query('sessionToken=notarealtoken')
+				.expect(500)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.code.should.be.exactly(101);
+					done();
+				});
+		});
 	});
 });
