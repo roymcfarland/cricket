@@ -1,22 +1,29 @@
 <!-- Begin ng-view -->
 <!-- ng-controller="createLineupController as createLineupCtrl" -->
 <div class="jumbotron">
-	
-	<!-- Display amount of money user has to purchase players -->
-	<div class="box shim-left">
-		<h5 class="pull-right">
-			Current Balance: {{createLineupCtrl.userMoney | currency}}
-		</h5>
+	<div class="wrapper">
+		<div class="container">
+			<h2>Step 2: Create Lineup</h2>
+		</div>
 	</div>
-
-	<!-- Create lineup module -->
-	<div class="box shim-left">
-		<h3>Step 2: Select Lineup</h3>
+	<div class="wrapper">
+		<div class="container">
+			<div class="col-sm-8">
+				<p>Balance: ${user.beginningBalance}</p>
+				<p>Remaining Transfers: {user.transfers} of 10</p>
+			</div>
+			<div class="col-sm-4">
+				<p>Next Match: {nextMatch}</p>
+				<p>Starts in: {countdown}</p>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper">
 		<div class="container">
 			<div class="col-sm-6">
 				<div class="text-center"><p>MY TEAM</p></div>
 				<div class="row">
-					<p>Minimum: 1 <img src="/../images/wicket.png" alt="wicket"> 3 <img src="/../images/ball.png"> 3 <img src="/../images/bat.png"></p>
+					<p>Minimum Lineup: 1 <img src="/../images/wicket.png" alt="wicket"> 3 <img src="/../images/ball.png"> 3 <img src="/../images/bat.png"></p>
 				</div>
 				<table class="table table-striped">
 					<thead>
@@ -36,6 +43,9 @@
 						</tr>
 					</tbody>
 				</table>
+				<div>
+					<a class="btn btn-default" ng-click="">Save Lineup</a>
+				</div>
 			</div>
 			<div class="col-sm-6">
 				<div class="text-center"><p>AVAILABLE PLAYERS</p></div>
@@ -61,9 +71,7 @@
 		</div>
 	</div>
 
-	<div>
-		<a class="btn btn-default" ng-click="">Save Lineup</a>
-	</div>
+
 	
 	<!-- 
 	<pre>{{players.players | json }}</pre>
