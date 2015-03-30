@@ -17,6 +17,10 @@ Status Codes
 
 429 - User must be an admin
 
+430 - Session Token missing
+
+500 - General
+
 512 - Populating a new user with default data - but the user passed in the route could not be found on Parse
 
 513 - Error adding default data to new Parse user
