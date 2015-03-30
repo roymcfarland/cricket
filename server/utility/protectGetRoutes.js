@@ -4,7 +4,7 @@ var config = require('../config/config');
 var protectGetRoutes = function(req, res, next){
 	var sessionToken = req.query.sessionToken;
 
-	if(!sessionToken) return res.sendStatus(404);
+	if(!sessionToken) return res.sendStatus(430);
 
 	superagent
 		.get('https://api.parse.com/1/users/me')

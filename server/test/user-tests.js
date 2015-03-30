@@ -118,12 +118,6 @@ describe('Sending a POST to /api/v1/users', function(){
 
 describe('Sending a GET to /api/v1/users', function(){
 	describe('should fail', function(){
-		it('when a user is not passed in.', function(done){
-			requestLocal
-				.get('/api/v1/users')
-				.expect(404)
-				.end(done);
-		});
 		it('when the wrong sessionToken is passed in.', function(done){
 			requestLocal
 				.get('/api/v1/users')
