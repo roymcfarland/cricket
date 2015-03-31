@@ -170,7 +170,7 @@ describe('Sending a GET to /api/v1/userLeagues', function(){
 		});
 		it('when getting certain user leagues.', function(done){
 			requestLocal
-				.get('/api/v1/userLeagues?sessionToken=' + testUser.sessionToken + '&userId=TZuZi1EJ1K' + '&leagueId=P5Adckyk4s')
+				.get('/api/v1/userLeagues?sessionToken=' + testUser.sessionToken + '&userId=TZuZi1EJ1K' + '&leagueId=aIQmutRHfO')
 				.expect(200)
 				.end(function(err, res){
 					if(err) return done(err);
