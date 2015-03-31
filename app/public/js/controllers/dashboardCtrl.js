@@ -2,64 +2,61 @@ var dashboardCtrl = angular.module("dashboardCtrl", []);
 
 dashboardCtrl.controller("dashboardController", function($location, $scope, $http) {
 	
+	/////////////////////////////////
+	/////////// Variables ///////////
+	/////////////////////////////////
+
+	// VM
 	var vm = this;
 	vm.user = Parse.User.current();
-	var user = Parse.User.current();
-	// console.log($scope);
-
-	/////////////////////////////////
-	////// USER AUTHENTICATION //////
-	/////////////////////////////////
-	
-	vm.user = Parse.User.current();
-	if(!vm.user) return $location.path("/");
-
-
-
-	/////////////////////////////////
-	/// ACQUIRE CURRENT USER INFO ///
-	/////////////////////////////////
 	vm.username = vm.user.getUsername();
-	// console.log("vm.user: ", vm.user);
-	vm.userId = vm.user.id;
 	vm.userMoney = vm.user.attributes.Money;
-	// console.log("vm.userMoney: ", vm.userMoney);
-
-
-
-	/////////////////////////////////
-	/////////// AJAX GET ////////////
-	/////////////////////////////////
-	/*
-	$http.get("/api/leagues/:userId")
-	.success(function(response) {
-		$scope.userLeagues = response;
-	})
-	.error(function(error) {
-		alert("Sorry - there was an error.Try again.");
-		$location.path("/dashboard");
-	});
-	*/
-
+	
+	var user = Parse.User.current();
 	var userId = user.id;
-	console.log("userId:", userId);
-
 	var sessionToken = user._sessionToken;
-	console.log("sessionToken:", sessionToken);
+	
 
-	$http.get("/api/v1/userLeagues?leagueId=" + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
-		.success(function(response, status) {
-			$scope.userLeagues = response;
-			$scope.status = status;
-			if (status == 200) {
-				console.log("$scope.status:", $scope.status);
-				console.log("$scope.userLeagues:", $scope.userLeagues);
-			}
-		})
-		.error(function(data, status) {
-			$scope.data = data;
-			$scope.status = status;
-		})
+	/////////////////////////////////
+	//////// Initialization /////////
+	/////////////////////////////////
+
+	var init = function() {
+
+		// Is the user logged in?
+		if(!vm.user) return $location.path("/");
+
+		// Get user's leagues
+		$http.get("/api/v1/userLeagues?leagueId=" + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
+			.success(function(response, status) {
+				$scope.userLeagues = response;
+				$scope.status = status;
+				if (status == 200) {
+					// console.log("$scope.status:", $scope.status);
+					// console.log("$scope.userLeagues:", $scope.userLeagues);
+				}
+			})
+			.error(function(response, status) {
+				$scope.response = response;
+				$scope.status = status;
+				if (status == 500) {
+					console.log("error response:", response);
+					alert("Error (500)");
+					$location.path("/dashboard");
+				}
+			});
+
+	};
+
+	init();
+
+
+
+	/////////////////////////////////
+	//////// dashboard.html /////////
+	/////////////////////////////////
+
+
 
 
 

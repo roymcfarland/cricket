@@ -38,7 +38,6 @@ var cricketDuel = angular.module("cricketDuel", [
 	"adminCtrl",
 	"leaguesCtrl",
 	"createLineupCtrl",
-	"matchesCtrl",
 	"leaguesService",
 	"createLineupService",
 	"matchService"

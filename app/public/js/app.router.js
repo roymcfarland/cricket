@@ -14,7 +14,7 @@ appRouter.config(function($routeProvider, $locationProvider) {
 		.when("/dashboard", {
 			templateUrl: "../views/dashboard.html",
 			controller: "dashboardController",
-			controllerAs: "dashboard"
+			controllerAs: "dashboardCtrl"
 		})
 
 		// route for admin managment
@@ -80,12 +80,6 @@ appRouter.config(function($routeProvider, $locationProvider) {
 			controllerAs: "createLineupCtrl"
 		})
 
-		// route for selecting match (MatchID)
-		.when("/dashboard/matches", {
-			templateUrl: "../views/matches.html",
-			controller: "matchesController",
-			controllerAs: "matchesCtrl"
-		})
 
 		// catch all route
 		.otherwise({
