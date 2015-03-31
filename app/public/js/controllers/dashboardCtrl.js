@@ -53,20 +53,45 @@ dashboardCtrl.controller("dashboardController", function($location, $scope, $htt
 
 
 	/////////////////////////////////
-	//////// dashboard.html /////////
-	/////////////////////////////////
-
-
-
-
-
-
-	/////////////////////////////////
-	///////////// ASIDE /////////////
+	///////////// Aside /////////////
 	/////////////////////////////////
 	$scope.aside = {
 		"title": "Easter Egg",
 		"content": "Testing Angular Strap!"
 	};
+
+
+
+	/////////////////////////////////
+	//////// dashboard.html /////////
+	/////////////////////////////////
+
+	$scope.selectUserLeague = function(id, name, score) {
+		
+		$scope.userLeagueId = id;
+		$scope.userLeagueName = name;
+		$scope.userLeagueScore = score;
+
+		console.log("You selected", $scope.userLeagueName);
+	
+	};
+
+
+
+	/////////////////////////////////
+	/////// viewUserLineup() ////////
+	/////////////////////////////////
+	
+	$scope.viewUserLineup = function() {
+
+		var leagueId = $scope.userLeagueId;
+		// console.log("leagueId:", leagueId);
+		$location.path("/dashboard/leagues/createLineup/" + leagueId);
+
+	};
+
+
+
+
 
 });

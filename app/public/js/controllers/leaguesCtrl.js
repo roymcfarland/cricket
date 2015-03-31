@@ -70,10 +70,12 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 			objectId: vm.user.id
 		};
 
+		/*
 		console.log("leagueId: ", leagueId);
 		console.log("leagueName: ", leagueName);
 		console.log("leagueEntryFee: ", leagueEntryFee);
 		console.log("user:", user);
+		*/
 
 		// AJAX POST //
 		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true", {user: user}, [])

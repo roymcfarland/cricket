@@ -10,7 +10,7 @@
 	</div>
 	<div class="wrapper">
 		<div class="container">
-			<h2>DASHBOARD</h2>
+			<h2>Dashboard</h2>
 		</div>
 	</div>
 	<div class="wrapper">
@@ -29,19 +29,20 @@
 					<th>Score</th>
 				</thead>
 				<tbody>
-					<tr ng-repeat="league in userLeagues">
+					<tr ng-repeat="league in userLeagues" ng-click="selectUserLeague(league.LeagueID.objectId, league.LeagueID.name, league.UserID.totalScore)">
 						<td>{{league.LeagueID.name}}</td>
 						<td>{{league.UserID.totalScore}}</td>
 					</tr>
 				</tbody>
 			</table>
-			<a class="btn btn-default pull-right">View League Details</a>
+			<a class="btn btn-default pull-right" ng-click="viewUserLineup()">View League</a>
 		</div>
 	</div>
 
 	<!--
 	<pre>{{userLeagues | json}}</pre>
 	-->
+
 	
 </div> <!-- /.jumbotron -->
 

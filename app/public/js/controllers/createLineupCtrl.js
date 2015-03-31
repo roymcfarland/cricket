@@ -30,15 +30,16 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// Is the user a member of this league?
 		$http.get("/api/v1/userLeagues?leagueId=" + leagueId + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
-			.success(function(data, status) {
-				$scope.data = data;
+			.success(function(response, status) {
+				$scope.league = response;
 				$scope.status = status;
 				if (status == 200) {
-				alert("League membership confirmed!");
+					console.log("League membership confirmed!");
+					console.log("$scope.status:", $scope.status);
 				}
 			})
-			.error(function(data, status) {
-				$scope.data = data;
+			.error(function(response, status) {
+				$scope.response = response;
 				$scope.status = status;
 				if (status == 428) {
 					console.log(data);

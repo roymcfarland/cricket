@@ -3,7 +3,7 @@
 <div class="jumbotron">
 	<div class="wrapper">
 		<div class="container">
-			<h2>STEP 2: CREATE LINEUP</h2>
+			<h2>Step 2: Create Lineup for {{league[0].LeagueID.name}}</h2>
 		</div>
 	</div>
 	<div class="wrapper">
@@ -36,7 +36,7 @@
 						<th>Cost</th>
 					</thead>
 					<tbody>
-						<tr ng-click="selectId(player.objectId); selectName(player.name); selectPlayerType(player.CricketPlayerType.name); selectPlayerTeam(player.team)">
+						<tr ng-click="selectPlayer(player.objectId, player.name, player.CricketPlayerType.name, player.team)">
 							<td><a class="btn btn-danger" ng-click="removePlayerFromTeam()">-</a></td>
 							<td>{{player.name}}</td>
 							<td>{{player.CricketPlayerType.name}}</td>
