@@ -11,10 +11,6 @@
 	<div class="wrapper">
 		<div class="container">
 			<h2>Dashboard</h2>
-		</div>
-	</div>
-	<div class="wrapper">
-		<div class="container">
 			<p class="pull-right">Current Balance: {{dashboardCtrl.userMoney | currency}}</p>
 		</div>
 	</div>
@@ -25,8 +21,8 @@
 			</div>
 			<table class="table table-striped">
 				<thead>
-					<th>Name</th>
-					<th>Score</th>
+					<th>League Name</th>
+					<th>Total Score</th>
 				</thead>
 				<tbody>
 					<tr ng-repeat="league in userLeagues" ng-click="selectUserLeague(league.LeagueID.objectId, league.LeagueID.name, league.UserID.totalScore)">
