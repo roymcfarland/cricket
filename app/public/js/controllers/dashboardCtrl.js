@@ -18,10 +18,10 @@ dashboardCtrl.controller("dashboardController", function($location, $scope, $htt
 	/// ACQUIRE CURRENT USER INFO ///
 	/////////////////////////////////
 	vm.username = vm.user.getUsername();
-	console.log("vm.user: ", vm.user);
+	// console.log("vm.user: ", vm.user);
 	vm.userId = vm.user.id;
 	vm.userMoney = vm.user.attributes.Money;
-	console.log("vm.userMoney: ", vm.userMoney);
+	// console.log("vm.userMoney: ", vm.userMoney);
 
 
 

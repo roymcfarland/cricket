@@ -5,6 +5,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////////////////////////////////
 	/////////// Variables ///////////
 	/////////////////////////////////
+	
 	var vm = this;
 	vm.user = Parse.User.current();
 	vm.username = vm.user.getUsername();
@@ -19,6 +20,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////////////////////////////////
 	//////// Initialization /////////
 	/////////////////////////////////
+	
 	var init = function() {
 
 		// Is the user logged in?
@@ -48,7 +50,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 
 	/////////////////////////////////
-	///// teamBuilderService.js /////
+	//// createLineupService.js /////
 	/////////////////////////////////
 	
 	Players.then(function(data) {
@@ -58,25 +60,18 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 
 	/////////////////////////////////
-	/////// team-builder.html ///////
+	/////// createLineup.html ///////
 	/////////////////////////////////
 
-	// ng-click
-	$scope.selectId = function(id) {
+	$scope.selectPlayer = function(id, name, playerType, playerTeam) {
 		$scope.playerId = id;
-	};
-	
-	$scope.selectName = function(name) {
 		$scope.playerName = name;
-	};
-	
-	$scope.selectPlayerType = function(playerType) {
 		$scope.playerType = playerType;
-	};
-	
-	$scope.selectPlayerTeam = function(playerTeam) {
 		$scope.playerTeam = playerTeam;
-	}
+
+		console.log("You selected", $scope.playerName);
+
+	};
 
 
 
@@ -85,20 +80,21 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////////////////////////////////
 	
 	$scope.addPlayerToTeam = function() {
+		
 		var playerId = $scope.playerId;
-		console.log("playerId: ", playerId);
 		var playerName = $scope.playerName;
-		console.log("playerName: ", playerName);
 		var playerType = $scope.playerType;
-		console.log("playerType: ", playerType);
 		var playerTeam = $scope.playerTeam;
-		console.log("playerTeam: ", playerTeam);
-
-		// See BP comment in leaguesCtrl.js
 		var user = {
 			sessionToken: vm.user._sessionToken,
 			objectId: vm.user.id
 		};
+
+		console.log("playerId:", playerId);
+		console.log("playerName:", playerName);
+		console.log("playerType:", playerType);
+		console.log("playerTeam:", playerTeam);
+		console.log("user:", user);
 
 		// AJAX POST //
 		/*
@@ -108,14 +104,14 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			$scope.status = status;
 			if (status == 200) {
 				alert("Congratulations! You have added " + playerName + "to your team!");
-				$location.path("/dashboard/leagus/createLineup/:leagueId");
+				$location.path("/dashboard/leagus/createLineup/" + leagueId);
 		}})
 		.error(function(data, status) {
 			$scope.data = data;
 			$scope.status = status;
 			if (status == 404) {
 				alert("Sorry! There was an error. Please try again. (Error 404)");
-				$location.path("/dashboard/leagues/createLineup/:leagueId");
+				$location.path("/dashboard/leagues/createLineup/" + leagueId);
 		}})
 		*/
 	};
@@ -128,12 +124,13 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	
 	$scope.removePlayerFromTeam = function() {
 		var playerId = $scope.playerId;
-		console.log("playerId: ", playerId);
 		var playerName = $scope.playerName;
-		console.log("playerName: ", playerName);
 		var playerType = $scope.playerType;
-		console.log("playerType: ", playerType);
 		var playerTeam = $scope.playerTeam;
+
+		console.log("playerId: ", playerId);
+		console.log("playerName: ", playerName);
+		console.log("playerType: ", playerType);
 		console.log("playerTeam: ", playerTeam);
 
 		// See BP comment in leaguesCtrl.js

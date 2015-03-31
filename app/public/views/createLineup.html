@@ -3,7 +3,7 @@
 <div class="jumbotron">
 	<div class="wrapper">
 		<div class="container">
-			<h2>Step 2: Create Lineup</h2>
+			<h2>STEP 2: CREATE LINEUP</h2>
 		</div>
 	</div>
 	<div class="wrapper">
@@ -22,7 +22,7 @@
 		<div class="container">
 			<div class="col-sm-6">
 				<div class="text-center"><p>MY TEAM</p></div>
-				<div class="row">
+				<div class="row wrapper">
 					<p>Minimum Lineup: 1 <img src="/../images/wicket.png" alt="wicket"> 3 <img src="/../images/ball.png"> 3 <img src="/../images/bat.png"></p>
 				</div>
 				<table class="table table-striped">
@@ -58,7 +58,7 @@
 						<th>Cost</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="player in players.players" ng-click="selectId(player.objectId); selectName(player.name); selectPlayerType(player.CricketPlayerType.name); selectPlayerTeam(player.team)">
+						<tr ng-repeat="player in players.players" ng-click="selectPlayer(player.objectId, player.name, player.CricketPlayerType.name, player.team)">
 							<td><a class="btn btn-success" ng-click="addPlayerToTeam()">+</a></td>
 							<td>{{player.name}}</td>
 							<td>{{player.CricketPlayerType.name}}</td>
@@ -70,8 +70,6 @@
 			</div>
 		</div>
 	</div>
-
-
 	
 	<!-- 
 	<pre>{{players.players | json }}</pre>
