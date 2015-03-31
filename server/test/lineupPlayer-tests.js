@@ -47,7 +47,11 @@ describe('Preparing for the tests', function(){
 					multiEntry: false,
 					name: 'Test League',
 					noOfEntries: 0,
-					owner: testUser.objectId,
+					owner: {
+						__type: 'Pointer',
+						className: '_User',
+						objectId: testUser.objectId
+					},
 					totalScore: 0,
 					winningPrize: 10
 				})
@@ -158,92 +162,6 @@ describe('Preparing for the tests', function(){
 
 describe('Sending a POST to /api/v1/lineupPlayers', function(){
 	describe('should fail', function(){
-		it('when the users objectId is not sent in.', function(done){
-			requireLocal
-				.post('/api/v1/lineupPlayers')
-				.send({
-					// user: testUser,
-					user: {
-						sessionToken: testUser.sessionToken
-					},
-					LineupID: testLineup.objectId,
-					CricketPlayerID: testCricketPlayer.objectId
-				})
-				.expect(428)
-				.end(function(err, res){
-					if(err) return done(err);
-					if(res.body.code) return done(res.body.code);
-
-					res.body.errors.user[0].should.be.exactly('The user objectId must be included.');
-					done();
-				});
-		});
-
-		it('when the users objectId is not alphanumeric.', function(done){
-			requireLocal
-				.post('/api/v1/lineupPlayers')
-				.send({
-					// user: testUser,
-					user: {
-						objectId: '=',
-						sessionToken: testUser.sessionToken
-					},
-					LineupID: testLineup.objectId,
-					CricketPlayerID: testCricketPlayer.objectId
-				})
-				.expect(428)
-				.end(function(err, res){
-					if(err) return done(err);
-					if(res.body.code) return done(res.body.code);
-
-					res.body.errors.user[0].should.be.exactly('The user objectId must be included.');
-					done();
-				});
-		});
-
-		it('when the users sessionToken is not sent in.', function(done){
-			requireLocal
-				.post('/api/v1/lineupPlayers')
-				.send({
-					// user: testUser,
-					user: {
-						objectId: testUser.objectId
-					},
-					LineupID: testLineup.objectId,
-					CricketPlayerID: testCricketPlayer.objectId
-				})
-				.expect(428)
-				.end(function(err, res){
-					if(err) return done(err);
-					if(res.body.code) return done(res.body.code);
-
-					res.body.errors.user[0].should.be.exactly('The user sessionToken must be included.');
-					done();
-				});
-		});
-
-		it('when the users sessionToken is not alphanumeric.', function(done){
-			requireLocal
-				.post('/api/v1/lineupPlayers')
-				.send({
-					// user: testUser,
-					user: {
-						objectId: testUser.objectId,
-						sessionToken: '='
-					},
-					LineupID: testLineup.objectId,
-					CricketPlayerID: testCricketPlayer.objectId
-				})
-				.expect(428)
-				.end(function(err, res){
-					if(err) return done(err);
-					if(res.body.code) return done(res.body.code);
-
-					res.body.errors.user[0].should.be.exactly('The user sessionToken must be included.');
-					done();
-				});
-		});
-
 		it('when the LineupID is not included.', function(done){
 			requireLocal
 				.post('/api/v1/lineupPlayers')
@@ -314,28 +232,6 @@ describe('Sending a POST to /api/v1/lineupPlayers', function(){
 					if(res.body.code) return done(res.body.code);
 
 					res.body.errors.CricketPlayerID[0].should.be.exactly('The CricketPlayerID field must be alphanumeric.');
-					done();
-				});
-		});
-
-		it('when the user sessionToken is not accepted by parse.', function(done){
-			requireLocal
-				.post('/api/v1/lineupPlayers')
-				.send({
-					user: {
-						objectId: testUser.objectId,
-						sessionToken: 'ytdlj890r7'
-					},
-					// user: testUser,
-					LineupID: testLineup.objectId,
-					CricketPlayerID: testCricketPlayer.objectId
-				})
-				.expect(520)
-				.end(function(err, res){
-					if(err) return done(err);
-
-					res.body.error.code.should.be.exactly(101);
-					res.body.error.error.should.be.exactly('invalid session');
 					done();
 				});
 		});

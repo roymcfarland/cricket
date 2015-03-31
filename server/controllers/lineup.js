@@ -7,8 +7,7 @@ var LineupController = function(){};
 var createRules = {
 	UserLeagueId: 'required|alpha_num',
 	MatchID: 'required|alpha_num',
-	Locked: 'required|boolean',
-	user: 'objectId|sessionToken'
+	Locked: 'required|boolean'
 };
 
 Validatorjs.register('boolean', function(value, requirement, attribute){
@@ -37,19 +36,6 @@ LineupController.prototype.create = function(req, res) {
 	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
 
 	async.series({
-		verifyUserIsLoggedIn: function(done){
-			superagent
-				.get('https://api.parse.com/1/users/me')
-				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
-				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
-				.set('X-Parse-Session-Token', req.body.user.sessionToken)
-				.end(function(verifyUserIsLoggedInResult){
-					if(verifyUserIsLoggedInResult.body.code) return done({code: 520, error: verifyUserIsLoggedInResult.body});
-
-					currentUser = verifyUserIsLoggedInResult.body;
-					done();
-				});
-		},
 		createLineup: function(done){
 			superagent
 				.post('https://api.parse.com/1/classes/Lineup')
