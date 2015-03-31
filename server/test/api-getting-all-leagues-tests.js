@@ -137,7 +137,7 @@ describe('Getting all leagues owned by the user', function(){
 				res.body[0].objectId.should.be.exactly(leagueId);
 				res.body[0].totalScore.should.be.exactly(0);
 				res.body[0].name.should.be.exactly('test league');
-				res.body[0].owner.should.be.exactly(userId);
+				res.body[0].owner.objectId.should.be.exactly(userId);
 				res.body[0].rules.should.be.type('object');
 				done();
 			});

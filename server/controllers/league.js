@@ -46,11 +46,16 @@ LeagueController.prototype.create = function(req, res) {
 				.set('Content-Type', 'application/json')
 				.send({
 					"totalScore": 0,
-					"owner": req.body.objectId,
+					"owner": {
+						__type: 'Pointer',
+						className: '_User',
+						objectId: req.body.objectId
+					},
 					"rules": rules,
 					"name": req.body.name
 				})
 				.end(function(createLeagueResponse){
+					console.log(createLeagueResponse.body);
 					if(createLeagueResponse.body.error) return res.status(516).send(createLeagueResponse.body.error);
 
 					res.status(200).send(createLeagueResponse.body);
@@ -61,13 +66,20 @@ LeagueController.prototype.create = function(req, res) {
 LeagueController.prototype.getAll = function(req, res) {
 	if(req.query.owner){
 		if(req.query.objectId){
-			var query = JSON.stringify({owner: req.query.objectId});
+			var query = JSON.stringify({
+				owner: {
+					__type: 'Pointer',
+					className: '_User',
+					objectId: req.query.objectId
+				}
+			});
 
 			superagent
 				.get('https://api.parse.com/1/classes/League')
 				.set('X-Parse-Application-Id', config.parse.applicationId)
 				.set('X-Parse-Master-Key', config.parse.masterKey)
 				.query('where=' + query + '}')
+				.query('include=owner')
 				.end(function(response){
 					if(response.body.error) return res.status(518).send(response.body.error);
 

@@ -6,6 +6,7 @@ var requestLocal = supertest('http://localhost:3000');
 var requestParse = supertest('https://api.parse.com');
 var testUser;
 var testAdmin;
+var testLeague;
 
 describe('Preparing for the GET userLeagues tests', function(){
 	describe('by creating', function(){
@@ -58,6 +59,35 @@ describe('Preparing for the GET userLeagues tests', function(){
 					res.body.objectId.should.have.type('string');
 					res.body.sessionToken.should.have.type('string');
 					testAdmin = res.body;
+					done();
+				});
+		});
+		it('a testLeague.', function(done){
+			requestParse
+				.post('/1/classes/League')
+				.set('X-Parse-Application-Id', config.parse.applicationId)
+				.set('X-Parse-Master-Key', config.parse.masterKey)
+				.send({
+					entryFee: 10,
+					guaranteedPrize: 0,
+					maxEntries: 50,
+					multiEntries: false,
+					name: 'testLeague',
+					noOfEntries: 0,
+					owner: {
+						__type: 'Pointer',
+						className: '_User',
+						objectId: testUser.objectId
+					},
+					totalScore: 0,
+					winningPrize: 10000
+				})
+				.end(function(err, res){
+					if(err) return done(err);
+					console.log(res.body);
+					if(res.body.code) return done(res.body);
+
+					testLeague = res.body;
 					done();
 				});
 		});
