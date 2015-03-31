@@ -56,6 +56,7 @@
             <ul class="nav navbar-nav navbar-right">
               <li><a href="/leaderboard" ng-if="index.loginChecker()">Leaderboard</a></li>
               <li><a href="/dashboard" ng-if="index.loginChecker()">Dashboard</a></li>
+              <li><a href="/dashboard/leagues" ng-if="index.loginChecker()">Leagues</a></li>
               <li><a href="/rules" ng-if="index.loginChecker()">Rules</a></li>
               <li><a href="/" ng-click="index.doLogout()" ng-if="index.loginChecker()">Logout</a></li>
             </ul> <!-- /.navbar-right -->
