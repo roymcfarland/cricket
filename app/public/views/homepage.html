@@ -1,0 +1,46 @@
+<!-- Begin ng-view -->
+<!-- ng-controller="homepageController as homepageCtrl" -->
+      <div class="jumbotron text-center" id="top-jumbotron">
+      	<div class="box-login">
+        	<br><p>Already Created a Team?</p>
+            <span id="login-buttons">
+            	<form action="login" method="get" class="form-inline">
+                	<button class="btn-lg" id="btn-login"><span class="glyphicon glyphicon-user"></span>  LOGIN</button>
+                </form>
+            </span>
+        
+         </div>
+      	<h1>WELCOME TO</h1>
+        <h2>CRICKETDUEL</h2>
+        <span id="home-buttons">        
+            <form action="/rules" method="get" class="form-inline">
+                <button class="btn-lg" id="btn-game-rules">GAME RULES</button>
+            </form>
+            <form action="/register" method="get" class="form-inline">
+                <button class="btn-lg" id="btn-join-league">JOIN A LEAGUE</button>
+            </form>
+        </span>
+       
+       
+        <span id="spn-next-game">
+	       <p>Next Game Starts</p>
+           <div>
+    	    <div id="defaultCountdown"></div>
+            </div>
+            
+            <span id="spn-match-teams">
+            	 KKR<br>
+            	<img src="/images/kkr.png" alt="KKR"><br>
+            	vs<br>
+            	<img src="images/MI.png" alt"MI"><br>
+                  MI
+        	</span>
+            
+        </span>
+        
+
+        
+      </div>
+      <div class="content">
+      Some text
+      </div>

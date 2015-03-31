@@ -3,6 +3,13 @@ var appRouter = angular.module("appRouter", ["ngRoute"])
 appRouter.config(function($routeProvider, $locationProvider) {
 	$routeProvider
 
+		// route for homepage
+		.when("/", {
+			templateUrl: "../views/homepage.html",
+			controller: "homepageController",
+			controllerAs: "homepageCtrl"
+		})
+
 		// route to game player's unique dashboard
 		.when("/dashboard", {
 			templateUrl: "../views/dashboard.html",

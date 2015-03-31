@@ -9,48 +9,30 @@
     <!-- PARSE DB -->
     <script src="//www.parsecdn.com/js/parse-1.3.4.min.js"></script>
     <!-- CSS --> 
-    <link href='http://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed|Roboto+Slab' rel='stylesheet' type='text/css'>
-    
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed|Roboto+Slab">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css">
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/js/bower_components/ng-table/dist/ng-table.min.css">
     <link rel="stylesheet" href="/js/bower_components/angular-motion/dist/angular-motion.min.css">
     <link rel="stylesheet" href="/js/bower_components/bootstrap-additions/dist/bootstrap-additions.min.css">
+    <link rel="stylesheet" href="/css/jquery.countdown.css">
     <link rel="stylesheet" href="/css/main.css">
     <!-- ANGULAR JS (inserted in <head> for ngCloak optimization) -->
     <script src="/js/bower_components/angular/angular.min.js"></script>
     <script src="/js/bower_components/angular-route/angular-route.min.js"></script>
-    
-    <link rel="stylesheet" href="/css/jquery.countdown.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="/js/jquery.plugin.js"></script>
-    <script src="/js/jquery.countdown.js"></script>
-    <script>
-    $(function () {
-			var gameDay = new Date(2015, 4 - 1, 16);
-			$('#defaultCountdown').countdown({
-				until: gameDay,
-				padZeroes: true, 
-				format: 'yDHMS', 
-				layout: '<ul>{y<}<li>{yn} {yl}</li>{y>}' + 
-					'{d<}<li>{dnn} {dl}</li>{d>}{h<}<li>{hnn} {hl}</li>{h>}' + 
-					'{m<}<li>{mnn} {ml}</li>{m>}{s<}<li>{snn} {sl}</li>{s>}</ul>'
-			});
-		});
-    </script>
-        
   </head>
   <!-- End </head> Start <body> --> 
   <div class="ng-cloak" id="main-div" ng-cloak ng-app="cricketDuel" ng-controller="indexController as index">
   <body class="container"> 
-
     <header>
       <!-- Navbar Header -->
       <nav class="navbar navbar-default">
           <div class="navbar-header">
-          <!--<a class="navbar-brand" href="/"><i class="fa fa-diamond"></i> CricketDuel</a>-->
-          <a class="navbar-brand" href="/"></a>
+            <!--
+            <a class="navbar-brand" href="/"><i class="fa fa-diamond"></i> CricketDuel</a>
+            -->
+            <a class="navbar-brand" href="/"></a>
           </div> <!-- ./navbar-header -->
           <div class="navbar-collapse" id="nav-container">
             <ul class="nav navbar-nav navbar-right">
@@ -64,54 +46,8 @@
       </nav> <!-- /.navbar-default -->
     </header>
     <main>
-      <!-- Main content where angular templating will be injected -->
-      
+      <!-- Where angular templating will be injected -->
       <div ng-view></div>
-
-      <div class="jumbotron text-center" id="top-jumbotron">
-      	<div class="box-login">
-        	<br><p>Already Created a Team?</p>
-            <span id="login-buttons">
-            	<form action="login" method="get" class="form-inline">
-                	<button class="btn-lg" id="btn-login"><span class="glyphicon glyphicon-user"></span>  LOGIN</button>
-                </form>
-            </span>
-        
-         </div>
-      	<h1>WELCOME TO</h1>
-        <h2>CRICKETDUEL</h2>
-        <span id="home-buttons">        
-            <form action="/rules" method="get" class="form-inline">
-                <button class="btn-lg" id="btn-game-rules">GAME RULES</button>
-            </form>
-            <form action="/register" method="get" class="form-inline">
-                <button class="btn-lg" id="btn-join-league">JOIN A LEAGUE</button>
-            </form>
-        </span>
-       
-       
-        <span id="spn-next-game">
-	       <p>Next Game Starts</p>
-           <div>
-    	    <div id="defaultCountdown"></div>
-            </div>
-            
-            <span id="spn-match-teams">
-            	 KKR<br>
-            	<img src="/images/kkr.png" alt="KKR"><br>
-            	vs<br>
-            	<img src="images/MI.png" alt"MI"><br>
-                  MI
-        	</span>
-            
-        </span>
-        
-
-        
-      </div>
-      <div class="content">
-      Some text
-      </div>
     </main>
   </body> 
   <!-- End </body> Start <footer> -->
@@ -132,6 +68,10 @@
     </nav> <!-- /.navbar -->
 
     <!-- JS -->
+    <!-- jQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/js/jquery.plugin.js"></script>
+    <script src="/js/jquery.countdown.js"></script>
     <!-- App files -->
     <script src="/js/app.js"></script>
     <script src="/js/app.router.js"></script>
@@ -145,6 +85,7 @@
     <script src="/js/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <!-- Controllers -->
     <script src="/js/controllers/indexCtrl.js"></script>
+    <script src="/js/controllers/homepageCtrl.js"></script>
     <script src="/js/controllers/panelCtrl.js"></script>
     <script src="/js/controllers/leaderboardCtrl.js"></script>
     <script src="/js/controllers/rulesCtrl.js"></script>

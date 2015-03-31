@@ -26,6 +26,7 @@ var cricketDuel = angular.module("cricketDuel", [
 	"ngTable",
 	"appRouter",
 	"indexCtrl",
+	"homepageCtrl",
 	"panelCtrl",
 	"leaderboardCtrl",
 	"rulesCtrl",
