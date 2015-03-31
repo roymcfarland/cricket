@@ -3,6 +3,8 @@ var dashboardCtrl = angular.module("dashboardCtrl", []);
 dashboardCtrl.controller("dashboardController", function($location, $scope, $http) {
 	
 	var vm = this;
+	vm.user = Parse.User.current();
+	var user = Parse.User.current();
 	// console.log($scope);
 
 	/////////////////////////////////
@@ -38,6 +40,28 @@ dashboardCtrl.controller("dashboardController", function($location, $scope, $htt
 		$location.path("/dashboard");
 	});
 	*/
+
+	var userId = user.id;
+	console.log("userId:", userId);
+
+	var sessionToken = user._sessionToken;
+	console.log("sessionToken:", sessionToken);
+
+	$http.get("/api/v1/userLeagues?leagueId=" + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
+		.success(function(response, status) {
+			$scope.userLeagues = response;
+			$scope.status = status;
+			if (status == 200) {
+				console.log("$scope.status:", $scope.status);
+				console.log("$scope.userLeagues:", $scope.userLeagues);
+			}
+		})
+		.error(function(data, status) {
+			$scope.data = data;
+			$scope.status = status;
+		})
+
+
 
 
 	/////////////////////////////////
