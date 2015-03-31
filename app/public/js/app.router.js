@@ -3,11 +3,18 @@ var appRouter = angular.module("appRouter", ["ngRoute"])
 appRouter.config(function($routeProvider, $locationProvider) {
 	$routeProvider
 
+		// route for homepage
+		.when("/", {
+			templateUrl: "../views/homepage.html",
+			controller: "homepageController",
+			controllerAs: "homepageCtrl"
+		})
+
 		// route to game player's unique dashboard
 		.when("/dashboard", {
 			templateUrl: "../views/dashboard.html",
 			controller: "dashboardController",
-			controllerAs: "dashboard"
+			controllerAs: "dashboardCtrl"
 		})
 
 		// route for admin managment
@@ -73,12 +80,6 @@ appRouter.config(function($routeProvider, $locationProvider) {
 			controllerAs: "createLineupCtrl"
 		})
 
-		// route for selecting match (MatchID)
-		.when("/dashboard/matches", {
-			templateUrl: "../views/matches.html",
-			controller: "matchesController",
-			controllerAs: "matchesCtrl"
-		})
 
 		// catch all route
 		.otherwise({
