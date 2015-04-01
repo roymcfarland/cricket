@@ -38,3 +38,42 @@ describe('Sending a GET request to a protected route', function(){
 		});
 	});
 });
+
+describe('Sending a POST request to a protected route', function(){
+	describe('should fail', function(){
+		it('when the sessionToken is not passed in.', function(done){
+			requestLocal
+				.post('/api/v1/test')
+				.expect(430)
+				.end(done);
+		});
+		it('when the sessionToken is not alphanumeric.', function(done){
+			requestLocal
+				.post('/api/v1/test')
+				.send({
+					sessionToken: 'irenstdh%'
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.errors.sessionToken[0].should.be.exactly('The sessionToken field must be alphanumeric.');
+					done();
+				});
+		});
+		it('when the session token is not accepted by Parse.', function(done){
+			requestLocal
+				.post('/api/v1/test')
+				.send({
+					sessionToken: 'notarealtoken'
+				})
+				.expect(500)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.code.should.be.exactly(101);
+					done();
+				});
+		});
+	});
+});
