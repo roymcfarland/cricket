@@ -84,6 +84,9 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 				$scope.status = status;
 				if (status == 200) {
 					alert("Congratulations! You have joined " + leagueName + ".");
+					// You need this to create the lineup.
+					console.log("$scope.data.objectId:", $scope.data.objectId);
+					// Insert post here with userLeagueId to create lineupId
 					$location.path("/dashboard/leagues/createLineup/" + leagueId);
 			}})
 			.error(function(data, status) {
