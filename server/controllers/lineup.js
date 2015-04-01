@@ -6,8 +6,8 @@ var LineupController = function(){};
 
 var createRules = {
 	UserLeagueId: 'required|alpha_num',
-	MatchID: 'required|alpha_num',
-	Locked: 'required|boolean'
+	MatchID: 'alpha_num',
+	Locked: 'boolean'
 };
 
 Validatorjs.register('boolean', function(value, requirement, attribute){

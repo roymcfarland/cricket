@@ -111,23 +111,6 @@ describe('Preparing for the tests', function(){
 
 describe('Sending a POST to /api/v1/lineups', function(){
 	describe('should fail', function(){
-		it('when the MatchID is not sent in', function(done){
-			requireLocal
-				.post('/api/v1/lineups')
-				.send({
-					UserLeagueId: testUserLeague.objectId,
-					Locked: false,
-					user: testUser
-				})
-				.expect(428)
-				.end(function(err, res){
-					if(err) return done(err);
-
-					res.body.errors.MatchID[0].should.be.exactly('The MatchID field is required.');
-					done();
-				});
-		});
-
 		it('when the MatchID is not an alpha numeric string', function(done){
 			requireLocal
 				.post('/api/v1/lineups')
@@ -142,24 +125,6 @@ describe('Sending a POST to /api/v1/lineups', function(){
 					if(err) return done(err);
 
 					res.body.errors.MatchID[0].should.be.exactly('The MatchID field must be alphanumeric.');
-					done();
-				});
-		});
-
-		it('when the Locked is not sent in', function(done){
-			requireLocal
-				.post('/api/v1/lineups')
-				.send({
-					UserLeagueId: testUserLeague.objectId,
-					MatchID: testMatch.objectId,
-					// Locked: false,
-					user: testUser
-				})
-				.expect(428)
-				.end(function(err, res){
-					if(err) return done(err);
-
-					res.body.errors.Locked[0].should.be.exactly('The Locked field is required.');
 					done();
 				});
 		});
