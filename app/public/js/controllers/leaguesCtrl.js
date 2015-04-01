@@ -79,18 +79,45 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 
 		// AJAX POST //
 		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true", {user: user}, [])
-			.success(function(data, status) {
-				$scope.data = data;
+			.success(function (res, status) {
+				$scope.res1 = res;
 				$scope.status = status;
 				if (status == 200) {
 					alert("Congratulations! You have joined " + leagueName + ".");
-					// You need this to create the lineup.
-					console.log("$scope.data.objectId:", $scope.data.objectId);
-					// Insert post here with userLeagueId to create lineupId
-					$location.path("/dashboard/leagues/createLineup/" + leagueId);
-			}})
-			.error(function(data, status) {
-				$scope.data = data;
+					var userLeagueId = $scope.res1.objectId;
+					console.log("userLeagueId:", $scope.res1.objectId);
+					var user = {
+						userLeagueID: userLeagueId,
+						sessionToken: vm.user._sessionToken,
+						objectId: vm.user.id
+					};
+					// AJAX POST //
+					$http.post("/api/v1/lineups", {user: user}, [])
+						.success(function (res, status) {
+							$scope.res2 = res;
+							$scope.status = status;
+							if (status == 200) {
+								console.log(typeof(res2));
+								console.log("lineupId:", res2);
+								// $location.path("/dashboard/leagues/createLineup/" + leagueId);
+							}
+						})
+						.error(function (res, status) {
+							$scope.res = res;
+							$scope.status = status;
+							if (status == 404) {
+								console.log("Error 404");
+							} else if (status == 428) {
+								console.log("Error 428");
+								console.log(typeof(res));
+								console.log("error res:", res);
+							}
+						});
+
+				}
+			})
+			.error(function (res, status) {
+				$scope.res = res;
 				$scope.status = status;
 				if (status == 518) {
 					alert("Sorry! This league is full. Please join another league. (Error 518)");
@@ -101,7 +128,9 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 				} else if (status == 500) {
 					alert("Sorry! There was an error. Please try again. (Error 500)");
 					$location.path("/dashboard/leagues");
-			}});
+				}
+			});
 
 	};
+
 });
