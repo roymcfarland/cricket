@@ -9,6 +9,7 @@ var userRoutes = function(app) {
 	app.post('/api/users/:objectId', userController.populateWithDefaultData);
 	app.get('/api/v1/users', protectGetRoutes, userController.getAll);
 	app.get('/api/v1/users/:objectId', protectGetRoutes, userController.getOne);
+	app.put('/api/v1/users/:objectId', protectPostRoutes, userController.update);
 
 	app.post('/api/v1/test', protectPostRoutes);
 };

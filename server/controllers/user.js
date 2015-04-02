@@ -8,6 +8,10 @@ var createRules = {
 	email: 'required|email'
 };
 
+var updateRules = {
+	email: 'email'
+};
+
 var UserController = function() {};
 
 UserController.prototype.create = function(req, res) {
@@ -85,6 +89,16 @@ UserController.prototype.getOne = function(req, res) {
 
 			return res.send({user: result.body});
 		});
+};
+
+UserController.prototype.update = function(req, res) {
+	var username = req.body.username;
+	var password = req.body.password;
+	var email = req.body.email;
+	var objectId = req.params.objectId
+	var validation = new Validatorjs(req.body, updateRules);
+
+	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
 };
 
 module.exports = UserController;

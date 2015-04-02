@@ -150,3 +150,26 @@ describe('Sending a GET to /api/v1/users/:objectId', function(){
 		});
 	});
 });
+
+describe('Sending a PUT to /api/v1/users/:objectId', function(){
+	describe('should fail', function(){
+		it('when the email is not an email address.', function(done){
+			requestLocal
+				.put('/api/v1/users/' + testUser.objectId)
+				.send({
+					sessionToken: testUser.sessionToken,
+					username: 'newTestUser',
+					password: 'newPassword',
+					email: 'notagoodemail'
+					// email: 'newTestUser@latitude40.com'
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.errors.email[0].should.be.exactly('The email format is invalid.');
+					done();
+				});
+		});
+	});
+});
