@@ -10,6 +10,7 @@ var userRoutes = function(app) {
 	app.get('/api/v1/users', protectGetRoutes, userController.getAll);
 	app.get('/api/v1/users/:objectId', protectGetRoutes, userController.getOne);
 	app.put('/api/v1/users/:objectId', protectPostRoutes, userController.update);
+	app.delete('/api/v1/users/:objectId', protectPostRoutes, userController.del);
 
 	app.post('/api/v1/test', protectPostRoutes);
 };

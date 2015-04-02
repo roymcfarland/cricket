@@ -118,4 +118,10 @@ UserController.prototype.update = function(req, res) {
 		});
 };
 
+UserController.prototype.del = function(req, res) {
+	var objectId = req.params.objectId;
+
+	if(req.user.objectId != objectId) return res.sendStatus(403);
+};
+
 module.exports = UserController;

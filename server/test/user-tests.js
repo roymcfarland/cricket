@@ -223,3 +223,17 @@ describe('Sending a PUT to /api/v1/users/:objectId', function(){
 		});
 	});
 });
+
+describe('Sending a DELETE to /api/v1/users/:objectId', function(){
+	describe('should fail', function(){
+		it('when trying to delete a different user.', function(done){
+			requestLocal
+				.del('/api/v1/users/' + testUser.objectId)
+				.send({
+					sessionToken: secondTestUser.sessionToken
+				})
+				.expect(403)
+				.end(done);
+		});
+	});
+});
