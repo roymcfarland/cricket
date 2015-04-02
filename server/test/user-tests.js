@@ -5,6 +5,7 @@ var requestLocal = supertest('http://localhost:3000');
 var requestParse = supertest('https://api.parse.com');
 
 var testUser;
+var secondTestUser;
 
 describe('Sending a POST to /api/v1/users', function(){
 	describe('should fail', function(){
@@ -112,7 +113,24 @@ describe('Sending a POST to /api/v1/users', function(){
 					testUser = res.body;
 					done();
 				});
-			});
+		});
+		it('when creating a secondTestUser.', function(done){
+			requestLocal
+				.post('/api/v1/users')
+				.send({
+					username: 'secondTestUser',
+					password: 'password',
+					email: 'secondTestUser@latitude40.com'
+				})
+				.expect(201)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.objectId.should.be.type('string');
+					secondTestUser = res.body;
+					done();
+				});
+		});
 	});
 });
 
@@ -170,6 +188,18 @@ describe('Sending a PUT to /api/v1/users/:objectId', function(){
 					res.body.errors.email[0].should.be.exactly('The email format is invalid.');
 					done();
 				});
+		});
+		it('when the user is attempting to update another user.', function(done){
+			requestLocal
+				.put('/api/v1/users/' + testUser.objectId)
+				.send({
+					sessionToken: secondTestUser.sessionToken,
+					username: 'newTestUser',
+					password: 'newPassword',
+					email: 'newTestUser@latitude40.com'
+				})
+				.expect(403)
+				.end(done);
 		});
 	});
 });

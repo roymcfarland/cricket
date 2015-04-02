@@ -99,6 +99,7 @@ UserController.prototype.update = function(req, res) {
 	var validation = new Validatorjs(req.body, updateRules);
 
 	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
+	if(req.user.objectId != objectId) return res.sendStatus(403);
 };
 
 module.exports = UserController;
