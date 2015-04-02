@@ -55,7 +55,6 @@ LeagueController.prototype.create = function(req, res) {
 					"name": req.body.name
 				})
 				.end(function(createLeagueResponse){
-					console.log(createLeagueResponse.body);
 					if(createLeagueResponse.body.error) return res.status(516).send(createLeagueResponse.body.error);
 
 					res.status(200).send(createLeagueResponse.body);
