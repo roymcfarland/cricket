@@ -236,4 +236,24 @@ describe('Sending a DELETE to /api/v1/users/:objectId', function(){
 				.end(done);
 		});
 	});
+	describe('should succeed', function(){
+		it('when deleting the testuser.', function(done){
+			requestLocal
+				.del('/api/v1/users/' + testUser.objectId)
+				.send({
+					sessionToken: testUser.sessionToken
+				})
+				.expect(200)
+				.end(done);
+		});
+		it('when deleting the secondTestUser.', function(done){
+			requestLocal
+				.del('/api/v1/users/' + secondTestUser.objectId)
+				.send({
+					sessionToken: secondTestUser.sessionToken
+				})
+				.expect(200)
+				.end(done);
+		});
+	});
 });

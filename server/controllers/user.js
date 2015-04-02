@@ -122,6 +122,17 @@ UserController.prototype.del = function(req, res) {
 	var objectId = req.params.objectId;
 
 	if(req.user.objectId != objectId) return res.sendStatus(403);
+
+	superagent
+		.del('https://api.parse.com/1/users/' + objectId)
+		.set('X-Parse-Application-Id', config.parse.applicationId)
+		.set('X-Parse-REST-API-Key', config.parse.apiKey)
+		.set('X-Parse-Session-Token', req.user.sessionToken)
+		.end(function(deleteUserResult){
+			if(deleteUserResult.body.code) return res.status(500).send(deleteUserResult.body);
+
+			return res.sendStatus(200);
+		});
 };
 
 module.exports = UserController;
