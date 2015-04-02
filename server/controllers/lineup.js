@@ -32,28 +32,34 @@ Validatorjs.register('sessionToken', function(value){
 LineupController.prototype.create = function(req, res) {
 	var validation = new Validatorjs(req.body, createRules);
 	var currentUser;
+	var MatchID = req.body.MatchID;
 
 	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
 
 	async.series({
 		createLineup: function(done){
-			superagent
-				.post('https://api.parse.com/1/classes/Lineup')
-				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
-				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
-				.send({
-					UserLeagueID: {
+			var payload = {
+				UserLeagueID: {
 						__type: 'Pointer',
 						className: 'UserLeague',
 						objectId: req.body.UserLeagueId
 					},
-					MatchID: {
+					Locked: req.body.Locked
+			};
+
+			if(MatchID) {
+				payload.MatchID = {
 						__type: 'Pointer',
 						className: 'Match',
-						objectId: req.body.MatchID
-					},
-					Locked: req.body.Locked
-				})
+						objectId: MatchID
+					};
+			}
+
+			superagent
+				.post('https://api.parse.com/1/classes/Lineup')
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.send(payload)
 				.end(function(createLineupResult){
 					if(createLineupResult.body.code) return done({code: 500, error: createLineupResult.body});
 
