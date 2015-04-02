@@ -8,6 +8,7 @@ var testUser;
 var testLeague;
 var testMatch;
 var testLineup;
+var testLineup2;
 
 describe('Preparing for the tests', function(){
 	describe('by creating a', function(){
@@ -149,8 +150,25 @@ describe('Sending a POST to /api/v1/lineups', function(){
 	});
 
 	describe('should succeed', function(){
-		it('when all the right stuff is passed in.', function(done){
-			console.log(testUserLeague);
+		it('when the MatchID is not passed in.', function(done){
+			requireLocal
+				.post('/api/v1/lineups')
+				.send({
+					UserLeagueId: testUserLeague.objectId,
+					// MatchID: testMatch.objectId,
+					Locked: false,
+					user: testUser
+				})
+				.expect(201)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.objectId.should.be.type('string');
+					testLineup = res.body;
+					done();
+				});
+		});
+		it('when the MatchID is passed in.', function(done){
 			requireLocal
 				.post('/api/v1/lineups')
 				.send({
@@ -159,12 +177,12 @@ describe('Sending a POST to /api/v1/lineups', function(){
 					Locked: false,
 					user: testUser
 				})
-				// .expect(201)
+				.expect(201)
 				.end(function(err, res){
 					if(err) return done(err);
 
 					res.body.objectId.should.be.type('string');
-					testLineup = res.body;
+					testLineup2 = res.body;
 					done();
 				});
 		});
@@ -217,6 +235,13 @@ describe('Cleaning up after the tests', function(){
 		it('testLineup', function(done){
 			requireParse
 				.del('/1/classes/Lineup/' + testLineup.objectId)
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.end(done);
+		});
+		it('testLineup2', function(done){
+			requireParse
+				.del('/1/classes/Lineup/' + testLineup2.objectId)
 				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
 				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 				.end(done);
