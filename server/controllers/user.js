@@ -97,9 +97,25 @@ UserController.prototype.update = function(req, res) {
 	var email = req.body.email;
 	var objectId = req.params.objectId
 	var validation = new Validatorjs(req.body, updateRules);
+	var payload = {};
 
 	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
 	if(req.user.objectId != objectId) return res.sendStatus(403);
+	if(username) payload.username = username;
+	if(password) payload.password = password;
+	if(email) payload.email = email;
+
+	superagent
+		.put('https://api.parse.com/1/users/' + objectId)
+		.set('X-Parse-Application-Id', config.parse.applicationId)
+		.set('X-Parse-REST-API-Key', config.parse.apiKey)
+		.set('X-Parse-Session-Token', req.user.sessionToken)
+		.send(payload)
+		.end(function(updateUserResult){
+			if(updateUserResult.body.code) return res.status(500).send(updateUserResult.body);
+
+			return res.send(updateUserResult.body);
+		});
 };
 
 module.exports = UserController;

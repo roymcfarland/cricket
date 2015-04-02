@@ -202,4 +202,24 @@ describe('Sending a PUT to /api/v1/users/:objectId', function(){
 				.end(done);
 		});
 	});
+	describe('should succeed', function(){
+		it('when updating a user.', function(done){
+			requestLocal
+				.put('/api/v1/users/' + testUser.objectId)
+				.send({
+					sessionToken: testUser.sessionToken,
+					username: 'newTestUser',
+					password: 'newPassword',
+					email: 'newTestUser@latitude40.com'
+				})
+				.expect(200)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body);
+
+					res.body.updatedAt.should.be.type('string');
+					done();
+				});
+		});
+	});
 });
