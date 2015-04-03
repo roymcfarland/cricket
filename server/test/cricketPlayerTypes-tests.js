@@ -5,6 +5,7 @@ var requestLocal = supertest('http://localhost:3000');
 var requestParse = supertest('https://api.parse.com');
 var testUser;
 var testAdmin;
+var testCricketPlayerType;
 
 describe('Preparing for the Cricket Player Type tests by creating a', function(){
 	it('testUser.', function(done){
@@ -124,6 +125,25 @@ describe('Sending a POST to /api/v1/cricketPlayerTypes', function(){
 					if(err) return done(err);
 
 					res.body.errors.lineUpMinimum[0].should.be.exactly('The lineUpMinimum must be a number.');
+					done();
+				});
+		});
+	});
+	describe('should succeed', function(){
+		it('when creating a new cricket player type.', function(done){
+			requestLocal
+				.post('/api/v1/cricketPlayerTypes')
+				.send({
+					sessionToken: testAdmin.sessionToken,
+					name: 'testCricketPlayerType',
+					lineUpMinimum: 2
+				})
+				.expect(201)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.objectId.should.be.type('string');
+					testCricketPlayerType = res.body;
 					done();
 				});
 		});
