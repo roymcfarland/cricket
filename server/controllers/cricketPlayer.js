@@ -51,4 +51,13 @@ CricketPlayerController.prototype.getAll = function(req, res) {
 		});
 };
 
+CricketPlayerController.prototype.getOne = function(req, res) {
+	var validationRules = {
+		objectId: 'alpha_num'
+	};
+	var validation = new Validatorjs(req.params, validationRules);
+
+	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
+};
+
 module.exports = CricketPlayerController;

@@ -281,6 +281,22 @@ describe('Sending a GET to /api/v1/cricketPlayers', function(){
 	});
 });
 
+describe('Sending a GET to /api/v1/cricketPlayers/:objectId', function(){
+	describe('should fail', function(){
+		it('when the objectId is not alphanumeric.', function(done){
+			requestLocal
+				.get('/api/v1/cricketPlayers/iaetnrdh$')
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.errors.objectId[0].should.be.exactly('The objectId field must be alphanumeric.');
+					done();
+				});
+		});
+	});
+});
+
 describe('Cleaning up after the Cricket Player tests by deleting', function(){
 	it('testCricketPlayerType.', function(done){
 		requestParse
