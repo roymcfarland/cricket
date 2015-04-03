@@ -96,8 +96,8 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 							$scope.status = status;
 							if (status == 201) {
 								console.log("res2.status:", status);
-								console.log(typeof(res2));
-								console.log("res2", res2)
+								console.log(typeof($scope.res2));
+								console.log("res2", $scope.res2)
 								// var lineupId = res2;
 								// $location.path("/dashboard/leagues/createLineup/lineup/" + lineupId + "/league/" + leagueId);
 							}
