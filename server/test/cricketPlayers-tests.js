@@ -365,6 +365,25 @@ describe('Sending a PUT to /api/v1/cricketPlayers/:objectId', function(){
 					done();
 				});
 		});
+		it('when the cricketPlayerTypeId is not alphanumeric.', function(done){
+			requestLocal
+				.put('/api/v1/cricketPlayers/' + testCricketPlayer.objectId)
+				.send({
+					sessionToken: testAdmin.sessionToken,
+					name: 'updatedTestCricketPlayer',
+					team: 'updatedTestCricketPlayerTeam',
+					cost: 8,
+					cricketPlayerTypeId: 'wuyflpgj%$^#',
+					// cricketPlayerTypeId: testCricketPlayerType.objectId
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.errors.cricketPlayerTypeId[0].should.be.exactly('The cricketPlayerTypeId field must be alphanumeric.');
+					done();
+				});
+		});
 	});
 });
 
