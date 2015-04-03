@@ -297,6 +297,23 @@ describe('Sending a GET to /api/v1/cricketPlayers/:objectId', function(){
 				.end(done);
 		});
 	});
+	describe('should succeed', function(){
+		it('when getting the testCricketPlayer.', function(done){
+			requestLocal
+				.get('/api/v1/cricketPlayers/' + testCricketPlayer.objectId)
+				.expect(200)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body);
+
+					res.body.name.should.be.exactly('testCricketPlayer');
+					res.body.team.should.be.exactly('testCricketPlayerTeam');
+					res.body.cost.should.be.exactly(9000);
+					res.body.CricketPlayerTypeID.name.should.be.exactly('testCricketPlayerType');
+					done();
+				});
+		});
+	});
 });
 
 describe('Cleaning up after the Cricket Player tests by deleting', function(){

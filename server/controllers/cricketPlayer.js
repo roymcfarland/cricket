@@ -66,6 +66,9 @@ CricketPlayerController.prototype.getOne = function(req, res) {
 		.query('include=CricketPlayerTypeID')
 		.end(function(getOneResult){
 			if(getOneResult.body.code && getOneResult.body.code == 101) return res.sendStatus(404);
+			if(getOneResult.body.code) return res.status(500).send(getOneResult.body);
+
+			return res.send(getOneResult.body);
 		});
 };
 
