@@ -53,7 +53,7 @@ CricketPlayerController.prototype.getAll = function(req, res) {
 
 CricketPlayerController.prototype.getOne = function(req, res) {
 	var validationRules = {
-		objectId: 'alpha_num'
+		objectId: 'alpha_num',
 	};
 	var validation = new Validatorjs(req.params, validationRules);
 
@@ -75,7 +75,8 @@ CricketPlayerController.prototype.getOne = function(req, res) {
 CricketPlayerController.prototype.update = function(req, res) {
 	var admin = req.user.admin;
 	var validationRules = {
-		name: 'alpha_num'
+		name: 'alpha_num',
+		team: 'alpha_num'
 	};
 	var validation = new Validatorjs(req.body, validationRules);
 
