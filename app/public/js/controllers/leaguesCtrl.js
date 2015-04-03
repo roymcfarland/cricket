@@ -83,23 +83,23 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 				$scope.res1 = res;
 				$scope.status = status;
 				if (status == 200) {
-					alert("Congratulations! You have joined " + leagueName + ".");
+					console.log("Congratulations! You have joined " + leagueName + ".");
 					var userLeagueId = $scope.res1.objectId;
-					console.log("userLeagueId:", $scope.res1.objectId);
 					var user = {
-						userLeagueID: userLeagueId,
 						sessionToken: vm.user._sessionToken,
 						objectId: vm.user.id
 					};
 					// AJAX POST //
-					$http.post("/api/v1/lineups", {user: user}, [])
+					$http.post("/api/v1/lineups", {UserLeagueId: userLeagueId, Locked: false, user: user}, [])
 						.success(function (res, status) {
 							$scope.res2 = res;
 							$scope.status = status;
-							if (status == 200) {
+							if (status == 201) {
+								console.log("res2.status:", status);
 								console.log(typeof(res2));
-								console.log("lineupId:", res2);
-								// $location.path("/dashboard/leagues/createLineup/" + leagueId);
+								console.log("res2", res2)
+								// var lineupId = res2;
+								// $location.path("/dashboard/leagues/createLineup/lineup/" + lineupId + "/league/" + leagueId);
 							}
 						})
 						.error(function (res, status) {
