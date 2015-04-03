@@ -421,6 +421,20 @@ describe('Sending a PUT to /api/v1/cricketPlayers/:objectId', function(){
 	});
 });
 
+describe('Sending a DELETE to /api/v1/cricketPlayers/:objectId', function(){
+	describe('should fail', function(){
+		it('when a testUser tries to delete a testCricketPlayer.', function(done){
+			requestLocal
+				.del('/api/v1/cricketPlayers/' + testCricketPlayer.objectId)
+				.send({
+					sessionToken: testUser.sessionToken
+				})
+				.expect(403)
+				.end(done);
+		});
+	});
+});
+
 describe('Cleaning up after the Cricket Player tests by deleting', function(){
 	it('testCricketPlayerType.', function(done){
 		requestParse

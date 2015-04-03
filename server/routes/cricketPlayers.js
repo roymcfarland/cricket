@@ -8,6 +8,7 @@ var cricketPlayerRoutes = function(app){
 	app.get('/api/v1/cricketPlayers', cricketPlayerController.getAll);
 	app.get('/api/v1/cricketPlayers/:objectId', cricketPlayerController.getOne);
 	app.put('/api/v1/cricketPlayers/:objectId', protectPostRoutes, cricketPlayerController.update);
+	app.delete('/api/v1/cricketPlayers/:objectId', protectPostRoutes, cricketPlayerController.del);
 };
 
 module.exports = cricketPlayerRoutes;
