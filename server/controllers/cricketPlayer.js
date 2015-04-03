@@ -38,4 +38,17 @@ CricketPlayerController.prototype.create = function(req, res) {
 		});
 };
 
+CricketPlayerController.prototype.getAll = function(req, res) {
+	superagent
+		.get('https://api.parse.com/1/classes/CricketPlayer')
+		.set('X-Parse-Application-Id', config.parse.applicationId)
+		.set('X-Parse-REST-API-Key', config.parse.apiKey)
+		.query('include=CricketPlayerTypeID')
+		.end(function(getAllResults){
+			if(getAllResults.body.code) return res.status(500).send(getAllResults.body);
+
+			return res.send(getAllResults.body.results);
+		});
+};
+
 module.exports = CricketPlayerController;

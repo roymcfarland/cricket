@@ -1,5 +1,6 @@
 var supertest = require('supertest');
 var should = require('should');
+var _ = require('underscore');
 var config = require('../config/config');
 
 var requestParse = supertest('https://api.parse.com');
@@ -248,6 +249,32 @@ describe('Sending a POST to /api/v1/cricketPlayers', function(){
 					
 					res.body.objectId.should.be.type('string');
 					testCricketPlayer = res.body;
+					done();
+				});
+		});
+	});
+});
+
+describe('Sending a GET to /api/v1/cricketPlayers', function(){
+	describe('should succeed', function(){
+		it('in getting all cricket players.', function(done){
+			requestLocal
+				.get('/api/v1/cricketPlayers')
+				.expect(200)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body);
+
+					console.log('*****');
+					console.log(res.body);
+					console.log('*****');
+
+					var cricketPlayer = _.findWhere(res.body, {objectId: testCricketPlayer.objectId});
+					cricketPlayer.objectId.should.be.exactly(testCricketPlayer.objectId);
+					cricketPlayer.name.should.be.exactly('testCricketPlayer');
+					cricketPlayer.team.should.be.exactly('testCricketPlayerTeam');
+					cricketPlayer.cost.should.be.exactly(9000);
+					cricketPlayer.CricketPlayerTypeID.name.should.be.exactly('testCricketPlayerType');
 					done();
 				});
 		});
