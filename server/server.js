@@ -16,6 +16,7 @@ var lineupRoutes = require('./routes/lineups')(app);
 var lineupPlayerRoutes = require('./routes/lineupPlayers')(app);
 var userLeagueRoutes = require('./routes/userLeague')(app);
 var cricketPlayers = require('./routes/cricketPlayers')(app);
+var cricketPlayerTypeRoutes = require('./routes/cricketPlayerTypes')(app);
 var webRoutes = require('./routes/web')(app);
 
 var port = process.env.PORT || 3000;
