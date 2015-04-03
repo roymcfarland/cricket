@@ -1,113 +1,42 @@
 <!-- Begin ng-view -->
-<!-- ng-controller="dashboardController as dashboard" -->
-
-<div class="list-group" ng-controller="panelController as panel">
-	<div class="list-group-item">
-		<a class="btn btn-default pull-right" href="/admin">Admin Controls</a>
-		<a class="btn btn-default pull-right" href="/dashboard/join-league">Join New League</a>
-		<button type="button" class="btn btn-primary pull-right" bs-aside="aside">Toggle Aside</button>
-		<h3>Dashboard</h3>
-		<h5 class="pull-right">Current Balance: {{dashboard.userMoney | currency}}</h5>
-			<ul class="nav nav-tabs">
-				<li ng-class="{ active: panel.isSelected(1) }">
-					<a href="" ng-click="panel.selectTab(1)">Little League</a>
-				</li>
-				<li ng-class="{ active: panel.isSelected(2) }">
-					<a href="" ng-click="panel.selectTab(2)">Big League</a>
-				</li>
-				<li ng-class="{ active: panel.isSelected(3) }">
-					<a href="" ng-click="panel.selectTab(3)">High Stakes League</a>
-				</li>
-			</ul>
-			<!-- Panel #1 -->
-			<div class="panel" ng-show="panel.isSelected(1)">
-				<table class="table table-striped">
-					<tr>
-						<th>Position</th>
-						<th>Name</th>
-						<th>Points</th>
-					</tr>
-					<tr>
-						<td>Batsman</td>
-						<td>Gautam Gambhir</td>
-						<td>143</td>
-					</tr>
-					<tr>
-						<td>Batsman</td>
-						<td>Piyush Chawla</td>
-						<td>129</td>
-					</tr>
-					<tr>
-						<td>Bowler</td>
-						<td>Manish Pandey</td>
-						<td>121</td>
-					</tr>
-					<tr>
-						<td>Bowler</td>
-						<td>Josh Hazlewood</td>
-						<td>118</td>
-					</tr>
-				</table>
-			</div>
-			<!-- Panel #2 -->
-			<div class="panel" ng-show="panel.isSelected(2)">
-				<table class="table table-striped">
-					<tr>
-						<th>Position</th>
-						<th>Name</th>
-						<th>Points</th>
-					</tr>
-					<tr>
-						<td>Batsman</td>
-						<td>Robin Uthappa</td>
-						<td>96</td>
-					</tr>
-					<tr>
-						<td>Batsman</td>
-						<td>Lasith Malinga</td>
-						<td>95</td>
-					</tr>
-					<tr>
-						<td>Bowler</td>
-						<td>Josh Hazlewood</td>
-						<td>90</td>
-					</tr>
-					<tr>
-						<td>Bowler</td>
-						<td>Shakib Al Hasan</td>
-						<td>82</td>
-					</tr>
-				</table>
-			</div>
-			<!-- Panel #3 -->
-			<div class="panel" ng-show="panel.isSelected(3)">
-				<table class="table table-striped">
-					<tr>
-						<th>Position</th>
-						<th>Name</th>
-						<th>Points</th>
-					</tr>
-					<tr>
-						<td>Batsman</td>
-						<td>Rohit Sharma</td>
-						<td>101</td>
-					</tr>
-					<tr>
-						<td>Batsman</td>
-						<td>Manish Pandey</td>
-						<td>90</td>
-					</tr>
-					<tr>
-						<td>Bowler</td>
-						<td>Lasith Malinga</td>
-						<td>87</td>
-					</tr>
-					<tr>
-						<td>Bowler</td>
-						<td>Gautam Gambhir</td>
-						<td>60</td>
-					</tr>
-				</table>
-			</div>
+<!-- ng-controller="dashboardController as dashboardCtrl" -->
+<div class="jumbotron">
+	<div class="wrapper">
+		<div class="container">
+			<a class="btn btn-default pull-right" href="/admin">Admin Controls</a>
+			<a class="btn btn-default pull-right" href="/dashboard/leagues">Join New League</a>
+			<button type="button" class="btn btn-primary pull-right" bs-aside="aside">Toggle Aside</button>
+		</div>
 	</div>
-</div> <!-- /.ng-controller -->
+	<div class="wrapper">
+		<div class="container">
+			<h2>Dashboard</h2>
+			<p class="pull-right">Current Balance: {{dashboardCtrl.userMoney | currency}}</p>
+		</div>
+	</div>
+	<div class="wrapper">
+		<div class="container">
+			<div class="text-center">
+				<p>CURRENT LEAGUES</p>
+			</div>
+			<table class="table table-striped">
+				<thead>
+					<th>League Name</th>
+					<th>Total Score</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="league in userLeagues" ng-click="selectUserLeague(league.LeagueID.objectId, league.LeagueID.name, league.UserID.totalScore)">
+						<td>{{league.LeagueID.name}}</td>
+						<td>{{league.UserID.totalScore}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<a class="btn btn-default pull-right disabled" ng-click="viewUserLineup()">View League</a>
+		</div>
+	</div>
+
+	<!--
+	<pre>{{userLeagues | json}}</pre>
+	-->
+	
+</div> <!-- /.jumbotron -->

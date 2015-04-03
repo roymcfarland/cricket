@@ -2,50 +2,96 @@ var dashboardCtrl = angular.module("dashboardCtrl", []);
 
 dashboardCtrl.controller("dashboardController", function($location, $scope, $http) {
 	
+	/////////////////////////////////
+	/////////// Variables ///////////
+	/////////////////////////////////
+
+	// VM
 	var vm = this;
-	// console.log($scope);
-
-	/////////////////////////////////
-	////// USER AUTHENTICATION //////
-	/////////////////////////////////
-	
 	vm.user = Parse.User.current();
-	if(!vm.user) return $location.path("/");
-
-
-
-	/////////////////////////////////
-	/// ACQUIRE CURRENT USER INFO ///
-	/////////////////////////////////
 	vm.username = vm.user.getUsername();
-	console.log("vm.user: ", vm.user);
-	vm.userId = vm.user.id;
 	vm.userMoney = vm.user.attributes.Money;
-	console.log("vm.userMoney: ", vm.userMoney);
+	
+	var user = Parse.User.current();
+	var userId = user.id;
+	var sessionToken = user._sessionToken;
+	
+
+	/////////////////////////////////
+	//////// Initialization /////////
+	/////////////////////////////////
+
+	var init = function() {
+
+		// Is the user logged in?
+		if(!vm.user) return $location.path("/");
+
+		// Get user's leagues
+		$http.get("/api/v1/userLeagues?leagueId=" + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
+			.success(function(response, status) {
+				$scope.userLeagues = response;
+				$scope.status = status;
+				if (status == 200) {
+					// console.log("$scope.status:", $scope.status);
+					// console.log("$scope.userLeagues:", $scope.userLeagues);
+				}
+			})
+			.error(function(response, status) {
+				$scope.response = response;
+				$scope.status = status;
+				if (status == 500) {
+					console.log("error response:", response);
+					alert("Error (500)");
+					$location.path("/dashboard");
+				}
+			});
+
+	};
+
+	init();
 
 
 
 	/////////////////////////////////
-	/////////// AJAX GET ////////////
-	/////////////////////////////////
-	/*
-	$http.get("/api/leagues/:userId")
-	.success(function(response) {
-		$scope.userLeagues = response;
-	})
-	.error(function(error) {
-		alert("Sorry - there was an error.Try again.");
-		$location.path("/dashboard");
-	});
-	*/
-
-
-	/////////////////////////////////
-	///////////// ASIDE /////////////
+	///////////// Aside /////////////
 	/////////////////////////////////
 	$scope.aside = {
 		"title": "Easter Egg",
 		"content": "Testing Angular Strap!"
 	};
+
+
+
+	/////////////////////////////////
+	//////// dashboard.html /////////
+	/////////////////////////////////
+
+	$scope.selectUserLeague = function(id, name, score) {
+		
+		$scope.userLeagueId = id;
+		$scope.userLeagueName = name;
+		$scope.userLeagueScore = score;
+
+		console.log("You selected", $scope.userLeagueName);
+	
+	};
+
+
+
+	/////////////////////////////////
+	/////// viewUserLineup() ////////
+	/////////////////////////////////
+	
+	$scope.viewUserLineup = function() {
+
+		var leagueId = $scope.userLeagueId;
+		// console.log("leagueId:", leagueId);
+		$location.path("/dashboard/leagues/createLineup/" + leagueId);
+
+	};
+
+
+
+
 
 });

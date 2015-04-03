@@ -1,0 +1,47 @@
+<!-- Begin ng-view -->
+<!-- ng-controller="leaguesController as leaguesCtrl" -->
+<div class="jumbotron">
+	<div class="wrapper">
+		<div class="container">
+			<h2>Step 1: Select League</h2>
+		</div>
+	</div>
+	<div class="wrapper">
+		<div class="container">
+			<p class="pull-right">Current Balance: {{leaguesCtrl.userMoney | currency}}</p>
+		</div>
+	</div>
+	<div class="wrapper">
+		<div class="container">
+			<table class="table table-striped">
+				<thead>
+					<th>Name</th>
+					<th>Entry Fee</th>
+					<th>Max Entries</th>
+					<th>No. of Entries</th>
+					<th>Guaranteed Prize</th>
+					<th>Winning Prize</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="league in leagues" ng-click="selectLeague(league.objectId, league.name, league.entryFee)">
+						<td>{{league.name}}</td>
+						<td>{{league.entryFee | currency}}</td>
+						<td>{{league.maxEntries}}</td>
+						<td>{{league.noOfEntries}}</td>
+						<td>{{league.guaranteedPrize | currency}}</td>
+						<td>{{league.winningPrize | currency}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div>
+		<a class="btn btn-default pull-right" ng-click="addUserToLeague()">Join Selected League</a>
+	</div>
+
+	<!--
+	<pre>{{leaguesInfo | json}}</pre>
+	-->
+
+</div> <!-- /.jumbotron -->
