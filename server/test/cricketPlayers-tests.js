@@ -433,6 +433,17 @@ describe('Sending a DELETE to /api/v1/cricketPlayers/:objectId', function(){
 				.end(done);
 		});
 	});
+	describe('should succeed', function(){
+		it('when an admin deletes a cricket player.', function(done){
+			requestLocal
+				.del('/api/v1/cricketPlayers/' + testCricketPlayer.objectId)
+				.send({
+					sessionToken: testAdmin.sessionToken
+				})
+				.expect(200)
+				.end(done);
+		});
+	});
 });
 
 describe('Cleaning up after the Cricket Player tests by deleting', function(){
