@@ -384,6 +384,25 @@ describe('Sending a PUT to /api/v1/cricketPlayers/:objectId', function(){
 					done();
 				});
 		});
+		it('when the cost is not a number.', function(done){
+			requestLocal
+				.put('/api/v1/cricketPlayers/' + testCricketPlayer.objectId)
+				.send({
+					sessionToken: testAdmin.sessionToken,
+					name: 'updatedTestCricketPlayer',
+					team: 'updatedTestCricketPlayerTeam',
+					// cost: 8,
+					cost: 'wuyflpgj%$^#',
+					cricketPlayerTypeId: testCricketPlayerType.objectId
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.errors.cost[0].should.be.exactly('The cost must be a number.');
+					done();
+				});
+		});
 	});
 });
 

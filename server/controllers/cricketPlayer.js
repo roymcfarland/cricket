@@ -77,7 +77,8 @@ CricketPlayerController.prototype.update = function(req, res) {
 	var validationRules = {
 		name: 'alpha_num',
 		team: 'alpha_num',
-		cricketPlayerTypeId: 'alpha_num'
+		cricketPlayerTypeId: 'alpha_num',
+		cost: 'numeric'
 	};
 	var validation = new Validatorjs(req.body, validationRules);
 
