@@ -8,6 +8,7 @@ var requestLocal = supertest('http://localhost:3000');
 var testCricketPlayerType;
 var testUser;
 var testAdmin;
+var testCricketPlayer;
 
 describe('Preparing for the Cricket Player tests by creating', function(){
 	it('a Cricket Player Type.', function(done){
@@ -225,6 +226,28 @@ describe('Sending a POST to /api/v1/cricketPlayers', function(){
 					if(err) return done(err);
 
 					res.body.errors.cricketPlayerTypeId[0].should.be.exactly('The cricketPlayerTypeId field must be alphanumeric.');
+					done();
+				});
+		});
+	});
+	describe('should succeed', function(){
+		it('when creating a testCricketPlayer', function(done){
+			requestLocal
+				.post('/api/v1/cricketPlayers')
+				.send({
+					sessionToken: testAdmin.sessionToken,
+					name: 'testCricketPlayer',
+					team: 'testCricketPlayerTeam',
+					cost: 9000,
+					cricketPlayerTypeId: testCricketPlayerType.objectId
+				})
+				.expect(201)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body);
+					
+					res.body.objectId.should.be.type('string');
+					testCricketPlayer = res.body;
 					done();
 				});
 		});
