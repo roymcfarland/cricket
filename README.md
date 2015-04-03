@@ -7,6 +7,8 @@ Status Codes
 201 - Created
 
 ==Error Codes==
+403 - Unauthorized
+
 404 - User not found on parse
 
 427 - Object ID not included when searching for leagues created by the user
@@ -14,6 +16,10 @@ Status Codes
 428 - Validation failed
 
 429 - User must be an admin
+
+430 - Session Token missing
+
+500 - General
 
 512 - Populating a new user with default data - but the user passed in the route could not be found on Parse
 

@@ -8,7 +8,8 @@ var testUser;
 var testLeague;
 var testMatch;
 var testLineup;
-var testLineup2;
+var testCricketPlayer;
+var testLineupPlayer;
 
 describe('Preparing for the tests', function(){
 	describe('by creating a', function(){
@@ -107,82 +108,151 @@ describe('Preparing for the tests', function(){
 					done();
 				});
 		});
-	});
-});
 
-describe('Sending a POST to /api/v1/lineups', function(){
-	describe('should fail', function(){
-		it('when the MatchID is not an alpha numeric string', function(done){
-			requireLocal
-				.post('/api/v1/lineups')
+		it('testLineup', function(done){
+			requireParse
+				.post('/1/classes/Lineup')
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 				.send({
-					UserLeagueId: testUserLeague.objectId,
-					MatchID: '=',
-					Locked: false,
-					user: testUser
+					UserLeagueID: {
+						__type: 'Pointer',
+						className: 'UserLeague',
+						objectId: testUserLeague.objectId
+					},
+					MatchID: {
+						__type: 'Pointer',
+						className: 'Match',
+						objectId: testMatch.objectId
+					},
+					Locked: false
 				})
-				.expect(428)
 				.end(function(err, res){
 					if(err) return done(err);
 
-					res.body.errors.MatchID[0].should.be.exactly('The MatchID field must be alphanumeric.');
+					testLineup = res.body;
 					done();
 				});
 		});
 
-		it('when the Locked is not a boolean', function(done){
-			requireLocal
-				.post('/api/v1/lineups')
+		it('testCricketPlayer', function(done){
+			requireParse
+				.post('/1/classes/CricketPlayer')
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 				.send({
-					UserLeagueId: testUserLeague.objectId,
-					MatchID: testMatch.objectId,
-					Locked: 1234,
-					user: testUser
+					name: 'Test Cricket Player',
+					team: 'Test Cricket Team',
+					cost: 100000,
+					CricketPlayerTypeID: {
+						__type: 'Pointer',
+						className: 'CricketPlayerType',
+						objectId: 'MKmUGrdjBM'
+					}
+				})
+				.end(function(err, res){
+					if(err) return done(err);
+
+					testCricketPlayer = res.body;
+					done();
+				});
+		});
+	});
+});
+
+describe('Sending a POST to /api/v1/lineupPlayers', function(){
+	describe('should fail', function(){
+		it('when the LineupID is not included.', function(done){
+			requireLocal
+				.post('/api/v1/lineupPlayers')
+				.send({
+					user: testUser,
+					// LineupID: testLineup.objectId,
+					CricketPlayerID: testCricketPlayer.objectId
 				})
 				.expect(428)
 				.end(function(err, res){
 					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
 
-					res.body.errors.Locked[0].should.be.exactly('The Locked field must be a boolean.');
+					res.body.errors.LineupID[0].should.be.exactly('The LineupID field is required.');
+					done();
+				});
+		});
+
+		it('when the LineupID is not alphanumeric.', function(done){
+			requireLocal
+				.post('/api/v1/lineupPlayers')
+				.send({
+					user: testUser,
+					LineupID: '=',
+					// LineupID: testLineup.objectId,
+					CricketPlayerID: testCricketPlayer.objectId
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
+
+					res.body.errors.LineupID[0].should.be.exactly('The LineupID field must be alphanumeric.');
+					done();
+				});
+		});
+
+		it('when the CricketPlayerID is not included.', function(done){
+			requireLocal
+				.post('/api/v1/lineupPlayers')
+				.send({
+					user: testUser,
+					LineupID: testLineup.objectId,
+					// CricketPlayerID: testCricketPlayer.objectId
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
+
+					res.body.errors.CricketPlayerID[0].should.be.exactly('The CricketPlayerID field is required.');
+					done();
+				});
+		});
+
+		it('when the CricketPlayerID is not alphanumeric.', function(done){
+			requireLocal
+				.post('/api/v1/lineupPlayers')
+				.send({
+					user: testUser,
+					LineupID: testLineup.objectId,
+					CricketPlayerID: '='
+					// CricketPlayerID: testCricketPlayer.objectId
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
+
+					res.body.errors.CricketPlayerID[0].should.be.exactly('The CricketPlayerID field must be alphanumeric.');
 					done();
 				});
 		});
 	});
 
 	describe('should succeed', function(){
-		it('when the MatchID is not passed in.', function(done){
+		it('when creating a new LineupPlayer', function(done){
 			requireLocal
-				.post('/api/v1/lineups')
+				.post('/api/v1/lineupPlayers')
 				.send({
-					UserLeagueId: testUserLeague.objectId,
-					// MatchID: testMatch.objectId,
-					Locked: false,
-					user: testUser
+					user: testUser,
+					LineupID: testLineup.objectId,
+					CricketPlayerID: testCricketPlayer.objectId
 				})
 				.expect(201)
 				.end(function(err, res){
 					if(err) return done(err);
+					if(res.body.code) return done(res.body.code);
 
 					res.body.objectId.should.be.type('string');
-					testLineup = res.body;
-					done();
-				});
-		});
-		it('when the MatchID is passed in.', function(done){
-			requireLocal
-				.post('/api/v1/lineups')
-				.send({
-					UserLeagueId: testUserLeague.objectId,
-					MatchID: testMatch.objectId,
-					Locked: false,
-					user: testUser
-				})
-				.expect(201)
-				.end(function(err, res){
-					if(err) return done(err);
-
-					res.body.objectId.should.be.type('string');
-					testLineup2 = res.body;
+					testLineupPlayer = res.body;
 					done();
 				});
 		});
@@ -239,9 +309,22 @@ describe('Cleaning up after the tests', function(){
 				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 				.end(done);
 		});
-		it('testLineup2', function(done){
+	});
+
+	describe('by deleting the Cricket Player', function(){
+		it('testCricketPlayer', function(done){
 			requireParse
-				.del('/1/classes/Lineup/' + testLineup2.objectId)
+				.del('/1/classes/CricketPlayer/' + testCricketPlayer.objectId)
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.end(done);
+		});
+	});
+
+	describe('by deleting the Lineup Player', function(){
+		it('testLineupPlayer', function(done){
+			requireParse
+				.del('/1/classes/LineupPlayer/' + testLineupPlayer.objectId)
 				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
 				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 				.end(done);

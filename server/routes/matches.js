@@ -4,6 +4,7 @@ var matchesController = new MatchesController();
 
 var matchesRoutes = function(app){
 	app.post('/api/v1/matches', matchesController.create);
+	app.get('/api/v1/matches', matchesController.getAll);
 };
 
 module.exports = matchesRoutes;
