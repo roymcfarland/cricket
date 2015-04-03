@@ -404,6 +404,21 @@ describe('Sending a PUT to /api/v1/cricketPlayers/:objectId', function(){
 				});
 		});
 	});
+	describe('should succeed', function(){
+		it('when updating the testCricketPlayer.', function(done){
+			requestLocal
+				.put('/api/v1/cricketPlayers/' + testCricketPlayer.objectId)
+				.send({
+					sessionToken: testAdmin.sessionToken,
+					name: 'updatedTestCricketPlayer',
+					team: 'updatedTestCricketPlayerTeam',
+					cost: 8,
+					cricketPlayerTypeId: testCricketPlayerType.objectId
+				})
+				.expect(200)
+				.end(done);
+		});
+	});
 });
 
 describe('Cleaning up after the Cricket Player tests by deleting', function(){

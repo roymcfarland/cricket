@@ -84,6 +84,28 @@ CricketPlayerController.prototype.update = function(req, res) {
 
 	if(!admin) return res.sendStatus(403);
 	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
+
+	var payload = {};
+
+	if(req.body.name) payload.name = req.body.name;
+	if(req.body.team) payload.team = req.body.team;
+	if(req.body.cost) payload.cost = req.body.cost;
+	if(req.body.cricketPlayerTypeId) payload.CricketPlayerTypeID = {
+		__type: 'Pointer',
+		className: 'CricketPlayerType',
+		objectId: req.body.cricketPlayerTypeId
+	};
+
+	superagent
+		.put('https://api.parse.com/1/classes/CricketPlayer/' + req.params.objectId)
+		.set('X-Parse-Application-Id', config.parse.applicationId)
+		.set('X-Parse-REST-API-Key', config.parse.apiKey)
+		.send(payload)
+		.end(function(updateResult){
+			if(updateResult.body.code) return res.status(500).send(updateResult.body);
+
+			return res.sendStatus(200);
+		});
 };
 
 module.exports = CricketPlayerController;
