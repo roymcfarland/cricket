@@ -6,6 +6,7 @@ var requestParse = supertest('https://api.parse.com');
 var requestLocal = supertest('http://localhost:3000');
 
 var testCricketPlayerType;
+var testUser;
 
 describe('Preparing for the Cricket Player tests by creating', function(){
 	it('a Cricket Player Type.', function(done){
@@ -26,6 +27,37 @@ describe('Preparing for the Cricket Player tests by creating', function(){
 				done();
 			});
 	});
+	it('a testUser.', function(done){
+		requestLocal
+			.post('/api/v1/users')
+			.send({
+				username: 'testuser',
+				password: 'password',
+				email: 'testuser@latitude40.com'
+			})
+			.expect(201)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				res.body.objectId.should.be.type('string');
+				testUser = res.body;
+				done();
+			});
+	});
+});
+
+describe('Sending a POST to /api/v1/cricketPlayers', function(){
+	describe('should fail', function(){
+		it('when the current user is not an admin.', function(done){
+			requestLocal
+				.post('/api/v1/cricketPlayers')
+				.send({
+					sessionToken: testUser.sessionToken
+				})
+				.expect(403)
+				.end(done);
+		});
+	});
 });
 
 describe('Cleaning up after the Cricket Player tests by deleting', function(){
@@ -42,4 +74,13 @@ describe('Cleaning up after the Cricket Player tests by deleting', function(){
 				done();
 			});
 	});
+	it('the testUser.', function(done){
+			requestLocal
+				.del('/api/v1/users/' + testUser.objectId)
+				.send({
+					sessionToken: testUser.sessionToken
+				})
+				.expect(200)
+				.end(done);
+		});
 });
