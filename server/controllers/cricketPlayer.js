@@ -58,6 +58,15 @@ CricketPlayerController.prototype.getOne = function(req, res) {
 	var validation = new Validatorjs(req.params, validationRules);
 
 	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
+
+	superagent
+		.get('https://api.parse.com/1/classes/CricketPlayer/' + req.params.objectId)
+		.set('X-Parse-Application-Id', config.parse.applicationId)
+		.set('X-Parse-REST-API-Key', config.parse.apiKey)
+		.query('include=CricketPlayerTypeID')
+		.end(function(getOneResult){
+			if(getOneResult.body.code && getOneResult.body.code == 101) return res.sendStatus(404);
+		});
 };
 
 module.exports = CricketPlayerController;

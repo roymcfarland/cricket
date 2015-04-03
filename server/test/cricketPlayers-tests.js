@@ -265,10 +265,6 @@ describe('Sending a GET to /api/v1/cricketPlayers', function(){
 					if(err) return done(err);
 					if(res.body.code) return done(res.body);
 
-					console.log('*****');
-					console.log(res.body);
-					console.log('*****');
-
 					var cricketPlayer = _.findWhere(res.body, {objectId: testCricketPlayer.objectId});
 					cricketPlayer.objectId.should.be.exactly(testCricketPlayer.objectId);
 					cricketPlayer.name.should.be.exactly('testCricketPlayer');
@@ -293,6 +289,12 @@ describe('Sending a GET to /api/v1/cricketPlayers/:objectId', function(){
 					res.body.errors.objectId[0].should.be.exactly('The objectId field must be alphanumeric.');
 					done();
 				});
+		});
+		it('when the player is not found.', function(done){
+			requestLocal
+				.get('/api/v1/cricketPlayers/notARealObjectId')
+				.expect(404)
+				.end(done);
 		});
 	});
 });
