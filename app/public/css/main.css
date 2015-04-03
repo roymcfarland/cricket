@@ -141,6 +141,29 @@ body {
 	background-image: linear-gradient(to right bottom, #7D807F 0%, #050505 30%, #050505 69%, #0C0D0D 100%);
 }
 
+#leaderboard {
+	border: 1px solid #030303;
+	float: right;
+	position: relative;
+	width: 350px;
+	height: 250px;
+	opacity: .6;
+	top: 155px;
+	
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		right bottom,
+		color-stop(0, #A1A1A1),
+		color-stop(0.48, #000000)
+	);
+	background-image: -o-linear-gradient(right bottom, #A1A1A1 0%, #000000 48%);
+	background-image: -moz-linear-gradient(right bottom, #A1A1A1 0%, #000000 48%);
+	background-image: -webkit-linear-gradient(right bottom, #A1A1A1 0%, #000000 48%);
+	background-image: -ms-linear-gradient(right bottom, #A1A1A1 0%, #000000 48%);
+	background-image: linear-gradient(to right bottom, #A1A1A1 0%, #000000 48%);
+	}
+
 #spn-match-teams {
 	float: left;
 	postion: relative;
