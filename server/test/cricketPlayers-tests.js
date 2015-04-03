@@ -327,6 +327,25 @@ describe('Sending a PUT to /api/v1/cricketPlayers/:objectId', function(){
 				.expect(403)
 				.end(done);
 		});
+		it('when the name is not alphanumeric.', function(done){
+			requestLocal
+				.put('/api/v1/cricketPlayers/' + testCricketPlayer.objectId)
+				.send({
+					sessionToken: testAdmin.sessionToken,
+					name: 'aiestnrh87$$%',
+					// name: 'updatedTestCricketPlayer',
+					team: 'updatedTestCricketPlayerTeam',
+					cost: 8,
+					cricketPlayerTypeId: testCricketPlayerType.objectId
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.errors.name[0].should.be.exactly('The name field must be alphanumeric.');
+					done();
+				});
+		});
 	});
 });
 
