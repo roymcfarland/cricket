@@ -9,7 +9,7 @@ CricketPlayerTypeController.prototype.create = function(req, res) {
 
 	var validationRules = {
 		name: 'required|alpha_num',
-		lineUpMinimum: 'required'
+		lineUpMinimum: 'required|numeric'
 	};
 	var validation = new Validatorjs(req.body, validationRules);
 
