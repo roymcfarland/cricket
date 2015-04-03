@@ -316,6 +316,20 @@ describe('Sending a GET to /api/v1/cricketPlayers/:objectId', function(){
 	});
 });
 
+describe('Sending a PUT to /api/v1/cricketPlayers/:objectId', function(){
+	describe('should fail', function(){
+		it('when the current user is not an admin.', function(done){
+			requestLocal
+				.put('/api/v1/cricketPlayers/' + testCricketPlayer.objectId)
+				.send({
+					sessionToken: testUser.sessionToken
+				})
+				.expect(403)
+				.end(done);
+		});
+	});
+});
+
 describe('Cleaning up after the Cricket Player tests by deleting', function(){
 	it('testCricketPlayerType.', function(done){
 		requestParse
