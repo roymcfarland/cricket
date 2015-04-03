@@ -93,6 +93,23 @@ describe('Sending a POST to /api/v1/cricketPlayerTypes', function(){
 					done();
 				});
 		});
+		it('when the name is not alphanumeric.', function(done){
+			requestLocal
+				.post('/api/v1/cricketPlayerTypes')
+				.send({
+					sessionToken: testAdmin.sessionToken,
+					name: 'ayurlstjg^&%$',
+					// name: 'testCricketPlayerType',
+					lineUpMinimum: 2
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.errors.name[0].should.be.exactly('The name field must be alphanumeric.');
+					done();
+				});
+		});
 	});
 });
 

@@ -8,7 +8,7 @@ CricketPlayerTypeController.prototype.create = function(req, res) {
 	if(!admin) return res.sendStatus(403);
 
 	var validationRules = {
-		name: 'required',
+		name: 'required|alpha_num',
 		lineUpMinimum: 'required'
 	};
 	var validation = new Validatorjs(req.body, validationRules);
