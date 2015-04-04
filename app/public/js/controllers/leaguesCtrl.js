@@ -96,10 +96,9 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 							$scope.status = status;
 							if (status == 201) {
 								console.log("res2.status:", status);
-								console.log(typeof($scope.res2));
-								console.log("res2", $scope.res2)
-								// var lineupId = res2;
-								// $location.path("/dashboard/leagues/createLineup/lineup/" + lineupId + "/league/" + leagueId);
+								console.log("res2.objectId:", $scope.res2.objectId);
+								var lineupId = $scope.res2.objectId;
+								$location.path("/dashboard/leagues/createLineup/lineup/" + lineupId + "/league/" + leagueId);
 							}
 						})
 						.error(function (res, status) {
@@ -109,8 +108,8 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 								console.log("Error 404");
 							} else if (status == 428) {
 								console.log("Error 428");
-								console.log(typeof(res));
-								console.log("error res:", res);
+								console.log(typeof($scope.res));
+								console.log("error $scope.res:", $scope.res);
 							}
 						});
 

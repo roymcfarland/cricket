@@ -6,16 +6,19 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////////// Variables ///////////
 	/////////////////////////////////
 	
-	// VM
 	var vm = this;
 	vm.user = Parse.User.current();
 	vm.username = vm.user.getUsername();
 	vm.userMoney = vm.user.attributes.Money;
-	
 	var leagueId = $routeParams.leagueId;
+	var lineupId = $routeParams.lineupId;
 	var user = Parse.User.current();
 	var userId = user.id;
 	var sessionToken = user._sessionToken;
+
+	// console.log("$routeParams:", $routeParams);
+	console.log("lineupId:", lineupId);
+	console.log("leagueId:", leagueId);
 
 
 
@@ -35,7 +38,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				$scope.status = status;
 				if (status == 200) {
 					console.log("League membership confirmed!");
-					console.log("$scope.status:", $scope.status);
+					// console.log("$scope.status:", $scope.status);
 				}
 			})
 			.error(function(response, status) {
