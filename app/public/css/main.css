@@ -18,6 +18,27 @@ body {
 	background-color: #010101;
 }
 
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+
+.group:before,
+.group:after {
+    content: "";
+    display: table;
+} 
+.group:after {
+    clear: both;
+}
+.group {
+    zoom: 1; /* For IE 6/7 (trigger hasLayout) */
+}
+
 .navbar {
 	margin-bottom: 0;
 }
@@ -79,11 +100,18 @@ body {
 	width: 200px;
 	margin-right: 0;
 }
+.welcome-mssg{
+	float: left;
+}
 
 #home-buttons {
 	position: relative;
-	left: 3.5%;
-	}
+	left: 12%;
+}
+	
+.login-btn {
+	float:left;
+}
 
 .box-login {
 	float: right;
@@ -114,15 +142,22 @@ body {
 	background-image:-moz-linear-gradient(90deg, rgb(238, 238, 238), rgb(0, 0, 0) 30%,rgb(102, 102, 0) 0%, rgb(204, 204, 204));
 }
 
+.bottom-home {
+}
+
 #spn-next-game {
+	overflow: hidden;	
+
 	float: right;
 	font-size: 24px;
 	border: 1px solid #ccc;
-	left: 250px;
-	top: 185px;
+	/*left: 250px;
+	top: 185px; */
 	width: 300px;
 	position: relative;
 	opacity: 0.9;
+	left: -10%;
+	margin: 1em;
 
 	
 	background-image: -webkit-gradient(
@@ -139,6 +174,36 @@ body {
 	background-image: -webkit-linear-gradient(right bottom, #7D807F 0%, #050505 30%, #050505 69%, #0C0D0D 100%);
 	background-image: -ms-linear-gradient(right bottom, #7D807F 0%, #050505 30%, #050505 69%, #0C0D0D 100%);
 	background-image: linear-gradient(to right bottom, #7D807F 0%, #050505 30%, #050505 69%, #0C0D0D 100%);
+}
+
+.next-game {
+	
+}
+#leaderboard {
+	border: 1px solid #030303;
+	float: left;
+	position: relative;
+	width: 350px;
+	height: 250px;
+	opacity: .6;
+	/*top: 155px; */
+	
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		right bottom,
+		color-stop(0, #A1A1A1),
+		color-stop(0.48, #000000)
+	);
+	background-image: -o-linear-gradient(right bottom, #A1A1A1 0%, #000000 48%);
+	background-image: -moz-linear-gradient(right bottom, #A1A1A1 0%, #000000 48%);
+	background-image: -webkit-linear-gradient(right bottom, #A1A1A1 0%, #000000 48%);
+	background-image: -ms-linear-gradient(right bottom, #A1A1A1 0%, #000000 48%);
+	background-image: linear-gradient(to right bottom, #A1A1A1 0%, #000000 48%);
+	}
+	
+.leaderboard {
+
 }
 
 #spn-match-teams {

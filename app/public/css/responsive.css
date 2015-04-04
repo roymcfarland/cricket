@@ -1,0 +1,18 @@
+@media screen and (max-width: 1000px) {
+    .welcome-mssg, .box-login, #spn-next-game, #leaderboard {
+        display: block;
+		float: none;
+    }		
+	.box-login  {
+		left: 11%;
+	}
+	
+	#spn-next-game {
+		margin-left: 163px;
+	}
+	
+	
+	.leaderboard {
+		 margin-top: 240px;
+		 margin-left: 95px;
+}

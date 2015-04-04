@@ -21,13 +21,14 @@
     <link rel="stylesheet" href="/js/bower_components/bootstrap-additions/dist/bootstrap-additions.min.css">
     <link rel="stylesheet" href="/css/jquery.countdown.css">
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <!-- ANGULAR JS (inserted in <head> for ngCloak optimization) -->
     <script src="/js/bower_components/angular/angular.min.js"></script>
     <script src="/js/bower_components/angular-route/angular-route.min.js"></script>
   </head>
-  
+    
   <!-- End </head> Start <body> --> 
-  
+        
   <div class="ng-cloak" id="main-div" ng-cloak ng-app="cricketDuel" ng-controller="indexController as index">
   <body class="container"> 
     <!-- Start <header> -->
@@ -38,7 +39,7 @@
             <!--
             <a class="navbar-brand" href="/"><i class="fa fa-diamond"></i> CricketDuel</a>
             -->
-            <a class="navbar-brand" href="/"></a>
+          <a class="navbar-brand" href="/"></a>
           </div> <!-- ./navbar-header -->
           <div class="navbar-collapse" id="nav-container">
             <ul class="nav navbar-nav navbar-right">
@@ -53,6 +54,62 @@
     <!-- End </header> Start <main> -->
     <main>
       <!-- Where angular templating will be injected -->
+      <!-- Main content where angular templating will be injected -->
+     
+     <!--
+      <div class="jumbotron text-center" id="top-jumbotron">
+        <div class="clearfix top-home">
+            <div class="welcome-mssg">
+                <h1>WELCOME TO</h1>
+                <h2>CRICKETDUEL</h2>
+                <div id="home-buttons" class="clearfix">        
+                    <form action="/rules" method="get" class="login-btn">
+                        <button class="btn-lg" id="btn-game-rules">GAME RULES</button>
+                    </form>
+                    <form action="/register" method="get" class="login-btn">
+                        <button class="btn-lg" id="btn-join-league">JOIN A LEAGUE</button>
+                    </form>
+                </div>
+             </div>
+            <div class="box-login">
+                <br><p>Already Created a Team?</p>
+                <span id="login-buttons">
+                    <form action="login" method="get" class="">
+                        <button class="btn-lg" id="btn-login"><span class="glyphicon glyphicon-user"></span>  LOGIN</button>
+                    </form>
+                </span>
+            
+             </div>
+        </div>
+        <div class="clearfix bottom-home">    
+            <div id="spn-next-game" class="next-game">
+               <p>Next Game Starts</p>
+               <div>
+                <div id="defaultCountdown"></div>
+                </div>
+                
+                <span id="spn-match-teams">
+                     KKR<br>
+                    <img src="/images/kkr.png" alt="KKR"><br>
+                    vs<br>
+                    <img src="images/MI.png" alt"MI"><br>
+                      MI
+                </span>
+                
+            </div>
+            
+            <div id="leaderboard" class="leaderboard">
+            LEADERBOARD
+            </div>
+            
+		</div>
+        
+      </div>
+      <div class="content">
+
+      </div>
+
+	-->
       <div ng-view></div>
     </main>
     <!-- End </main> -->
@@ -109,7 +166,7 @@
     <script src="/js/services/leaguesService.js"></script>
     <script src="/js/services/createLineupService.js"></script>
     <script src="/js/services/matchService.js"></script>
-
+  
   </footer> 
   <!-- End </footer> -->
 
