@@ -83,12 +83,22 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 
 	/////////////////////////////////
+	////////// saveLineup() /////////
+	/////////////////////////////////
+	
+	$scope.saveLineup = function() {
+
+	};
+
+
+
+	/////////////////////////////////
 	////// addPlayerToTeam() ////////
 	/////////////////////////////////
 	
 	$scope.addPlayerToTeam = function() {
 		
-		var playerId = $scope.playerId;
+		var cricketPlayerId = $scope.playerId;
 		var playerName = $scope.playerName;
 		var playerType = $scope.playerType;
 		var playerTeam = $scope.playerTeam;
@@ -97,30 +107,37 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			objectId: vm.user.id
 		};
 
-		console.log("playerId:", playerId);
-		console.log("playerName:", playerName);
-		console.log("playerType:", playerType);
-		console.log("playerTeam:", playerTeam);
 		console.log("user:", user);
+		console.log("lineupId:", lineupId);
+		console.log("cricketPlayerId:", cricketPlayerId);
+		// console.log("playerName:", playerName);
+		// console.log("playerType:", playerType);
+		// console.log("playerTeam:", playerTeam);
 
 		// AJAX POST //
-		/*
-		$http.post("/api/v1/players" + playerId + "?addUser=true", {user: user}, [])
-		.success(function(data, status) {
-			$scope.data = data;
+		$http.post("/api/v1/lineupPlayers", {user: user, LineupID: lineupId, CricketPlayerID: cricketPlayerId}, [])
+		.success(function (res, status) {
+			$scope.res = res;
 			$scope.status = status;
-			if (status == 200) {
-				alert("Congratulations! You have added " + playerName + "to your team!");
-				$location.path("/dashboard/leagus/createLineup/" + leagueId);
-		}})
-		.error(function(data, status) {
-			$scope.data = data;
+			if (status == 201) {
+				// console.log("$scope.status:", $scope.status);
+				// console.log("$scope.res:", $scope.res);
+				var lineupPlayerId = $scope.res.objectId;
+				console.log("lineupPlayerId:", lineupPlayerId);
+			}
+		})
+		.error(function (res, status) {
+			$scope.res = res;
 			$scope.status = status;
 			if (status == 404) {
-				alert("Sorry! There was an error. Please try again. (Error 404)");
-				$location.path("/dashboard/leagues/createLineup/" + leagueId);
-		}})
-		*/
+				console.log("Error 404");
+			} else if (status == 428) {
+				console.log("Error 428");
+				console.log(typeof($scope.res));
+				console.log("error $scope.res:", $scope.res);
+			}
+		});
+
 	};
 
 
