@@ -73,15 +73,6 @@ appRouter.config(function($routeProvider, $locationProvider) {
 			controllerAs: "leaguesCtrl"
 		})
 
-		/*
-		// route for createLineup page
-		.when("/dashboard/leagues/createLineup/:leagueId", {
-			templateUrl: "../views/createLineup.html",
-			controller: "createLineupController",
-			controllerAs: "createLineupCtrl"
-		})
-		*/
-
 		// route for createLineup page
 		.when("/dashboard/leagues/createLineup/lineup/:lineupId/league/:leagueId", {
 			templateUrl: "../views/createLineup.html",
