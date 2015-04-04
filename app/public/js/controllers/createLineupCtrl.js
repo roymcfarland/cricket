@@ -33,21 +33,25 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// Is the user a member of this league?
 		$http.get("/api/v1/userLeagues?leagueId=" + leagueId + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
-			.success(function(response, status) {
-				$scope.league = response;
+			.success(function (res, status) {
+				$scope.league = res;
 				$scope.status = status;
 				if (status == 200) {
 					console.log("League membership confirmed!");
 					// console.log("$scope.status:", $scope.status);
 				}
 			})
-			.error(function(response, status) {
-				$scope.response = response;
+			.error(function (res, status) {
+				$scope.res = res;
 				$scope.status = status;
-				if (status == 428) {
+				if (status == 404) {
+					console.log("Error 404");
+				} else if (status == 428) {
 					console.log(data);
 					alert("Error: " + data.errors.leagueId[0] + " (428)");
 					$location.path("/dashboard/leagues");
+				} else {
+					console.log("Error unknown");
 				}
 			});
 	};
@@ -124,6 +128,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				// console.log("$scope.res:", $scope.res);
 				var lineupPlayerId = $scope.res.objectId;
 				console.log("lineupPlayerId:", lineupPlayerId);
+				alert(playerName + " has been added to your team");
 			}
 		})
 		.error(function (res, status) {
@@ -133,8 +138,15 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				console.log("Error 404");
 			} else if (status == 428) {
 				console.log("Error 428");
-				console.log(typeof($scope.res));
-				console.log("error $scope.res:", $scope.res);
+				console.log("Error $scope.res:", $scope.res);
+			} else if (status == 500) {
+				console.log("Error 500");
+				console.log("Error $scope.res:", $scope.res);
+			} else if (status == 520) {
+				console.log("Error 520");
+				console.log("Error $scope.res:", $scope.res);
+			} else {
+				console.log("Error unknown")
 			}
 		});
 

@@ -21,6 +21,7 @@
 					<th>No. of Entries</th>
 					<th>Guaranteed Prize</th>
 					<th>Winning Prize</th>
+					<th></th>
 				</thead>
 				<tbody>
 					<tr ng-repeat="league in leagues" ng-click="selectLeague(league.objectId, league.name, league.entryFee)">
@@ -30,14 +31,11 @@
 						<td>{{league.noOfEntries}}</td>
 						<td>{{league.guaranteedPrize | currency}}</td>
 						<td>{{league.winningPrize | currency}}</td>
+						<td><a class="btn btn-primary" ng-click="addUserToLeague()">+</a></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-	</div>
-
-	<div>
-		<a class="btn btn-default pull-right" ng-click="addUserToLeague()">Join Selected League</a>
 	</div>
 
 	<!--

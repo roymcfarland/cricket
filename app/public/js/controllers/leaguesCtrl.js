@@ -83,7 +83,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 				$scope.res1 = res;
 				$scope.status = status;
 				if (status == 200) {
-					console.log("Congratulations! You have joined " + leagueName + ".");
+					alert(leagueName + " membership confirmed");
 					var userLeagueId = $scope.res1.objectId;
 					var user = {
 						sessionToken: vm.user._sessionToken,
@@ -108,8 +108,15 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 								console.log("Error 404");
 							} else if (status == 428) {
 								console.log("Error 428");
-								console.log(typeof($scope.res));
-								console.log("error $scope.res:", $scope.res);
+								console.log("Error $scope.res:", $scope.res);
+							} else if (status == 500) {
+								console.log("Error 500");
+								console.log("Error $scope.res:", $scope.res);
+							} else if (status == 520) {
+								console.log("Error 520");
+								console.log("Error $scope.res:", $scope.res);
+							} else {
+								console.log("Error unknown");
 							}
 						});
 
@@ -118,7 +125,9 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 			.error(function (res, status) {
 				$scope.res = res;
 				$scope.status = status;
-				if (status == 518) {
+				if (status == 404) {
+					console.log("Error 404");
+				} else if (status == 518) {
 					alert("Sorry! This league is full. Please join another league. (Error 518)");
 					$location.path("/dashboard/leagues");
 				} else if (status == 519) {
@@ -127,6 +136,8 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 				} else if (status == 500) {
 					alert("Sorry! There was an error. Please try again. (Error 500)");
 					$location.path("/dashboard/leagues");
+				} else {
+					console.log("Error unknown");
 				}
 			});
 

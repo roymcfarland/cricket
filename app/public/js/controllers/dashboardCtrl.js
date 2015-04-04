@@ -39,13 +39,22 @@ dashboardCtrl.controller("dashboardController", function($location, $scope, $htt
 			.error(function(response, status) {
 				$scope.response = response;
 				$scope.status = status;
-				if (status == 500) {
+				if (status == 404) {
+					console.log("Error 404");
+				} else if (status == 403) {
+					console.log("Error 403");
+					console.log("Error $scope.res:", $scope.res);
+				} else if (status == 428) {
+					console.log("Error 428");
+					console.log("Error $scope.res:", $scope.res);
+				} else if (status == 500) {
 					console.log("error response:", response);
 					alert("Error (500)");
 					$location.path("/dashboard");
+				} else {
+					console.log("Error unknown");
 				}
 			});
-
 	};
 
 	init();
