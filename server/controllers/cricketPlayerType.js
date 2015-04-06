@@ -59,7 +59,8 @@ CricketPlayerTypeController.prototype.getOne = function(req, res) {
 CricketPlayerTypeController.prototype.update = function(req, res) {
 	var admin = req.user.admin;
 	var validationRules = {
-		name: 'alpha_num'
+		name: 'alpha_num',
+		lineUpMinimum: 'numeric'
 	};
 	var validation = new Validatorjs(req.body, validationRules);
 

@@ -220,6 +220,22 @@ describe('Sending a PUT to /api/v1/cricketPlayerTypes/:objectId', function(){
 					done();
 				});
 		});
+		it('when the lineUpMinimum is not numeric.', function(done){
+			requestLocal
+				.put('/api/v1/cricketPlayerTypes/' + testCricketPlayerType.objectId)
+				.send({
+					sessionToken: testAdmin.sessionToken,
+					name: 'updatedTestCricketPlayerType',
+					lineUpMinimum: 'aisnertj'
+				})
+				.expect(428)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.errors.lineUpMinimum[0].should.be.exactly('The lineUpMinimum must be a number.');
+					done();
+				});
+		});
 	});
 });
 
