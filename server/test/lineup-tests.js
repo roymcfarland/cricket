@@ -210,6 +210,25 @@ describe('Sending a GET to /api/v1/lineups', function(){
 	});
 });
 
+describe('Sending a GET to /api/v1/lineups/:objectId', function(){
+	describe('should succeed', function(){
+		it('in getting the testLineup.', function(done){
+			requireLocal
+			.get('/api/v1/lineups/' + testLineup.objectId)
+			.query('sessionToken=' + testUser.sessionToken)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				res.body.objectId.should.be.exactly(testLineup.objectId);
+				res.body.Locked.should.be.exactly(false);
+				res.body.UserLeagueID.UserID.username.should.be.exactly('testUser');
+				done();
+			});
+		});
+	});
+});
+
 describe('Cleaning up after the tests', function(){
 	describe('by deleting the user', function(){
 		it('testUser', function(done){
