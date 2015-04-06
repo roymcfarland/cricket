@@ -345,6 +345,20 @@ describe('Sending a PUT to /api/v1/lineups/:objectId', function(){
 	});
 });
 
+describe('Sending a DELETE to /api/v1/lineups/:objectId', function(){
+	describe('should fail', function(){
+		it('when the current user is not the owner of the lineup.', function(done){
+			requestLocal
+			.del('/api/v1/lineups/' + testLineup.objectId)
+			.send({
+				sessionToken: testUser2.sessionToken
+			})
+			.expect(403)
+			.end(done);
+		});
+	});
+});
+
 describe('Cleaning up after the tests', function(){
 	describe('by deleting the user', function(){
 		it('testUser', function(done){
