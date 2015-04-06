@@ -58,8 +58,13 @@ CricketPlayerTypeController.prototype.getOne = function(req, res) {
 
 CricketPlayerTypeController.prototype.update = function(req, res) {
 	var admin = req.user.admin;
+	var validationRules = {
+		name: 'alpha_num'
+	};
+	var validation = new Validatorjs(req.body, validationRules);
 
 	if(!admin) res.sendStatus(403);
+	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
 };
 
 module.exports = CricketPlayerTypeController;
