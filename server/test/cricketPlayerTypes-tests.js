@@ -171,6 +171,25 @@ describe('Sending a GET to /api/v1/cricketPlayerTypes', function(){
 	});
 });
 
+describe('Sending a GET to /api/v1/cricketPlayerTypes/:objectId', function(){
+	describe('should succeed', function(){
+		it('when getting the testCricketPlayerType.', function(done){
+			requestLocal
+				.get('/api/v1/cricketPlayerTypes/' + testCricketPlayerType.objectId)
+				.expect(200)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body);
+
+					res.body.objectId.should.be.exactly(testCricketPlayerType.objectId);
+					res.body.name.should.be.exactly('testCricketPlayerType');
+					res.body.lineUpMinimum.should.be.exactly(2);
+					done();
+				});
+		});
+	});
+});
+
 describe('Cleaning up after the Cricket Player Type tests by deleting the', function(){
 	it('testUser.', function(done){
 		requestLocal
