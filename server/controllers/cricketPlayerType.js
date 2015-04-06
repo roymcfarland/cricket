@@ -56,4 +56,10 @@ CricketPlayerTypeController.prototype.getOne = function(req, res) {
 		});
 };
 
+CricketPlayerTypeController.prototype.update = function(req, res) {
+	var admin = req.user.admin;
+
+	if(!admin) res.sendStatus(403);
+};
+
 module.exports = CricketPlayerTypeController;

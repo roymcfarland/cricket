@@ -190,6 +190,22 @@ describe('Sending a GET to /api/v1/cricketPlayerTypes/:objectId', function(){
 	});
 });
 
+describe('Sending a PUT to /api/v1/cricketPlayerTypes/:objectId', function(){
+	describe('should fail', function(){
+		it('when the current user is not an admin.', function(done){
+			requestLocal
+				.put('/api/v1/cricketPlayerTypes/' + testCricketPlayerType.objectId)
+				.send({
+					sessionToken: testUser.sessionToken,
+					name: 'updatedTestCricketPlayerType',
+					lineUpMinimum: 4
+				})
+				.expect(403)
+				.end(done);
+		});
+	});
+});
+
 describe('Cleaning up after the Cricket Player Type tests by deleting the', function(){
 	it('testUser.', function(done){
 		requestLocal
