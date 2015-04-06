@@ -278,6 +278,17 @@ describe('Sending a DELETE to /api/v1/cricketPlayerTypes/:objectId', function(){
 				.end(done);
 		});
 	});
+	describe('should succeed', function(){
+		it('when deleting the testCricketPlayerType.', function(done){
+			requestLocal
+				.del('/api/v1/cricketPlayerTypes/' + testCricketPlayerType.objectId)
+				.send({
+					sessionToken: testAdmin.sessionToken
+				})
+				.expect(200)
+				.end(done);
+		});
+	});
 });
 
 describe('Cleaning up after the Cricket Player Type tests by deleting the', function(){

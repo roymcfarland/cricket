@@ -85,9 +85,19 @@ CricketPlayerTypeController.prototype.update = function(req, res) {
 };
 
 CricketPlayerTypeController.prototype.del = function(req, res) {
-	var admin = req.params.admin;
+	var admin = req.user.admin;
 
 	if(!admin) return res.sendStatus(403);
+
+	superagent
+		.del('https://api.parse.com/1/classes/CricketPlayerType/' + req.params.objectId)
+		.set('X-Parse-Application-Id', config.parse.applicationId)
+		.set('X-Parse-REST-API-Key', config.parse.apiKey)
+		.end(function(updateResults){
+			if(updateResults.body.code) return res.status(500).send(updateResults.body);
+
+			return res.sendStatus(200);
+		});
 };
 
 module.exports = CricketPlayerTypeController;
