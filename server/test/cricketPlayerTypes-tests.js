@@ -1,4 +1,5 @@
 var supertest = require('supertest');
+var _ = require('underscore');
 var config = require('../config/config');
 
 var requestLocal = supertest('http://localhost:3000');
@@ -144,6 +145,26 @@ describe('Sending a POST to /api/v1/cricketPlayerTypes', function(){
 
 					res.body.objectId.should.be.type('string');
 					testCricketPlayerType = res.body;
+					done();
+				});
+		});
+	});
+});
+
+describe('Sending a GET to /api/v1/cricketPlayerTypes', function(){
+	describe('should succeed', function(){
+		it('in getting all cricket player types.', function(done){
+			requestLocal
+				.get('/api/v1/cricketPlayerTypes')
+				.expect(200)
+				.end(function(err, res){
+					if(err) return done(err);
+					if(res.body.code) return done(res.body);
+
+					var cricketPlayerType = _.findWhere(res.body, {objectId: testCricketPlayerType.objectId});
+					cricketPlayerType.objectId.should.be.exactly(testCricketPlayerType.objectId);
+					cricketPlayerType.name.should.be.exactly('testCricketPlayerType');
+					cricketPlayerType.lineUpMinimum.should.be.exactly(2);
 					done();
 				});
 		});
