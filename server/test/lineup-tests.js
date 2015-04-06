@@ -2,14 +2,16 @@ var supertest = require('supertest');
 var should = require('should');
 var _ = require('underscore');
 
-var requireLocal = supertest('http://localhost:3000');
+var requestLocal = supertest('http://localhost:3000');
 var requireParse = supertest('https://api.parse.com');
 var testUserLeague;
 var testUser;
+var testUser2;
 var testLeague;
 var testMatch;
 var testLineup;
 var testLineup2;
+var testLineup3;
 
 describe('Preparing for the tests', function(){
 	describe('by creating a', function(){
@@ -34,7 +36,23 @@ describe('Preparing for the tests', function(){
 					done();
 				});
 		});
+		it('testUser2.', function(done){
+			requestLocal
+				.post('/api/v1/users')
+				.send({
+					username: 'testuser2',
+					password: 'password',
+					email: 'testuser2@latitude40.com'
+				})
+				.expect(201)
+				.end(function(err, res){
+					if(err) return done(err);
 
+					res.body.objectId.should.be.type('string');
+					testUser2 = res.body;
+					done();
+				});
+		});
 		it('testLeague', function(done){
 			requireParse
 				.post('/1/classes/League')
@@ -114,7 +132,7 @@ describe('Preparing for the tests', function(){
 describe('Sending a POST to /api/v1/lineups', function(){
 	describe('should fail', function(){
 		it('when the MatchID is not an alpha numeric string', function(done){
-			requireLocal
+			requestLocal
 				.post('/api/v1/lineups')
 				.send({
 					UserLeagueId: testUserLeague.objectId,
@@ -132,7 +150,7 @@ describe('Sending a POST to /api/v1/lineups', function(){
 		});
 
 		it('when the Locked is not a boolean', function(done){
-			requireLocal
+			requestLocal
 				.post('/api/v1/lineups')
 				.send({
 					UserLeagueId: testUserLeague.objectId,
@@ -152,7 +170,7 @@ describe('Sending a POST to /api/v1/lineups', function(){
 
 	describe('should succeed', function(){
 		it('when the MatchID is not passed in.', function(done){
-			requireLocal
+			requestLocal
 				.post('/api/v1/lineups')
 				.send({
 					UserLeagueId: testUserLeague.objectId,
@@ -170,7 +188,7 @@ describe('Sending a POST to /api/v1/lineups', function(){
 				});
 		});
 		it('when the MatchID is passed in.', function(done){
-			requireLocal
+			requestLocal
 				.post('/api/v1/lineups')
 				.send({
 					UserLeagueId: testUserLeague.objectId,
@@ -187,13 +205,31 @@ describe('Sending a POST to /api/v1/lineups', function(){
 					done();
 				});
 		});
+		it('when creating testLineup3.', function(done){
+			requestLocal
+				.post('/api/v1/lineups')
+				.send({
+					UserLeagueId: testUserLeague.objectId,
+					MatchID: testMatch.objectId,
+					Locked: false,
+					user: testUser2
+				})
+				.expect(201)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.objectId.should.be.type('string');
+					testLineup2 = res.body;
+					done();
+				});
+		});
 	});
 });
 
 describe('Sending a GET to /api/v1/lineups', function(){
 	describe('should succeed', function(){
 		it('in getting all of the lineups.', function(done){
-			requireLocal
+			requestLocal
 			.get('/api/v1/lineups')
 			.query('sessionToken=' + testUser.sessionToken)
 			.end(function(err, res){
@@ -213,7 +249,7 @@ describe('Sending a GET to /api/v1/lineups', function(){
 describe('Sending a GET to /api/v1/lineups/:objectId', function(){
 	describe('should succeed', function(){
 		it('in getting the testLineup.', function(done){
-			requireLocal
+			requestLocal
 			.get('/api/v1/lineups/' + testLineup.objectId)
 			.query('sessionToken=' + testUser.sessionToken)
 			.end(function(err, res){
@@ -229,6 +265,22 @@ describe('Sending a GET to /api/v1/lineups/:objectId', function(){
 	});
 });
 
+describe('Sending a PUT to /api/v1/lineups/:objectId', function(){
+	describe('should fail', function(){
+		it('when the user is not the same as the one connected to the lineup.', function(done){
+			requestLocal
+			.put('/api/v1/lineups/' + testLineup.objectId)
+			.send({
+				sessionToken: testUser2.sessionToken,
+				Locked: true,
+				MatchID: testMatch.objectId
+			})
+			.expect(403)
+			.end(done);
+		});
+	});
+});
+
 describe('Cleaning up after the tests', function(){
 	describe('by deleting the user', function(){
 		it('testUser', function(done){
@@ -239,8 +291,16 @@ describe('Cleaning up after the tests', function(){
 				.set('X-Parse-Session-Token', testUser.sessionToken)
 				.end(done);
 		});
+		it('testUser2.', function(done){
+			requestLocal
+				.del('/api/v1/users/' + testUser2.objectId)
+				.send({
+					sessionToken: testUser2.sessionToken
+				})
+				.expect(200)
+				.end(done);
+		});
 	});
-
 	describe('by deleting the league', function(){
 		it('testLeague', function(done){
 			requireParse

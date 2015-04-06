@@ -99,4 +99,25 @@ LineupController.prototype.getOne = function(req, res) {
 	});
 };
 
+LineupController.prototype.update = function(req, res) {
+	async.series({
+		verifyCurrentUserOwnsLineup: function(done){
+			superagent
+			.get('https://api.parse.com/1/classes/Lineup/' + req.params.objectId)
+			.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+			.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+			.query('include=UserLeagueID.UserID')
+			.end(function(result){
+				if(result.body.code) return done({code: 500, error: result.body});
+				if(result.body.UserLeagueID.UserID.objectId != req.user.objectId) return done({code: 403});
+
+				done();
+			});
+		}
+	}, function(err, results){
+		if(err && err.code && err.error) return res.status(err.code).send(err.error);
+		if(err && err.code) return res.sendStatus(err.code);
+	});
+};
+
 module.exports = LineupController;
