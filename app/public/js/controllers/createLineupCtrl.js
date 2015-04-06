@@ -185,6 +185,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 	};
 
+/*
 	////////////////////////////////
 	//// removePlayerFromTeam() ////
 	////////////////////////////////
@@ -209,11 +210,26 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// VISUALLY REMOVE PLAYER FROM USER'S LINEUP
 		console.log("####", lineup);
-
+		
+		var removePlayer = function() {
+			console.log("playerId:", playerId);
+			console.log("lineup[0].id", lineup[0].id);
+			console.log("lineup[1].id", lineup[1].id);
+			for (i=0; i < lineup.length; i++)
+				if (lineup[i].id == playerId) {
+					lineup.splice(i,1);
+					break;
+				}
+		};
+		removePlayer();
+		console.log("####", lineup);
 
 	};
 
 	// console.log(typeof(lineup));
 	// console.log("lineup array:", lineup);
+*/
 
 });
+
+
