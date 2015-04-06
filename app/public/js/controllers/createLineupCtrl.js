@@ -106,7 +106,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	
 	$scope.addPlayerToTeam = function() {
 		
-		var cricketPlayerId = $scope.playerId;
+		var playerId = $scope.playerId;
 		var playerName = $scope.playerName;
 		var playerPosition = $scope.playerPosition;
 		var playerTeam = $scope.playerTeam;
@@ -118,14 +118,14 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// console.log("user:", user);
 		// console.log("lineupId:", lineupId);
-		// console.log("cricketPlayerId:", cricketPlayerId);
+		console.log("playerId:", playerId);
 		// console.log("playerCost:", playerCost);
 		// console.log("playerName:", playerName);
 		// console.log("playerType:", playerType);
 		// console.log("playerTeam:", playerTeam);
 
 		// AJAX POST
-		$http.post("/api/v1/lineupPlayers", {user: user, LineupID: lineupId, CricketPlayerID: cricketPlayerId}, [])
+		$http.post("/api/v1/lineupPlayers", {user: user, LineupID: lineupId, CricketPlayerID: playerId}, [])
 		.success(function (res, status) {
 			$scope.res = res;
 			$scope.status = status;
@@ -134,7 +134,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				// console.log("$scope.res:", $scope.res);
 				var lineupPlayerId = $scope.res.objectId;
 				console.log("lineupPlayerId:", lineupPlayerId);
-				alert(playerName + " has been added to your team");
+				console.log(playerName + " has been added to your team");
 			}
 		})
 		.error(function (res, status) {
@@ -157,7 +157,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		});
 
 		// VISUALLY ADD PLAYER TO USER'S LINEUP
-		var Player = function(name, position, team, cost) {
+		var Player = function(id, name, position, team, cost) {
+			this.id = id;
 			this.name = name;
 			this.position = position;
 			this.team = team;
@@ -165,47 +166,54 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 		
 		var movePlayerToLineup = function() {
-			var lineupPlayer = new Player (playerName, playerPosition, playerTeam, playerCost);
-			console.log(lineupPlayer);
+			var lineupPlayer = new Player (playerId, playerName, playerPosition, playerTeam, playerCost);
+			// console.log(lineupPlayer);
+			$scope.lineupPlayer = lineupPlayer;
 			lineup.push(lineupPlayer);
 			$scope.lineup = lineup;
+
+			// Disable player in available players column
+			console.log("playerId:", lineupPlayer.id);
+
+			return lineup;
+
 		};
-
 		movePlayerToLineup();
-
-		console.log(lineup);
+		
+		// Array of objects created for ng-repeat="player in lineup"
+		console.log("###", lineup);
 
 	};
-
-
 
 	////////////////////////////////
 	//// removePlayerFromTeam() ////
 	////////////////////////////////
 	
 	$scope.removePlayerFromTeam = function() {
-		var playerId = $scope.playerId;
-		var playerName = $scope.playerName;
-		var playerType = $scope.playerType;
-		var playerTeam = $scope.playerTeam;
-
-		console.log("playerId: ", playerId);
-		console.log("playerName: ", playerName);
-		console.log("playerType: ", playerType);
-		console.log("playerTeam: ", playerTeam);
-
-		// See BP comment in leaguesCtrl.js
+		var playerId = $scope.lineupPlayer.id;
+		var playerName = $scope.lineupPlayer.name;
+		var playerPosition = $scope.lineupPlayer.position;
+		var playerTeam = $scope.lineupPlayer.team;
+		var playerCost = $scope.lineupPlayer.cost;
 		var user = {
 			sessionToken: vm.user._sessionToken,
 			objectId: vm.user.id
-		}
+		};
 
-		///// AJAX  ////
+		console.log("user:", user);
+		console.log("playerId: ", playerId);
+		console.log("playerName: ", playerName);
+		console.log("playerPosition: ", playerPosition);
+		console.log("playerTeam: ", playerTeam);
+		console.log("playerCost:", playerCost);
+
+		// VISUALLY REMOVE PLAYER FROM USER'S LINEUP
+		console.log("####", lineup);
 
 
 	};
 
-	console.log(typeof(lineup));
-	console.log("lineup array:", lineup);
+	// console.log(typeof(lineup));
+	// console.log("lineup array:", lineup);
 
 });
