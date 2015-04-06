@@ -64,8 +64,24 @@ CricketPlayerTypeController.prototype.update = function(req, res) {
 	};
 	var validation = new Validatorjs(req.body, validationRules);
 
-	if(!admin) res.sendStatus(403);
+	if(!admin) return res.sendStatus(403);
 	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
+
+	var payload = {};
+
+	if(req.body.name) payload.name = req.body.name;
+	if(req.body.lineUpMinimum) payload.lineUpMinimum = req.body.lineUpMinimum;
+
+	superagent
+		.put('https://api.parse.com/1/classes/CricketPlayerType/' + req.params.objectId)
+		.set('X-Parse-Application-Id', config.parse.applicationId)
+		.set('X-Parse-REST-API-Key', config.parse.apiKey)
+		.send(payload)
+		.end(function(updateResults){
+			if(updateResults.body.code) return res.status(500).send(updateResults.body);
+
+			return res.sendStatus(200);
+		});
 };
 
 module.exports = CricketPlayerTypeController;
