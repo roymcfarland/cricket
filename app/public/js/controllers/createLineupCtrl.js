@@ -21,6 +21,9 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	console.log("leagueId:", leagueId);
 
 
+	var lineup = [];
+
+
 
 	/////////////////////////////////
 	//////// Initialization /////////
@@ -74,11 +77,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////// createLineup.html ///////
 	/////////////////////////////////
 
-	$scope.selectPlayer = function(id, name, playerType, playerTeam) {
+	$scope.selectPlayer = function(id, name, position, team, cost) {
 		$scope.playerId = id;
 		$scope.playerName = name;
-		$scope.playerType = playerType;
-		$scope.playerTeam = playerTeam;
+		$scope.playerPosition = position;
+		$scope.playerTeam = team;
+		$scope.playerCost = cost;
 
 		console.log("You selected", $scope.playerName);
 
@@ -104,21 +108,23 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		
 		var cricketPlayerId = $scope.playerId;
 		var playerName = $scope.playerName;
-		var playerType = $scope.playerType;
+		var playerPosition = $scope.playerPosition;
 		var playerTeam = $scope.playerTeam;
+		var playerCost = $scope.playerCost;
 		var user = {
 			sessionToken: vm.user._sessionToken,
 			objectId: vm.user.id
 		};
 
-		console.log("user:", user);
-		console.log("lineupId:", lineupId);
-		console.log("cricketPlayerId:", cricketPlayerId);
+		// console.log("user:", user);
+		// console.log("lineupId:", lineupId);
+		// console.log("cricketPlayerId:", cricketPlayerId);
+		// console.log("playerCost:", playerCost);
 		// console.log("playerName:", playerName);
 		// console.log("playerType:", playerType);
 		// console.log("playerTeam:", playerTeam);
 
-		// AJAX POST //
+		// AJAX POST
 		$http.post("/api/v1/lineupPlayers", {user: user, LineupID: lineupId, CricketPlayerID: cricketPlayerId}, [])
 		.success(function (res, status) {
 			$scope.res = res;
@@ -150,6 +156,25 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			}
 		});
 
+		// VISUALLY ADD PLAYER TO USER'S LINEUP
+		var Player = function(name, position, team, cost) {
+			this.name = name;
+			this.position = position;
+			this.team = team;
+			this.cost = cost;
+		};
+		
+		var movePlayerToLineup = function() {
+			var lineupPlayer = new Player (playerName, playerPosition, playerTeam, playerCost);
+			console.log(lineupPlayer);
+			lineup.push(lineupPlayer);
+			$scope.lineup = lineup;
+		};
+
+		movePlayerToLineup();
+
+		console.log(lineup);
+
 	};
 
 
@@ -179,5 +204,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 
 	};
+
+	console.log(typeof(lineup));
+	console.log("lineup array:", lineup);
 
 });
