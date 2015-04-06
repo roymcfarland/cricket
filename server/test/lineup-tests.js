@@ -1,14 +1,17 @@
 var supertest = require('supertest');
 var should = require('should');
+var _ = require('underscore');
 
-var requireLocal = supertest('http://localhost:3000');
+var requestLocal = supertest('http://localhost:3000');
 var requireParse = supertest('https://api.parse.com');
 var testUserLeague;
 var testUser;
+var testUser2;
 var testLeague;
 var testMatch;
 var testLineup;
 var testLineup2;
+var testLineup3;
 
 describe('Preparing for the tests', function(){
 	describe('by creating a', function(){
@@ -33,7 +36,23 @@ describe('Preparing for the tests', function(){
 					done();
 				});
 		});
+		it('testUser2.', function(done){
+			requestLocal
+				.post('/api/v1/users')
+				.send({
+					username: 'testuser2',
+					password: 'password',
+					email: 'testuser2@latitude40.com'
+				})
+				.expect(201)
+				.end(function(err, res){
+					if(err) return done(err);
 
+					res.body.objectId.should.be.type('string');
+					testUser2 = res.body;
+					done();
+				});
+		});
 		it('testLeague', function(done){
 			requireParse
 				.post('/1/classes/League')
@@ -113,7 +132,7 @@ describe('Preparing for the tests', function(){
 describe('Sending a POST to /api/v1/lineups', function(){
 	describe('should fail', function(){
 		it('when the MatchID is not an alpha numeric string', function(done){
-			requireLocal
+			requestLocal
 				.post('/api/v1/lineups')
 				.send({
 					UserLeagueId: testUserLeague.objectId,
@@ -131,7 +150,7 @@ describe('Sending a POST to /api/v1/lineups', function(){
 		});
 
 		it('when the Locked is not a boolean', function(done){
-			requireLocal
+			requestLocal
 				.post('/api/v1/lineups')
 				.send({
 					UserLeagueId: testUserLeague.objectId,
@@ -151,7 +170,7 @@ describe('Sending a POST to /api/v1/lineups', function(){
 
 	describe('should succeed', function(){
 		it('when the MatchID is not passed in.', function(done){
-			requireLocal
+			requestLocal
 				.post('/api/v1/lineups')
 				.send({
 					UserLeagueId: testUserLeague.objectId,
@@ -169,7 +188,7 @@ describe('Sending a POST to /api/v1/lineups', function(){
 				});
 		});
 		it('when the MatchID is passed in.', function(done){
-			requireLocal
+			requestLocal
 				.post('/api/v1/lineups')
 				.send({
 					UserLeagueId: testUserLeague.objectId,
@@ -186,6 +205,168 @@ describe('Sending a POST to /api/v1/lineups', function(){
 					done();
 				});
 		});
+		it('when creating testLineup3.', function(done){
+			requestLocal
+				.post('/api/v1/lineups')
+				.send({
+					UserLeagueId: testUserLeague.objectId,
+					MatchID: testMatch.objectId,
+					Locked: false,
+					user: testUser2
+				})
+				.expect(201)
+				.end(function(err, res){
+					if(err) return done(err);
+
+					res.body.objectId.should.be.type('string');
+					testLineup2 = res.body;
+					done();
+				});
+		});
+	});
+});
+
+describe('Sending a GET to /api/v1/lineups', function(){
+	describe('should succeed', function(){
+		it('in getting all of the lineups.', function(done){
+			requestLocal
+			.get('/api/v1/lineups')
+			.query('sessionToken=' + testUser.sessionToken)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				var lineup = _.findWhere(res.body, {objectId: testLineup.objectId});
+
+				lineup.Locked.should.be.exactly(false);
+				lineup.UserLeagueID.UserID.username.should.be.exactly('testUser');
+				done();
+			});
+		});
+	});
+});
+
+describe('Sending a GET to /api/v1/lineups/:objectId', function(){
+	describe('should succeed', function(){
+		it('in getting the testLineup.', function(done){
+			requestLocal
+			.get('/api/v1/lineups/' + testLineup.objectId)
+			.query('sessionToken=' + testUser.sessionToken)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				res.body.objectId.should.be.exactly(testLineup.objectId);
+				res.body.Locked.should.be.exactly(false);
+				res.body.UserLeagueID.UserID.username.should.be.exactly('testUser');
+				done();
+			});
+		});
+	});
+});
+
+describe('Sending a PUT to /api/v1/lineups/:objectId', function(){
+	describe('should fail', function(){
+		it('when the user is not the same as the one connected to the lineup.', function(done){
+			requestLocal
+			.put('/api/v1/lineups/' + testLineup.objectId)
+			.send({
+				sessionToken: testUser2.sessionToken,
+				Locked: true,
+				MatchID: testMatch.objectId
+			})
+			.expect(403)
+			.end(done);
+		});
+		it('when Locked is not a boolean.', function(done){
+			requestLocal
+			.put('/api/v1/lineups/' + testLineup.objectId)
+			.send({
+				sessionToken: testUser.sessionToken,
+				Locked: 'taresnth',
+				MatchID: testMatch.objectId
+			})
+			.expect(428)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				res.body.errors.Locked[0].should.be.exactly('The Locked field must be a boolean.');
+				done();
+			});
+		});
+		it('when MatchID is not alphanumeric.', function(done){
+			requestLocal
+			.put('/api/v1/lineups/' + testLineup.objectId)
+			.send({
+				sessionToken: testUser.sessionToken,
+				Locked: true,
+				MatchID: 'testMatch.objectId'
+			})
+			.expect(428)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				res.body.errors.MatchID[0].should.be.exactly('The MatchID field must be alphanumeric.');
+				done();
+			});
+		});
+	});
+	describe('should succeed', function(){
+		after('Verifying that the lineup was updated on Parse.', function(done){
+			requestLocal
+			.get('/api/v1/lineups/' + testLineup.objectId)
+			.query('sessionToken=' + testUser.sessionToken)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				res.body.objectId.should.be.exactly(testLineup.objectId);
+				res.body.Locked.should.be.exactly(true);
+				res.body.UserLeagueID.UserID.username.should.be.exactly('testUser');
+				done();
+			});
+		});
+		it('when the user updates their own lineup.', function(done){
+			requestLocal
+			.put('/api/v1/lineups/' + testLineup.objectId)
+			.send({
+				sessionToken: testUser.sessionToken,
+				Locked: true,
+				MatchID: testMatch.objectId
+			})
+			.expect(200)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				done();
+			});
+		});
+	});
+});
+
+describe('Sending a DELETE to /api/v1/lineups/:objectId', function(){
+	describe('should fail', function(){
+		it('when the current user is not the owner of the lineup.', function(done){
+			requestLocal
+			.del('/api/v1/lineups/' + testLineup.objectId)
+			.send({
+				sessionToken: testUser2.sessionToken
+			})
+			.expect(403)
+			.end(done);
+		});
+	});
+	describe('should succeed', function(){
+		it('in deleting the testLineup3.', function(done){
+			requestLocal
+			.del('/api/v1/lineups/' + testLineup.objectId)
+			.send({
+				sessionToken: testUser.sessionToken
+			})
+			.expect(200)
+			.end(done);
+		});
 	});
 });
 
@@ -199,8 +380,16 @@ describe('Cleaning up after the tests', function(){
 				.set('X-Parse-Session-Token', testUser.sessionToken)
 				.end(done);
 		});
+		it('testUser2.', function(done){
+			requestLocal
+				.del('/api/v1/users/' + testUser2.objectId)
+				.send({
+					sessionToken: testUser2.sessionToken
+				})
+				.expect(200)
+				.end(done);
+		});
 	});
-
 	describe('by deleting the league', function(){
 		it('testLeague', function(done){
 			requireParse
