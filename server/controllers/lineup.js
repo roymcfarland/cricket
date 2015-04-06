@@ -73,4 +73,17 @@ LineupController.prototype.create = function(req, res) {
 	});
 };
 
+LineupController.prototype.getAll = function(req, res) {
+	superagent
+	.get('https://api.parse.com/1/classes/Lineup')
+	.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+	.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+	.query('include=UserLeagueID.UserID')
+	.end(function(getAllResults){
+		if(getAllResults.body.code) return res.status(500).send(getAllResults.body);
+
+		return res.send(getAllResults.body.results);
+	});
+};
+
 module.exports = LineupController;

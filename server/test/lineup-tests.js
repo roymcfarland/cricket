@@ -1,5 +1,6 @@
 var supertest = require('supertest');
 var should = require('should');
+var _ = require('underscore');
 
 var requireLocal = supertest('http://localhost:3000');
 var requireParse = supertest('https://api.parse.com');
@@ -185,6 +186,26 @@ describe('Sending a POST to /api/v1/lineups', function(){
 					testLineup2 = res.body;
 					done();
 				});
+		});
+	});
+});
+
+describe('Sending a GET to /api/v1/lineups', function(){
+	describe('should succeed', function(){
+		it('in getting all of the lineups.', function(done){
+			requireLocal
+			.get('/api/v1/lineups')
+			.query('sessionToken=' + testUser.sessionToken)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				var lineup = _.findWhere(res.body, {objectId: testLineup.objectId});
+
+				lineup.Locked.should.be.exactly(false);
+				lineup.UserLeagueID.UserID.username.should.be.exactly('testUser');
+				done();
+			});
 		});
 	});
 });
