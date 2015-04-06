@@ -357,6 +357,17 @@ describe('Sending a DELETE to /api/v1/lineups/:objectId', function(){
 			.end(done);
 		});
 	});
+	describe('should succeed', function(){
+		it('in deleting the testLineup3.', function(done){
+			requestLocal
+			.del('/api/v1/lineups/' + testLineup.objectId)
+			.send({
+				sessionToken: testUser.sessionToken
+			})
+			.expect(200)
+			.end(done);
+		});
+	});
 });
 
 describe('Cleaning up after the tests', function(){

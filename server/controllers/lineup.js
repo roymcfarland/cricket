@@ -168,10 +168,23 @@ LineupController.prototype.del = function(req, res) {
 
 				done();
 			});
-		} 
+		},
+		deleteLineup: function(done){
+			superagent
+			.del('https://api.parse.com/1/classes/Lineup/' + req.params.objectId)
+			.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+			.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+			.end(function(result){
+				if(result.body.code) return done({code: 500, error: result.body});
+
+				done();
+			});
+		}
 	}, function(err, success){
 		if(err && err.code && err.code.error) return res.status(err.code).send(err.error);
 		if(err && err.code) return res.sendStatus(err.code);
+
+		return res.sendStatus(200);
 	});
 };
 
