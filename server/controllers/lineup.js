@@ -113,6 +113,14 @@ LineupController.prototype.update = function(req, res) {
 
 				done();
 			});
+		},
+		validateData: function(done){
+			var rules = {
+				Locked: 'boolean'
+			};
+			var validation = new Validatorjs(req.body, rules);
+
+			if(validation.fails()) return done({code: 428, error: {errors: validation.errors.all()}});
 		}
 	}, function(err, results){
 		if(err && err.code && err.error) return res.status(err.code).send(err.error);

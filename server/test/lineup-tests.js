@@ -278,6 +278,22 @@ describe('Sending a PUT to /api/v1/lineups/:objectId', function(){
 			.expect(403)
 			.end(done);
 		});
+		it('when Locked is not a boolean.', function(done){
+			requestLocal
+			.put('/api/v1/lineups/' + testLineup.objectId)
+			.send({
+				sessionToken: testUser.sessionToken,
+				Locked: 'taresnth',
+				MatchID: testMatch.objectId
+			})
+			.expect(428)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				res.body.errors.Locked[0].should.be.exactly('The Locked field must be a boolean.');
+				done();
+			});
+		})
 	});
 });
 
