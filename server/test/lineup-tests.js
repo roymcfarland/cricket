@@ -311,6 +311,38 @@ describe('Sending a PUT to /api/v1/lineups/:objectId', function(){
 			});
 		});
 	});
+	describe('should succeed', function(){
+		after('Verifying that the lineup was updated on Parse.', function(done){
+			requestLocal
+			.get('/api/v1/lineups/' + testLineup.objectId)
+			.query('sessionToken=' + testUser.sessionToken)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				res.body.objectId.should.be.exactly(testLineup.objectId);
+				res.body.Locked.should.be.exactly(true);
+				res.body.UserLeagueID.UserID.username.should.be.exactly('testUser');
+				done();
+			});
+		});
+		it('when the user updates their own lineup.', function(done){
+			requestLocal
+			.put('/api/v1/lineups/' + testLineup.objectId)
+			.send({
+				sessionToken: testUser.sessionToken,
+				Locked: true,
+				MatchID: testMatch.objectId
+			})
+			.expect(200)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				done();
+			});
+		});
+	});
 });
 
 describe('Cleaning up after the tests', function(){

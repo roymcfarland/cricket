@@ -122,10 +122,35 @@ LineupController.prototype.update = function(req, res) {
 			var validation = new Validatorjs(req.body, rules);
 
 			if(validation.fails()) return done({code: 428, error: {errors: validation.errors.all()}});
+			done();
+		},
+		updateLineup: function(done){
+			var payload = {};
+
+			if(req.body.Locked == false || req.body.Locked) payload.Locked = req.body.Locked;
+			if(req.body.MatchID) payload.MatchID = {
+				__type: 'Pointer',
+				className: 'Match',
+				objectId: req.body.MatchID
+			};
+
+			superagent
+			.put('https://api.parse.com/1/classes/Lineup/' + req.params.objectId)
+			.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+			.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+			.send(payload)
+			.end(function(result){
+				console.log(result.body);
+				if(result.body.code) return done({code: 500, error: result.body});
+
+				done();
+			});
 		}
 	}, function(err, results){
 		if(err && err.code && err.error) return res.status(err.code).send(err.error);
 		if(err && err.code) return res.sendStatus(err.code);
+
+		return res.sendStatus(200);
 	});
 };
 
