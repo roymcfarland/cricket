@@ -76,7 +76,7 @@ MatchesController.prototype.getAll = function(req, res) {
 		.end(function(getAllMatchesResult){
 			if(getAllMatchesResult.body.code) return res.status(500).send(getAllMatchesResult.body);
 
-			return res.send({matches: getAllMatchesResult.body.results});
+			return res.send(getAllMatchesResult.body.results);
 		});
 };
 

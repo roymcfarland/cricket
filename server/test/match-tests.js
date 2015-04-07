@@ -128,6 +128,23 @@ describe('Sending a POST to /api/v1/matches', function(){
 	});
 });
 
+describe('Sending a GET to /api/v1/matches', function(){
+	describe('should succeed', function(){
+		it('in getting all of the matches.', function(done){
+			requestLocal
+			.get('/api/v1/matches')
+			.expect(200)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				res.body[0].objectId.should.be.type('string');
+				done();
+			});
+		});
+	});
+});
+
 describe('Cleaning up', function(){
 	describe('the user', function(){
 		it('adminUser', function(done){
