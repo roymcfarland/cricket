@@ -375,6 +375,17 @@ describe('Sending a DELETE to /api/v1/lineupPlayers', function(){
 			.end(done);
 		});
 	});
+	describe('should succeed', function(){
+		it('in deleting the testLineupPlayer.', function(done){
+			requireLocal
+			.del('/api/v1/lineupPlayers/' + testLineupPlayer.objectId)
+			.send({
+				sessionToken: testUser.sessionToken
+			})
+			.expect(200)
+			.end(done);
+		});
+	});
 });
 
 describe('Cleaning up after the tests', function(){
