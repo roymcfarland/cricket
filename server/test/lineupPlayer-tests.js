@@ -6,6 +6,7 @@ var requireLocal = supertest('http://localhost:3000');
 var requireParse = supertest('https://api.parse.com');
 var testUserLeague;
 var testUser;
+var testUser2;
 var testLeague;
 var testMatch;
 var testLineup;
@@ -35,7 +36,27 @@ describe('Preparing for the tests', function(){
 					done();
 				});
 		});
+		it('testUser2', function(done){
+			requireParse
+				.post('/1/users')
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.send({
+					username: 'testUser2',
+					password: 'password',
+					email: 'testUser2@latitude40.com',
+					totalScore: 0,
+					newUser: false,
+					Money: 0,
+					admin: false
+				})
+				.end(function(err, res){
+					if(err) return done(err);
 
+					testUser2 = res.body;
+					done();
+				});
+		});
 		it('testLeague', function(done){
 			requireParse
 				.post('/1/classes/League')
@@ -296,6 +317,22 @@ describe('Sending a GET to /api/v1/lineupPlayers/:objectId', function(){
 	});
 });
 
+describe('Sending a PUT to /api/v1/lineupPlayers/:objectId', function(){
+	describe('should fail', function(){
+		it('when the current user is not the lineup player owner.', function(done){
+			requireLocal
+			.put('/api/v1/lineupPlayers/' + testLineupPlayer.objectId)
+			.send({
+				sessionToken: testUser2.sessionToken,
+				LineupID: testLineup.objectId,
+				CricketPlayerID: testCricketPlayer.objectId
+			})
+			.expect(403)
+			.end(done);
+		});
+	});
+});
+
 describe('Cleaning up after the tests', function(){
 	describe('by deleting the user', function(){
 		it('testUser', function(done){
@@ -304,6 +341,14 @@ describe('Cleaning up after the tests', function(){
 				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
 				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 				.set('X-Parse-Session-Token', testUser.sessionToken)
+				.end(done);
+		});
+		it('testUser2', function(done){
+			requireParse
+				.del('/1/users/' + testUser2.objectId)
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.set('X-Parse-Session-Token', testUser2.sessionToken)
 				.end(done);
 		});
 	});
