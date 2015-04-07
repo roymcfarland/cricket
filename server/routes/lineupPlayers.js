@@ -9,6 +9,7 @@ var lineupPlayerRoutes = function(app){
 	app.get('/api/v1/lineupPlayers', protectGetRoutes, lineupPlayerController.getAll);
 	app.get('/api/v1/lineupPlayers/:objectId', protectGetRoutes, lineupPlayerController.getOne);
 	app.put('/api/v1/lineupPlayers/:objectId', protectPostRoutes, lineupPlayerController.update);
+	app.delete('/api/v1/lineupPlayers/:objectId', protectPostRoutes, lineupPlayerController.del);
 };
 
 module.exports = lineupPlayerRoutes;

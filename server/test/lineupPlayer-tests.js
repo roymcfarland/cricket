@@ -363,6 +363,20 @@ describe('Sending a PUT to /api/v1/lineupPlayers/:objectId', function(){
 	});
 });
 
+describe('Sending a DELETE to /api/v1/lineupPlayers', function(){
+	describe('should fail', function(){
+		it('when the current user tries to delete someone elses lineup player.', function(done){
+			requireLocal
+			.del('/api/v1/lineupPlayers/' + testLineupPlayer.objectId)
+			.send({
+				sessionToken: testUser2.sessionToken
+			})
+			.expect(403)
+			.end(done);
+		});
+	});
+});
+
 describe('Cleaning up after the tests', function(){
 	describe('by deleting the user', function(){
 		it('testUser', function(done){
