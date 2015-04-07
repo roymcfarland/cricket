@@ -278,6 +278,24 @@ describe('Sending a GET to /api/v1/lineupPlayers', function(){
 	});
 });
 
+describe('Sending a GET to /api/v1/lineupPlayers/:objectId', function(){
+	describe('should succeed', function(){
+		it('in getting one lineup player.', function(done){
+			requireLocal
+			.get('/api/v1/lineupPlayers/' + testLineupPlayer.objectId)
+			.query('sessionToken=' + testUser.sessionToken)
+			.expect(200)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				res.body.objectId.should.be.exactly(testLineupPlayer.objectId);
+				done();
+			});
+		});
+	});
+});
+
 describe('Cleaning up after the tests', function(){
 	describe('by deleting the user', function(){
 		it('testUser', function(done){
