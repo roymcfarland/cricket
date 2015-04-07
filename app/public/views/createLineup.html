@@ -36,10 +36,10 @@
 						<th>Cost</th>
 					</thead>
 					<tbody>
-						<tr ng-click="selectPlayer(player.objectId, player.name, player.CricketPlayerType.name, player.team)">
+						<tr ng-repeat="player in lineup" ng-click="selectPlayer(player.objectId, player.name, player.CricketPlayerType.name, player.team, player.cost)">
 							<td><a class="btn btn-danger" ng-click="removePlayerFromTeam()">-</a></td>
 							<td>{{player.name}}</td>
-							<td>{{player.CricketPlayerType.name}}</td>
+							<td>{{player.position}}</td>
 							<td>{{player.team}}</td>
 							<td>{{player.cost | currency}}</td>
 						</tr>
@@ -60,7 +60,7 @@
 						<th>Cost</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="player in players.players" ng-click="selectPlayer(player.objectId, player.name, player.CricketPlayerType.name, player.team)">
+						<tr ng-repeat="player in players.players" ng-click="selectPlayer(player.objectId, player.name, player.CricketPlayerType.name, player.team, player.cost)">
 							<td><a class="btn btn-success" ng-click="addPlayerToTeam()">+</a></td>
 							<td>{{player.name}}</td>
 							<td>{{player.CricketPlayerType.name}}</td>
@@ -73,7 +73,7 @@
 		</div>
 	</div>
 	
-	<!-- 
+	<!--
 	<pre>{{players.players | json }}</pre>
 	-->
 
