@@ -94,10 +94,39 @@ LineupPlayerController.prototype.update = function(req, res) {
 			var validation = new Validatorjs(req.body, rules);
 
 			if(validation.fails()) return done({code: 428, error: {errors: validation.errors.all()}});
+
+			done();
+		},
+		updateLineupPlayer: function(done){
+			var payload = {};
+
+			if(req.body.LineupID) payload.LineupID = {
+				__type: 'Pointer',
+				className: 'Lineup',
+				objectId: req.body.LineupID
+			};
+			if(req.body.CricketPlayerID) payload.CricketPlayerID = {
+				__type: 'Pointer',
+				className: 'CricketPlayer',
+				objectId: req.body.CricketPlayerID
+			};
+
+			superagent
+			.put('https://api.parse.com/1/classes/LineupPlayer/' + req.params.objectId)
+			.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+			.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+			.send(payload)
+			.end(function(result){
+				if(result.body.code) return done({code: 500, error: result.body});
+
+				return done();
+			});
 		}
 	}, function(err, success){
 		if(err && err.code && err.error) return res.status(err.code).send(err.error);
 		if(err && err.code) return res.sendStatus(err.code);
+
+		return res.sendStatus(200);
 	});
 };
 

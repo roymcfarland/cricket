@@ -348,6 +348,19 @@ describe('Sending a PUT to /api/v1/lineupPlayers/:objectId', function(){
 			});
 		})
 	});
+	describe('should succeed', function(){
+		it('in updating the lineup player.', function(done){
+			requireLocal
+			.put('/api/v1/lineupPlayers/' + testLineupPlayer.objectId)
+			.send({
+				sessionToken: testUser.sessionToken,
+				LineupID: testLineup.objectId,
+				CricketPlayerID: testCricketPlayer.objectId
+			})
+			.expect(200)
+			.end(done);
+		});
+	});
 });
 
 describe('Cleaning up after the tests', function(){
