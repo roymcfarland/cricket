@@ -145,6 +145,23 @@ describe('Sending a GET to /api/v1/matches', function(){
 	});
 });
 
+describe('Sending a GET to /api/v1/matches/:objectId', function(){
+	describe('should succeed', function(){
+		it('in getting one match.', function(done){
+			requestLocal
+			.get('/api/v1/matches/' + testMatch.objectId)
+			.expect(200)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				res.body.objectId.should.be.type('string');
+				done();
+			});
+		});
+	});
+});
+
 describe('Cleaning up', function(){
 	describe('the user', function(){
 		it('adminUser', function(done){
