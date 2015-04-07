@@ -330,6 +330,23 @@ describe('Sending a PUT to /api/v1/lineupPlayers/:objectId', function(){
 			.expect(403)
 			.end(done);
 		});
+		it('when the LineupID or CricketPlayerID is not alphanumeric.', function(done){
+			requireLocal
+			.put('/api/v1/lineupPlayers/' + testLineupPlayer.objectId)
+			.send({
+				sessionToken: testUser.sessionToken,
+				LineupID: 'testLineup.objectId',
+				CricketPlayerID: 'testCricketPlayer.objectId'
+			})
+			.expect(428)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				res.body.errors.LineupID[0].should.be.exactly('The LineupID field must be alphanumeric.');
+				res.body.errors.CricketPlayerID[0].should.be.exactly('The CricketPlayerID field must be alphanumeric.');
+				done();
+			});
+		})
 	});
 });
 

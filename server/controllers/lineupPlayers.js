@@ -85,6 +85,15 @@ LineupPlayerController.prototype.update = function(req, res) {
 
 				done();
 			});
+		},
+		validateData: function(done){
+			var rules = {
+				LineupID: 'alpha_num',
+				CricketPlayerID: 'alpha_num'
+			};
+			var validation = new Validatorjs(req.body, rules);
+
+			if(validation.fails()) return done({code: 428, error: {errors: validation.errors.all()}});
 		}
 	}, function(err, success){
 		if(err && err.code && err.error) return res.status(err.code).send(err.error);
