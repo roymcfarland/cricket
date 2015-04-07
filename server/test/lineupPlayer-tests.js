@@ -1,5 +1,6 @@
 var supertest = require('supertest');
 var should = require('should');
+var _ = require('underscore');
 
 var requireLocal = supertest('http://localhost:3000');
 var requireParse = supertest('https://api.parse.com');
@@ -255,6 +256,24 @@ describe('Sending a POST to /api/v1/lineupPlayers', function(){
 					testLineupPlayer = res.body;
 					done();
 				});
+		});
+	});
+});
+
+describe('Sending a GET to /api/v1/lineupPlayers', function(){
+	describe('should succeed', function(){
+		it('in getting all lineup players.', function(done){
+			requireLocal
+			.get('/api/v1/lineupPlayers')
+			.query('sessionToken=' + testUser.sessionToken)
+			.expect(200)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				res.body[0].objectId.should.be.type('string');
+				done();
+			});
 		});
 	});
 });
