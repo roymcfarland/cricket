@@ -1,10 +1,12 @@
 var supertest = require('supertest');
 var should = require('should');
+var _ = require('underscore');
 
 var requireLocal = supertest('http://localhost:3000');
 var requireParse = supertest('https://api.parse.com');
 var testUserLeague;
 var testUser;
+var testUser2;
 var testLeague;
 var testMatch;
 var testLineup;
@@ -34,7 +36,27 @@ describe('Preparing for the tests', function(){
 					done();
 				});
 		});
+		it('testUser2', function(done){
+			requireParse
+				.post('/1/users')
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.send({
+					username: 'testUser2',
+					password: 'password',
+					email: 'testUser2@latitude40.com',
+					totalScore: 0,
+					newUser: false,
+					Money: 0,
+					admin: false
+				})
+				.end(function(err, res){
+					if(err) return done(err);
 
+					testUser2 = res.body;
+					done();
+				});
+		});
 		it('testLeague', function(done){
 			requireParse
 				.post('/1/classes/League')
@@ -259,6 +281,113 @@ describe('Sending a POST to /api/v1/lineupPlayers', function(){
 	});
 });
 
+describe('Sending a GET to /api/v1/lineupPlayers', function(){
+	describe('should succeed', function(){
+		it('in getting all lineup players.', function(done){
+			requireLocal
+			.get('/api/v1/lineupPlayers')
+			.query('sessionToken=' + testUser.sessionToken)
+			.expect(200)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				res.body[0].objectId.should.be.type('string');
+				done();
+			});
+		});
+	});
+});
+
+describe('Sending a GET to /api/v1/lineupPlayers/:objectId', function(){
+	describe('should succeed', function(){
+		it('in getting one lineup player.', function(done){
+			requireLocal
+			.get('/api/v1/lineupPlayers/' + testLineupPlayer.objectId)
+			.query('sessionToken=' + testUser.sessionToken)
+			.expect(200)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				res.body.objectId.should.be.exactly(testLineupPlayer.objectId);
+				done();
+			});
+		});
+	});
+});
+
+describe('Sending a PUT to /api/v1/lineupPlayers/:objectId', function(){
+	describe('should fail', function(){
+		it('when the current user is not the lineup player owner.', function(done){
+			requireLocal
+			.put('/api/v1/lineupPlayers/' + testLineupPlayer.objectId)
+			.send({
+				sessionToken: testUser2.sessionToken,
+				LineupID: testLineup.objectId,
+				CricketPlayerID: testCricketPlayer.objectId
+			})
+			.expect(403)
+			.end(done);
+		});
+		it('when the LineupID or CricketPlayerID is not alphanumeric.', function(done){
+			requireLocal
+			.put('/api/v1/lineupPlayers/' + testLineupPlayer.objectId)
+			.send({
+				sessionToken: testUser.sessionToken,
+				LineupID: 'testLineup.objectId',
+				CricketPlayerID: 'testCricketPlayer.objectId'
+			})
+			.expect(428)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				res.body.errors.LineupID[0].should.be.exactly('The LineupID field must be alphanumeric.');
+				res.body.errors.CricketPlayerID[0].should.be.exactly('The CricketPlayerID field must be alphanumeric.');
+				done();
+			});
+		})
+	});
+	describe('should succeed', function(){
+		it('in updating the lineup player.', function(done){
+			requireLocal
+			.put('/api/v1/lineupPlayers/' + testLineupPlayer.objectId)
+			.send({
+				sessionToken: testUser.sessionToken,
+				LineupID: testLineup.objectId,
+				CricketPlayerID: testCricketPlayer.objectId
+			})
+			.expect(200)
+			.end(done);
+		});
+	});
+});
+
+describe('Sending a DELETE to /api/v1/lineupPlayers', function(){
+	describe('should fail', function(){
+		it('when the current user tries to delete someone elses lineup player.', function(done){
+			requireLocal
+			.del('/api/v1/lineupPlayers/' + testLineupPlayer.objectId)
+			.send({
+				sessionToken: testUser2.sessionToken
+			})
+			.expect(403)
+			.end(done);
+		});
+	});
+	describe('should succeed', function(){
+		it('in deleting the testLineupPlayer.', function(done){
+			requireLocal
+			.del('/api/v1/lineupPlayers/' + testLineupPlayer.objectId)
+			.send({
+				sessionToken: testUser.sessionToken
+			})
+			.expect(200)
+			.end(done);
+		});
+	});
+});
+
 describe('Cleaning up after the tests', function(){
 	describe('by deleting the user', function(){
 		it('testUser', function(done){
@@ -267,6 +396,14 @@ describe('Cleaning up after the tests', function(){
 				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
 				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 				.set('X-Parse-Session-Token', testUser.sessionToken)
+				.end(done);
+		});
+		it('testUser2', function(done){
+			requireParse
+				.del('/1/users/' + testUser2.objectId)
+				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+				.set('X-Parse-Session-Token', testUser2.sessionToken)
 				.end(done);
 		});
 	});
