@@ -185,7 +185,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 	};
 
-/*
+
 	////////////////////////////////
 	//// removePlayerFromTeam() ////
 	////////////////////////////////
@@ -228,7 +228,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 	// console.log(typeof(lineup));
 	// console.log("lineup array:", lineup);
-*/
 
 });
 
