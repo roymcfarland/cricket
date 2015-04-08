@@ -105,8 +105,15 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////////////////////////////////
 	
 	$scope.addPlayerToTeam = function() {
-		console.log(this);
 		var selectedCricketPlayer = this.player;
+		// console.log("###:", currentLineup);
+		var findWhere = _.findWhere(currentLineup, {id: selectedCricketPlayer.objectId});
+		// console.log(findWhere);
+		if (findWhere) return alert("You have already added this player to your lineup.");
+		
+
+
+		console.log(this);
 		console.log(selectedCricketPlayer);
 		var playerId = $scope.playerId;
 		var playerName = $scope.playerName;
@@ -170,6 +177,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		var addPlayerToLineup = function() {
 			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
 			$scope.lineupPlayer = lineupPlayer;
+			
 			currentLineup.push(lineupPlayer);
 			$scope.currentLineup = currentLineup;
 
