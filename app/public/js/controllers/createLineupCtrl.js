@@ -21,7 +21,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	console.log("leagueId:", leagueId);
 
 
-	var lineup = [];
+	var currentLineup = [];
 
 
 
@@ -105,7 +105,9 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////////////////////////////////
 	
 	$scope.addPlayerToTeam = function() {
-		
+		console.log(this);
+		var selectedCricketPlayer = this.player;
+		console.log(selectedCricketPlayer);
 		var playerId = $scope.playerId;
 		var playerName = $scope.playerName;
 		var playerPosition = $scope.playerPosition;
@@ -165,23 +167,22 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			this.cost = cost;
 		};
 		
-		var movePlayerToLineup = function() {
-			var lineupPlayer = new Player (playerId, playerName, playerPosition, playerTeam, playerCost);
-			// console.log(lineupPlayer);
+		var addPlayerToLineup = function() {
+			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
 			$scope.lineupPlayer = lineupPlayer;
-			lineup.push(lineupPlayer);
-			$scope.lineup = lineup;
+			currentLineup.push(lineupPlayer);
+			$scope.currentLineup = currentLineup;
 
 			// Disable player in available players column
 			console.log("playerId:", lineupPlayer.id);
 
-			return lineup;
+			return currentLineup;
 
 		};
-		movePlayerToLineup();
+		addPlayerToLineup();
 		
 		// Array of objects created for ng-repeat="player in lineup"
-		console.log("###", lineup);
+		console.log("###", currentLineup);
 
 	};
 
@@ -191,7 +192,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	////////////////////////////////
 	
 	$scope.removePlayerFromTeam = function() {
-		var playerId = $scope.lineupPlayer.id;
+		console.log(this);
+		var playerId = this.player.id;
 		var playerName = $scope.lineupPlayer.name;
 		var playerPosition = $scope.lineupPlayer.position;
 		var playerTeam = $scope.lineupPlayer.team;
@@ -202,28 +204,29 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 
 		console.log("user:", user);
-		console.log("playerId: ", playerId);
-		console.log("playerName: ", playerName);
-		console.log("playerPosition: ", playerPosition);
-		console.log("playerTeam: ", playerTeam);
+		console.log("playerId:", playerId);
+		console.log("playerName:", playerName);
+		console.log("playerPosition:", playerPosition);
+		console.log("playerTeam:", playerTeam);
 		console.log("playerCost:", playerCost);
 
 		// VISUALLY REMOVE PLAYER FROM USER'S LINEUP
-		console.log("####", lineup);
+		console.log("####", currentLineup);
 		
 		var removePlayer = function() {
-			console.log("playerId:", playerId);
-			console.log("lineup[0].id", lineup[0].id);
-			console.log("lineup[1].id", lineup[1].id);
-			for (i=0; i < lineup.length; i++)
-				if (lineup[i].id == playerId) {
-					lineup.splice(i,1);
+			// console.log("playerId:", playerId);
+			// console.log("lineup[0].id", currentLineup[0].id);
+			// console.log("lineup[1].id", currentLineup[1].id);
+			for (var i=0; i < currentLineup.length; i++)
+				if (currentLineup[i].id == playerId) {
+					currentLineup.splice(i,1);
 					break;
 				}
+			$scope.currentLineup = currentLineup;
 		};
 		removePlayer();
 		
-		console.log("####", lineup);
+		console.log("####", currentLineup);
 
 	};
 

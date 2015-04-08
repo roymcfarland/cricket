@@ -36,7 +36,7 @@
 						<th>Cost</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="player in lineup" ng-click="selectPlayer(player.objectId, player.name, player.CricketPlayerType.name, player.team, player.cost)">
+						<tr ng-repeat="player in currentLineup" ng-click="selectPlayer(player.objectId, player.name, player.CricketPlayerType.name, player.team, player.cost)">
 							<td><a class="btn btn-danger" ng-click="removePlayerFromTeam()">-</a></td>
 							<td>{{player.name}}</td>
 							<td>{{player.position}}</td>
@@ -73,8 +73,6 @@
 		</div>
 	</div>
 	
-	<!--
 	<pre>{{players.players | json }}</pre>
-	-->
 
 </div> <!-- /.jumbotron -->
