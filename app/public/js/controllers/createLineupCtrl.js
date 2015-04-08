@@ -17,11 +17,16 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	var sessionToken = user._sessionToken;
 
 	// console.log("$routeParams:", $routeParams);
-	console.log("lineupId:", lineupId);
-	console.log("leagueId:", leagueId);
+	// console.log("lineupId:", lineupId);
+	// console.log("leagueId:", leagueId);
 
 
 	var currentLineup = [];
+
+	// Establish cricketPlayerType minimums for user's lineup
+	vm.numberOfBowlers = 3;
+	vm.numberOfBatsmen = 3;
+	vm.numberOfWicketKeepers = 1;
 
 
 
@@ -127,7 +132,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// console.log("user:", user);
 		// console.log("lineupId:", lineupId);
-		console.log("playerId:", playerId);
+		// console.log("playerId:", playerId);
 		// console.log("playerCost:", playerCost);
 		// console.log("playerName:", playerName);
 		// console.log("playerType:", playerType);
@@ -175,22 +180,26 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 		
 		var addPlayerToLineup = function() {
-			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
-			$scope.lineupPlayer = lineupPlayer;
 			
+			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
+
+			$scope.lineupPlayer = lineupPlayer;
 			currentLineup.push(lineupPlayer);
+
+			if (selectedCricketPlayer.CricketPlayerType.name === "Bowler" && vm.numberOfBowlers > 0) {
+				vm.numberOfBowlers --;
+			} else if (selectedCricketPlayer.CricketPlayerType.name === "Batsman" && vm.numberOfBatsmen) {
+				vm.numberOfBatsmen --;
+			} else if (selectedCricketPlayer.CricketPlayerType.name === "Wicket Keeper" && vm.numberOfWicketKeepers > 0) {
+				vm.numberOfWicketKeepers --;
+			}
+
 			$scope.currentLineup = currentLineup;
-
-			// Disable player in available players column
-			console.log("playerId:", lineupPlayer.id);
-
 			return currentLineup;
 
 		};
+
 		addPlayerToLineup();
-		
-		// Array of objects created for ng-repeat="player in lineup"
-		console.log("###", currentLineup);
 
 	};
 
@@ -200,7 +209,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	////////////////////////////////
 	
 	$scope.removePlayerFromTeam = function() {
-		console.log(this);
 		var playerId = this.player.id;
 		var playerName = $scope.lineupPlayer.name;
 		var playerPosition = $scope.lineupPlayer.position;
@@ -211,31 +219,25 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			objectId: vm.user.id
 		};
 
-		console.log("user:", user);
-		console.log("playerId:", playerId);
-		console.log("playerName:", playerName);
-		console.log("playerPosition:", playerPosition);
-		console.log("playerTeam:", playerTeam);
-		console.log("playerCost:", playerCost);
-
 		// VISUALLY REMOVE PLAYER FROM USER'S LINEUP
-		console.log("####", currentLineup);
-		
 		var removePlayer = function() {
-			// console.log("playerId:", playerId);
-			// console.log("lineup[0].id", currentLineup[0].id);
-			// console.log("lineup[1].id", currentLineup[1].id);
 			for (var i=0; i < currentLineup.length; i++)
 				if (currentLineup[i].id == playerId) {
+					var removedPlayerPosition = currentLineup[i].position;
+					// console.log(removedPlayerPosition);
 					currentLineup.splice(i,1);
+					if (removedPlayerPosition === "Bowler" && vm.numberOfBowlers < 3) {
+						vm.numberOfBowlers ++;
+					} else if (removedPlayerPosition === "Batsman" && vm.numberOfBatsmen < 3) {
+						vm.numberOfBatsmen ++;
+					} else if (removedPlayerPosition === "Wicket Keeper" && vm.numberOfWicketKeepers < 1) {
+						vm.numberOfWicketKeepers ++;
+					}
 					break;
 				}
 			$scope.currentLineup = currentLineup;
 		};
 		removePlayer();
-		
-		console.log("####", currentLineup);
-
 	};
 
 	// console.log(typeof(lineup));

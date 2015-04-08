@@ -25,7 +25,7 @@
 					<p>MY TEAM</p>
 				</div>
 				<div class="row wrapper">
-					<p>Minimum Lineup: 1 <img src="/../images/wicket.png" alt="wicket"> 3 <img src="/../images/ball.png"> 3 <img src="/../images/bat.png"></p>
+					<p>Minimum Lineup: {{createLineupCtrl.numberOfWicketKeepers}} <img src="/../images/wicket.png" alt="wicket"> {{createLineupCtrl.numberOfBowlers}} <img src="/../images/ball.png"> {{createLineupCtrl.numberOfBatsmen}} <img src="/../images/bat.png"></p>
 				</div>
 				<table class="table table-striped">
 					<thead>
@@ -73,6 +73,8 @@
 		</div>
 	</div>
 	
+	<!--
 	<pre>{{players.players | json }}</pre>
+	-->
 
 </div> <!-- /.jumbotron -->
