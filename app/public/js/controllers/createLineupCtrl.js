@@ -222,6 +222,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				}
 		};
 		removePlayer();
+		
 		console.log("####", lineup);
 
 	};
