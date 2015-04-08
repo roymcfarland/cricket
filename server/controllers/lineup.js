@@ -7,7 +7,8 @@ var LineupController = function(){};
 var createRules = {
 	UserLeagueId: 'required|alpha_num',
 	MatchID: 'alpha_num',
-	Locked: 'boolean'
+	Locked: 'boolean',
+	captain: 'alpha_num'
 };
 
 Validatorjs.register('boolean', function(value, requirement, attribute){
@@ -40,11 +41,11 @@ LineupController.prototype.create = function(req, res) {
 		createLineup: function(done){
 			var payload = {
 				UserLeagueID: {
-						__type: 'Pointer',
-						className: 'UserLeague',
-						objectId: req.body.UserLeagueId
-					},
-					Locked: req.body.Locked
+					__type: 'Pointer',
+					className: 'UserLeague',
+					objectId: req.body.UserLeagueId
+				},
+				Locked: req.body.Locked
 			};
 
 			if(MatchID) {
@@ -54,6 +55,11 @@ LineupController.prototype.create = function(req, res) {
 						objectId: MatchID
 					};
 			}
+			if(req.body.captain) payload.captain = {
+				__type: 'Pointer',
+				className: 'CricketPlayer',
+				objectId: req.body.captain
+			};
 
 			superagent
 				.post('https://api.parse.com/1/classes/Lineup')
