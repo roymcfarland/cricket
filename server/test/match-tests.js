@@ -162,6 +162,57 @@ describe('Sending a GET to /api/v1/matches/:objectId', function(){
 	});
 });
 
+describe('Sending a PUT to /api/v1/matches/:objectId', function(){
+	describe('should fail', function(){
+		it('when the current user is not an admin.', function(done){
+			requestLocal
+			.put('/api/v1/matches/' + testMatch.objectId)
+			.send({
+				sessionToken: normalUser.sessionToken
+			})
+			.expect(403)
+			.end(done);
+		});
+		it('when the Name is not alphanumeric.', function(done){
+			requestLocal
+			.put('/api/v1/matches/' + testMatch.objectId)
+			.send({
+				sessionToken: adminUser.sessionToken,
+				Name: 'LJFG^%$#anrs'
+			})
+			.expect(428)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				res.body.errors.Name[0].should.be.exactly('The Name field must be alphanumeric.');
+				done();
+			});
+		});
+	});
+	describe('should succeed', function(){
+		after('Verifying that the match got updated on parse.', function(done){
+			requestLocal
+			.get('/api/v1/matches/' + testMatch.objectId)
+			.end(function(err, res){
+				if(err) return done(err);
+				
+				res.body.Name.should.be.exactly('updatedTestMatch');
+				done();
+			});
+		});
+		it('when updating a Match.', function(done){
+			requestLocal
+			.put('/api/v1/matches/' + testMatch.objectId)
+			.send({
+				sessionToken: adminUser.sessionToken,
+				Name: 'updatedTestMatch'
+			})
+			.expect(200)
+			.end(done);
+		});
+	});
+});
+
 describe('Cleaning up', function(){
 	describe('the user', function(){
 		it('adminUser', function(done){

@@ -1,5 +1,6 @@
 var async = require('async');
 var superagent = require('superagent');
+var Validatorjs = require('validatorjs');
 
 var parseUrl = 'https://api.parse.com';
 
@@ -89,6 +90,34 @@ MatchesController.prototype.getOne = function(req, res) {
 		if(getOneResult.body.code) return res.status(500).send(getOneResult.body);
 
 		return res.send(getOneResult.body);
+	});
+};
+
+MatchesController.prototype.update = function(req, res) {
+	var admin = req.user.admin;
+
+	if(!admin) return res.sendStatus(403);
+
+	var rules = {
+		Name: 'alpha_num'
+	};
+	var validation = new Validatorjs(req.body, rules);
+
+	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
+
+	var payload = {};
+
+	if(req.body.Name) payload.Name = req.body.Name;
+
+	superagent
+	.put('https://api.parse.com/1/classes/Match/' + req.params.objectId)
+	.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+	.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+	.send(payload)
+	.end(function(updateResult){
+		if(updateResult.body.code) return res.status(500).send(updateResult.body);
+
+		return res.sendStatus(200);
 	});
 };
 
