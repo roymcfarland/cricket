@@ -79,7 +79,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$scope.players = data;
 	});
 
-	console.log('Leagues: ', Leagues.getOne);
+	console.log('Leagues:', Leagues.getOne);
 
 	Leagues.getOne.then(function(data) {
 		$scope.leagues = data;
@@ -110,30 +110,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////////////////////////////////
 	
 	$scope.saveLineup = function() {
-
-	};
-
-
-
-	/////////////////////////////////
-	////// addPlayerToTeam() ////////
-	/////////////////////////////////
-	
-	$scope.addPlayerToTeam = function() {
-
-		var selectedCricketPlayer = this.player;
-		var findWhere = _.findWhere(currentLineup, {id: selectedCricketPlayer.objectId});
-		if (findWhere) return alert("You have already added this player to your lineup.");
-		
-		var playerId = $scope.playerId;
-		var playerName = $scope.playerName;
-		var playerPosition = $scope.playerPosition;
-		var playerTeam = $scope.playerTeam;
-		var playerCost = $scope.playerCost;
-		var user = {
-			sessionToken: vm.user._sessionToken,
-			objectId: vm.user.id
-		};
 
 		// AJAX POST
 		$http.post("/api/v1/lineupPlayers", {user: user, LineupID: lineupId, CricketPlayerID: playerId}, [])
@@ -166,6 +142,30 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				console.log("Error unknown")
 			}
 		});
+
+	};
+
+
+
+	/////////////////////////////////
+	////// addPlayerToTeam() ////////
+	/////////////////////////////////
+	
+	$scope.addPlayerToTeam = function() {
+
+		var selectedCricketPlayer = this.player;
+		var findWhere = _.findWhere(currentLineup, {id: selectedCricketPlayer.objectId});
+		if (findWhere) return alert("You have already added this player to your lineup.");
+		
+		var playerId = $scope.playerId;
+		var playerName = $scope.playerName;
+		var playerPosition = $scope.playerPosition;
+		var playerTeam = $scope.playerTeam;
+		var playerCost = $scope.playerCost;
+		var user = {
+			sessionToken: vm.user._sessionToken,
+			objectId: vm.user.id
+		};
 
 		// VISUALLY ADD PLAYER TO USER'S LINEUP
 		var Player = function(id, name, position, team, cost) {

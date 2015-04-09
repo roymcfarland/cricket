@@ -7,11 +7,11 @@ leaguesService.factory("Leagues", function($http, $q, $location) {
 		$http.get("/api/leagues")
 			.success(function (response) {
 				// TEMPORARY MOCKUP
-				console.log(response);
+				// console.log(response);
 				response.forEach(function(league) {
 					league.beginningBalance = 100000;
 				});
-				console.log(response);
+				// console.log(response);
 				deferred.resolve(response);
 			})
 			.error(function (error) {
