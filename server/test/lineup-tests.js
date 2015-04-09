@@ -371,7 +371,10 @@ describe('Sending a GET to /api/v1/lineups', function(){
 				if(err) return done(err);
 				if(res.body.code) return done(res.body);
 
+
 				res.body[0].objectId.should.be.type('string');
+				var lineup = _.findWhere(res.body, {objectId: testLineupWithCaptain.objectId});
+				lineup.captain.name.should.be.exactly('testCricketPlayer');
 				done();
 			});
 		});
