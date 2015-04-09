@@ -385,15 +385,16 @@ describe('Sending a GET to /api/v1/lineups/:objectId', function(){
 	describe('should succeed', function(){
 		it('in getting the testLineup.', function(done){
 			requestLocal
-			.get('/api/v1/lineups/' + testLineup.objectId)
+			.get('/api/v1/lineups/' + testLineupWithCaptain.objectId)
 			.query('sessionToken=' + testUser.sessionToken)
 			.end(function(err, res){
 				if(err) return done(err);
 				if(res.body.code) return done(res.body);
 
-				res.body.objectId.should.be.exactly(testLineup.objectId);
+				res.body.objectId.should.be.exactly(testLineupWithCaptain.objectId);
 				res.body.Locked.should.be.exactly(false);
 				res.body.UserLeagueID.UserID.username.should.be.exactly('testUser');
+				res.body.captain.name.should.be.exactly('testCricketPlayer');
 				done();
 			});
 		});
