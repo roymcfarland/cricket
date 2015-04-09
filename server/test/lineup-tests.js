@@ -476,6 +476,7 @@ describe('Sending a PUT to /api/v1/lineups/:objectId', function(){
 				res.body.objectId.should.be.exactly(testLineup.objectId);
 				res.body.Locked.should.be.exactly(true);
 				res.body.UserLeagueID.UserID.username.should.be.exactly('testUser');
+				res.body.captain.name.should.be.exactly('testCricketPlayer');
 				done();
 			});
 		});
@@ -485,7 +486,8 @@ describe('Sending a PUT to /api/v1/lineups/:objectId', function(){
 			.send({
 				sessionToken: testUser.sessionToken,
 				Locked: true,
-				MatchID: testMatch.objectId
+				MatchID: testMatch.objectId,
+				captain: testCricketPlayer.objectId
 			})
 			.expect(200)
 			.end(function(err, res){

@@ -141,6 +141,11 @@ LineupController.prototype.update = function(req, res) {
 				className: 'Match',
 				objectId: req.body.MatchID
 			};
+			if(req.body.captain) payload.captain = {
+				__type: 'Pointer',
+				className: 'CricketPlayer',
+				objectId: req.body.captain
+			};
 
 			superagent
 			.put('https://api.parse.com/1/classes/Lineup/' + req.params.objectId)
