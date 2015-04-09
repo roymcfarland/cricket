@@ -7,7 +7,8 @@ var LineupController = function(){};
 var createRules = {
 	UserLeagueId: 'required|alpha_num',
 	MatchID: 'alpha_num',
-	Locked: 'boolean'
+	Locked: 'boolean',
+	captain: 'alpha_num'
 };
 
 Validatorjs.register('boolean', function(value, requirement, attribute){
@@ -40,11 +41,11 @@ LineupController.prototype.create = function(req, res) {
 		createLineup: function(done){
 			var payload = {
 				UserLeagueID: {
-						__type: 'Pointer',
-						className: 'UserLeague',
-						objectId: req.body.UserLeagueId
-					},
-					Locked: req.body.Locked
+					__type: 'Pointer',
+					className: 'UserLeague',
+					objectId: req.body.UserLeagueId
+				},
+				Locked: req.body.Locked
 			};
 
 			if(MatchID) {
@@ -54,6 +55,11 @@ LineupController.prototype.create = function(req, res) {
 						objectId: MatchID
 					};
 			}
+			if(req.body.captain) payload.captain = {
+				__type: 'Pointer',
+				className: 'CricketPlayer',
+				objectId: req.body.captain
+			};
 
 			superagent
 				.post('https://api.parse.com/1/classes/Lineup')
@@ -78,7 +84,8 @@ LineupController.prototype.getAll = function(req, res) {
 	.get('https://api.parse.com/1/classes/Lineup')
 	.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
 	.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
-	.query('include=UserLeagueID.UserID')
+	.query('include=UserLeagueID.UserID,captain')
+	.query('limit=1000')
 	.end(function(getAllResults){
 		if(getAllResults.body.code) return res.status(500).send(getAllResults.body);
 
@@ -91,7 +98,7 @@ LineupController.prototype.getOne = function(req, res) {
 	.get('https://api.parse.com/1/classes/Lineup/' + req.params.objectId)
 	.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
 	.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
-	.query('include=UserLeagueID.UserID')
+	.query('include=UserLeagueID.UserID,captain')
 	.end(function(getAllResults){
 		if(getAllResults.body.code) return res.status(500).send(getAllResults.body);
 
@@ -117,7 +124,8 @@ LineupController.prototype.update = function(req, res) {
 		validateData: function(done){
 			var rules = {
 				Locked: 'boolean',
-				MatchID: 'alpha_num'
+				MatchID: 'alpha_num',
+				captain: 'alpha_num'
 			};
 			var validation = new Validatorjs(req.body, rules);
 
@@ -132,6 +140,11 @@ LineupController.prototype.update = function(req, res) {
 				__type: 'Pointer',
 				className: 'Match',
 				objectId: req.body.MatchID
+			};
+			if(req.body.captain) payload.captain = {
+				__type: 'Pointer',
+				className: 'CricketPlayer',
+				objectId: req.body.captain
 			};
 
 			superagent
