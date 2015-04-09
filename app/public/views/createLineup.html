@@ -9,7 +9,7 @@
 	<div class="wrapper">
 		<div class="container">
 			<div class="col-sm-8">
-				<p>Balance: ${user.beginningBalance}</p>
+				<p>Balance: {{leagues.beginningBalance | currency}}</p>
 				<p>Remaining Transfers: {user.transfers} of 10</p>
 			</div>
 			<div class="col-sm-4">
@@ -25,7 +25,7 @@
 					<p>MY TEAM</p>
 				</div>
 				<div class="row wrapper">
-					<p>Minimum Lineup: 1 <img src="/../images/wicket.png" alt="wicket"> 3 <img src="/../images/ball.png"> 3 <img src="/../images/bat.png"></p>
+					<p>Minimum Lineup: {{createLineupCtrl.numberOfWicketKeepers}} <img src="/../images/wicket.png" alt="wicket"> {{createLineupCtrl.numberOfBowlers}} <img src="/../images/ball.png"> {{createLineupCtrl.numberOfBatsmen}} <img src="/../images/bat.png"></p>
 				</div>
 				<table class="table table-striped">
 					<thead>
@@ -36,7 +36,7 @@
 						<th>Cost</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="player in lineup" ng-click="selectPlayer(player.objectId, player.name, player.CricketPlayerType.name, player.team, player.cost)">
+						<tr ng-repeat="player in currentLineup" ng-click="selectPlayer(player.objectId, player.name, player.CricketPlayerType.name, player.team, player.cost)">
 							<td><a class="btn btn-danger" ng-click="removePlayerFromTeam()">-</a></td>
 							<td>{{player.name}}</td>
 							<td>{{player.position}}</td>
@@ -73,8 +73,6 @@
 		</div>
 	</div>
 	
-	<!--
 	<pre>{{players.players | json }}</pre>
-	-->
 
 </div> <!-- /.jumbotron -->

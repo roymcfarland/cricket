@@ -1,6 +1,6 @@
 var createLineupCtrl = angular.module("createLineupCtrl", []);
 
-createLineupCtrl.controller("createLineupController", function($location, $scope, $http, $filter, $routeParams, Players) {
+createLineupCtrl.controller("createLineupController", function($location, $scope, $http, $filter, $routeParams, Leagues, Players) {
 
 	/////////////////////////////////
 	/////////// Variables ///////////
@@ -17,11 +17,19 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	var sessionToken = user._sessionToken;
 
 	// console.log("$routeParams:", $routeParams);
-	console.log("lineupId:", lineupId);
-	console.log("leagueId:", leagueId);
+	// console.log("lineupId:", lineupId);
+	// console.log("leagueId:", leagueId);
 
 
-	var lineup = [];
+	var currentLineup = [];
+
+	// Establish cricketPlayerType minimums for user's lineup
+	vm.numberOfBowlers = 3;
+	vm.numberOfBatsmen = 3;
+	vm.numberOfWicketKeepers = 1;
+
+	// Establish user's balance for buying players for lineup
+	// vm.beginningBalance = 10000000;
 
 
 
@@ -71,6 +79,13 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$scope.players = data;
 	});
 
+	console.log('Leagues: ', Leagues.getOne);
+
+	Leagues.getOne.then(function(data) {
+		$scope.leagues = data;
+		console.log("###:", $scope.leagues);
+	});
+
 
 
 	/////////////////////////////////
@@ -105,6 +120,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////////////////////////////////
 	
 	$scope.addPlayerToTeam = function() {
+
+		var selectedCricketPlayer = this.player;
+		var findWhere = _.findWhere(currentLineup, {id: selectedCricketPlayer.objectId});
+		if (findWhere) return alert("You have already added this player to your lineup.");
 		
 		var playerId = $scope.playerId;
 		var playerName = $scope.playerName;
@@ -115,14 +134,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			sessionToken: vm.user._sessionToken,
 			objectId: vm.user.id
 		};
-
-		// console.log("user:", user);
-		// console.log("lineupId:", lineupId);
-		console.log("playerId:", playerId);
-		// console.log("playerCost:", playerCost);
-		// console.log("playerName:", playerName);
-		// console.log("playerType:", playerType);
-		// console.log("playerTeam:", playerTeam);
 
 		// AJAX POST
 		$http.post("/api/v1/lineupPlayers", {user: user, LineupID: lineupId, CricketPlayerID: playerId}, [])
@@ -165,23 +176,29 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			this.cost = cost;
 		};
 		
-		var movePlayerToLineup = function() {
-			var lineupPlayer = new Player (playerId, playerName, playerPosition, playerTeam, playerCost);
-			// console.log(lineupPlayer);
+		var addPlayerToLineup = function() {
+			
+			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
+
 			$scope.lineupPlayer = lineupPlayer;
-			lineup.push(lineupPlayer);
-			$scope.lineup = lineup;
+			currentLineup.push(lineupPlayer);
 
-			// Disable player in available players column
-			console.log("playerId:", lineupPlayer.id);
 
-			return lineup;
+
+			if (selectedCricketPlayer.CricketPlayerType.name === "Bowler" && vm.numberOfBowlers > 0) {
+				vm.numberOfBowlers --;
+			} else if (selectedCricketPlayer.CricketPlayerType.name === "Batsman" && vm.numberOfBatsmen) {
+				vm.numberOfBatsmen --;
+			} else if (selectedCricketPlayer.CricketPlayerType.name === "Wicket Keeper" && vm.numberOfWicketKeepers > 0) {
+				vm.numberOfWicketKeepers --;
+			}
+
+			$scope.currentLineup = currentLineup;
+			return currentLineup;
 
 		};
-		movePlayerToLineup();
-		
-		// Array of objects created for ng-repeat="player in lineup"
-		console.log("###", lineup);
+
+		addPlayerToLineup();
 
 	};
 
@@ -191,7 +208,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	////////////////////////////////
 	
 	$scope.removePlayerFromTeam = function() {
-		var playerId = $scope.lineupPlayer.id;
+		var playerId = this.player.id;
 		var playerName = $scope.lineupPlayer.name;
 		var playerPosition = $scope.lineupPlayer.position;
 		var playerTeam = $scope.lineupPlayer.team;
@@ -201,30 +218,25 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			objectId: vm.user.id
 		};
 
-		console.log("user:", user);
-		console.log("playerId: ", playerId);
-		console.log("playerName: ", playerName);
-		console.log("playerPosition: ", playerPosition);
-		console.log("playerTeam: ", playerTeam);
-		console.log("playerCost:", playerCost);
-
 		// VISUALLY REMOVE PLAYER FROM USER'S LINEUP
-		console.log("####", lineup);
-		
 		var removePlayer = function() {
-			console.log("playerId:", playerId);
-			console.log("lineup[0].id", lineup[0].id);
-			console.log("lineup[1].id", lineup[1].id);
-			for (i=0; i < lineup.length; i++)
-				if (lineup[i].id == playerId) {
-					lineup.splice(i,1);
+			for (var i=0; i < currentLineup.length; i++)
+				if (currentLineup[i].id == playerId) {
+					var removedPlayerPosition = currentLineup[i].position;
+					// console.log(removedPlayerPosition);
+					currentLineup.splice(i,1);
+					if (removedPlayerPosition === "Bowler" && vm.numberOfBowlers < 3) {
+						vm.numberOfBowlers ++;
+					} else if (removedPlayerPosition === "Batsman" && vm.numberOfBatsmen < 3) {
+						vm.numberOfBatsmen ++;
+					} else if (removedPlayerPosition === "Wicket Keeper" && vm.numberOfWicketKeepers < 1) {
+						vm.numberOfWicketKeepers ++;
+					}
 					break;
 				}
+			$scope.currentLineup = currentLineup;
 		};
 		removePlayer();
-		
-		console.log("####", lineup);
-
 	};
 
 	// console.log(typeof(lineup));

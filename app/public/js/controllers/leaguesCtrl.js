@@ -35,7 +35,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 	/////// leaguesService.js ///////
 	/////////////////////////////////
 
-	Leagues.then(function(data) {
+	Leagues.getAll.then(function(data) {
 		$scope.leagues = data;
 	});
 
