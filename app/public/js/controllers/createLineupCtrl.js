@@ -109,6 +109,56 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	////////// saveLineup() /////////
 	/////////////////////////////////
 	
+	// problemSaving array to push problems to
+	$scope.problemSaving = [];
+
+	$scope.recursiveSave = function(arr, errors) {
+		if (arr.length == 0) return console.log("Save finished with " + errors + "number of errors.")
+
+			var cricketPlayer = arr.pop();
+			// console.log("###:", cricketPlayer.id);
+			var payload = {
+				user: user,
+				LineupID: lineupId,
+				CricketPlayerID: cricketPlayer.id
+			};
+			// AJAX POST
+			$http.post("/api/v1/lineupPlayers", payload)
+			.success(function (data, status) {
+				if (status == 201) {
+					console.log("### SAVED! ###");
+					$scope.recursiveSave(arr, errors);
+				}
+			})
+			.error(function (data, status) {
+				console.log("### THERE WAS AN ERROR ###");
+				$scope.problemSaving.push(cricketPlayer);
+				$scope.recursiveSave(arr, errors++)
+			})
+
+
+	};
+
+	$scope.saveLineup = function() {
+		var currentLineupToSave = angular.copy($scope.currentLineup);
+		// console.log("currentLineupToSave:", currentLineupToSave); 
+		// if (currentLineupToSave == 0)
+		$scope.recursiveSave(currentLineupToSave, 0);
+	};
+
+	/*
+	function save(arr, errors) {
+		// exit condition or errors is 3 exit out
+		// 
+		// 
+		// try saving first player AJAX POST
+		// if success, remove player from array and set errors to 0
+		// if failr, increment errors
+		// call save and pass array and errors
+	};
+	*/
+	
+/*
 	$scope.saveLineup = function() {
 
 		// AJAX POST
@@ -144,6 +194,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		});
 
 	};
+
+	*/
 
 
 

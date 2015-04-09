@@ -46,7 +46,7 @@
 					</tbody>
 				</table>
 				<div>
-					<a class="btn btn-default disabled" ng-click="saveLineup()">Save Lineup</a>
+					<a class="btn btn-default" ng-click="saveLineup()">Save Lineup</a>
 				</div>
 			</div>
 			<div class="col-sm-6">
@@ -73,6 +73,12 @@
 		</div>
 	</div>
 	
+	<!--
 	<pre>{{players.players | json }}</pre>
+	-->
+
+	<div ng-repeat="cricketPlayer in problemSaving">
+		{{cricketPlayer.name}}
+	</div>
 
 </div> <!-- /.jumbotron -->
