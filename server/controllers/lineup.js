@@ -124,7 +124,8 @@ LineupController.prototype.update = function(req, res) {
 		validateData: function(done){
 			var rules = {
 				Locked: 'boolean',
-				MatchID: 'alpha_num'
+				MatchID: 'alpha_num',
+				captain: 'alpha_num'
 			};
 			var validation = new Validatorjs(req.body, rules);
 

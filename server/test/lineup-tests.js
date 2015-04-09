@@ -446,6 +446,23 @@ describe('Sending a PUT to /api/v1/lineups/:objectId', function(){
 				done();
 			});
 		});
+		it('when captain is not alphanumeric.', function(done){
+			requestLocal
+			.put('/api/v1/lineups/' + testLineup.objectId)
+			.send({
+				sessionToken: testUser.sessionToken,
+				Locked: true,
+				MatchID: testMatch.objectId,
+				captain: 'testCricketPlayer.objectId'
+			})
+			.expect(428)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				res.body.errors.captain[0].should.be.exactly('The captain field must be alphanumeric.');
+				done();
+			});
+		});
 	});
 	describe('should succeed', function(){
 		after('Verifying that the lineup was updated on Parse.', function(done){
