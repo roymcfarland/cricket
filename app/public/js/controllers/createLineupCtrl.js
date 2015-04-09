@@ -1,6 +1,6 @@
 var createLineupCtrl = angular.module("createLineupCtrl", []);
 
-createLineupCtrl.controller("createLineupController", function($location, $scope, $http, $filter, $routeParams, Players) {
+createLineupCtrl.controller("createLineupController", function($location, $scope, $http, $filter, $routeParams, Leagues, Players) {
 
 	/////////////////////////////////
 	/////////// Variables ///////////
@@ -27,6 +27,9 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	vm.numberOfBowlers = 3;
 	vm.numberOfBatsmen = 3;
 	vm.numberOfWicketKeepers = 1;
+
+	// Establish user's balance for buying players for lineup
+	// vm.beginningBalance = 10000000;
 
 
 
@@ -76,6 +79,13 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$scope.players = data;
 	});
 
+	console.log('Leagues: ', Leagues.getOne);
+
+	Leagues.getOne.then(function(data) {
+		$scope.leagues = data;
+		console.log("###:", $scope.leagues);
+	});
+
 
 
 	/////////////////////////////////
@@ -110,16 +120,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////////////////////////////////
 	
 	$scope.addPlayerToTeam = function() {
+
 		var selectedCricketPlayer = this.player;
-		// console.log("###:", currentLineup);
 		var findWhere = _.findWhere(currentLineup, {id: selectedCricketPlayer.objectId});
-		// console.log(findWhere);
 		if (findWhere) return alert("You have already added this player to your lineup.");
 		
-
-
-		console.log(this);
-		console.log(selectedCricketPlayer);
 		var playerId = $scope.playerId;
 		var playerName = $scope.playerName;
 		var playerPosition = $scope.playerPosition;
@@ -129,14 +134,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			sessionToken: vm.user._sessionToken,
 			objectId: vm.user.id
 		};
-
-		// console.log("user:", user);
-		// console.log("lineupId:", lineupId);
-		// console.log("playerId:", playerId);
-		// console.log("playerCost:", playerCost);
-		// console.log("playerName:", playerName);
-		// console.log("playerType:", playerType);
-		// console.log("playerTeam:", playerTeam);
 
 		// AJAX POST
 		$http.post("/api/v1/lineupPlayers", {user: user, LineupID: lineupId, CricketPlayerID: playerId}, [])
@@ -185,6 +182,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 			$scope.lineupPlayer = lineupPlayer;
 			currentLineup.push(lineupPlayer);
+
+
 
 			if (selectedCricketPlayer.CricketPlayerType.name === "Bowler" && vm.numberOfBowlers > 0) {
 				vm.numberOfBowlers --;

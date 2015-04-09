@@ -9,7 +9,7 @@
 	<div class="wrapper">
 		<div class="container">
 			<div class="col-sm-8">
-				<p>Balance: ${user.beginningBalance}</p>
+				<p>Balance: {{leagues.beginningBalance | currency}}</p>
 				<p>Remaining Transfers: {user.transfers} of 10</p>
 			</div>
 			<div class="col-sm-4">
@@ -73,8 +73,6 @@
 		</div>
 	</div>
 	
-	<!--
 	<pre>{{players.players | json }}</pre>
-	-->
 
 </div> <!-- /.jumbotron -->
