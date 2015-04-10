@@ -104,7 +104,7 @@ UserLeagueController.prototype.getAll = function(req, res) {
 UserLeagueController.prototype.create = function(req, res) {
 	var rules = {
 		LeagueID: 'required|alpha_num',
-		UserID: 'required'
+		UserID: 'required|alpha_num'
 	};
 	var validation = new Validatorjs(req.body, rules);
 
