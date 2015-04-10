@@ -102,6 +102,7 @@ body {
 }
 .welcome-mssg{
 	float: left;
+	margin-left: 80px;
 }
 
 #home-buttons {
@@ -184,8 +185,9 @@ body {
 	float: left;
 	position: relative;
 	width: 350px;
-	height: 250px;
+	height: 300px;
 	opacity: .6;
+	left: 115px;
 	/*top: 155px; */
 	
 	background-image: -webkit-gradient(
