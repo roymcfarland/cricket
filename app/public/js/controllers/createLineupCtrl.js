@@ -88,8 +88,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 						cost: el.CricketPlayerID.cost
 					};
 				});
-				// console.log("$scope.savedLineup:", $scope.savedLineup);
-				console.log("$scope.currentLineup:", $scope.currentLineup);
+				// console.log("$scope.currentLineup:", $scope.currentLineup);
 				for (var i = 0; i < $scope.currentLineup.length; i++) {
 					if ($scope.currentLineup[i].position === "Bowler" && vm.numberOfBowlers > 0) {
 						vm.numberOfBowlers --;
@@ -99,6 +98,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 						vm.numberOfWicketKeepers --;
 					}
 				}
+
+				for (var i = 0; i < $scope.currentLineup.length; i ++) {
+					$scope.currentBalance -= $scope.currentLineup[i].cost;
+				}
+
 			})
 			.error(function (res, status) {
 				if (status == 404) {
@@ -125,8 +129,9 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	// console.log('Leagues:', Leagues.getOne);
 
 	Leagues.getOne.then(function(data) {
-		$scope.leagues = data;
-		// console.log("###:", $scope.leagues);
+		$scope.league = data;
+		$scope.currentBalance = $scope.league.beginningBalance;
+		// console.log("$scope.beginningBalance:", $scope.beginningBalance);
 	});
 
 
@@ -277,6 +282,14 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 			$scope.lineupPlayer = lineupPlayer;
 			$scope.currentLineup.push($scope.lineupPlayer);
+			
+			console.log("$scope.currentBalance:", $scope.currentBalance);
+			var decrementBalance = function() {
+				$scope.currentBalance -= selectedCricketPlayer.cost;
+			}
+			decrementBalance();
+			console.log("$scope.currentBalance:", $scope.currentBalance);
+
 
 
 
@@ -288,7 +301,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				vm.numberOfWicketKeepers --;
 			}
 
-			// $scope.currentLineup = currentLineup;
 			return currentLineup;
 
 		};
@@ -315,11 +327,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// VISUALLY REMOVE PLAYER FROM USER'S LINEUP
 		var removePlayer = function() {
-			for (var i=0; i < currentLineup.length; i++)
-				if (currentLineup[i].id == playerId) {
-					var removedPlayerPosition = currentLineup[i].position;
+			for (var i=0; i < $scope.currentLineup.length; i++)
+				if ($scope.currentLineup[i].id == playerId) {
+					var removedPlayerPosition = $scope.currentLineup[i].position;
 					// console.log(removedPlayerPosition);
-					currentLineup.splice(i,1);
+					$scope.currentLineup.splice(i,1);
 					if (removedPlayerPosition === "Bowler" && vm.numberOfBowlers < 3) {
 						vm.numberOfBowlers ++;
 					} else if (removedPlayerPosition === "Batsman" && vm.numberOfBatsmen < 3) {
@@ -329,14 +341,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					}
 					break;
 				}
-			$scope.currentLineup = currentLineup;
 		};
 		removePlayer();
 	};
 
-	// console.log(typeof(lineup));
-	// console.log("lineup array:", lineup);
-
 });
-
-
