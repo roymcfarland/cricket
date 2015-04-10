@@ -104,11 +104,32 @@ UserLeagueController.prototype.getAll = function(req, res) {
 UserLeagueController.prototype.create = function(req, res) {
 	var rules = {
 		LeagueID: 'required|alpha_num',
-		UserID: 'required|alpha_num'
 	};
 	var validation = new Validatorjs(req.body, rules);
 
 	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
+
+	superagent
+	.post('https://api.parse.com/1/classes/UserLeague')
+	.set('X-Parse-Application-Id', config.parse.applicationId)
+	.set('X-Parse-REST-API-Key', config.parse.apiKey)
+	.send({
+		LeagueID: {
+			__type: 'Pointer',
+			className: 'League',
+			objectId: req.body.LeagueID
+		},
+		UserID: {
+			__type: 'Pointer',
+			className: '_User',
+			objectId: req.user.objectId
+		}
+	})
+	.end(function(createResult){
+		if(createResult.body.code) return res.status(500).send(createResult.body);
+
+		return res.status(201).send(createResult.body);
+	});
 };
 
 module.exports = UserLeagueController;

@@ -6,6 +6,7 @@ var requestParse = supertest('https://api.parse.com');
 var testUser;
 var testLeague;
 var requestLocal = supertest('http://localhost:3000');
+var testUserLeague;
 
 describe('Preparing for the user league tests', function(){
 	describe('by creating a', function(){
@@ -97,42 +98,23 @@ describe('Sending a POST to /api/v1/userLeagues', function(){
 				done();
 			});
 		});
-		it('when the UserID is not passed in.', function(done){
-			requestLocal
-			.post('/api/v1/userLeagues')
-			.send({
-				sessionToken: testUser.sessionToken,
-				LeagueID: testLeague.objectId,
-				// UserID: testUser.objectId
-			})
-			.expect(428)
-			.end(function(err, res){
-				if(err) return done(err);
-
-				res.body.errors.UserID[0].should.be.exactly('The UserID field is required.');
-				done();
-			});
-		});
-		it('when the UserID is not alphanumeric.', function(done){
-			requestLocal
-			.post('/api/v1/userLeagues')
-			.send({
-				sessionToken: testUser.sessionToken,
-				LeagueID: testLeague.objectId,
-				UserID: 'testUser.objectId'
-			})
-			.expect(428)
-			.end(function(err, res){
-				if(err) return done(err);
-
-				res.body.errors.UserID[0].should.be.exactly('The UserID field must be alphanumeric.');
-				done();
-			});
-		});
 	});
 	describe('should succeed', function(){
 		it('in creating a userLeague.', function(done){
-			done();
+			requestLocal
+			.post('/api/v1/userLeagues')
+			.send({
+				sessionToken: testUser.sessionToken,
+				LeagueID: testLeague.objectId
+			})
+			.expect(201)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				res.body.objectId.should.be.type('string');
+				testUserLeague = res.body;
+				done();
+			});
 		});
 	});
 });
