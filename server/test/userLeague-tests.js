@@ -98,7 +98,20 @@ describe('Sending a POST to /api/v1/userLeagues', function(){
 			});
 		});
 		it('when the UserID is not passed in.', function(done){
-			done();
+			requestLocal
+			.post('/api/v1/userLeagues')
+			.send({
+				sessionToken: testUser.sessionToken,
+				LeagueID: testLeague.objectId,
+				// UserID: testUser.objectId
+			})
+			.expect(428)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				res.body.errors.UserID[0].should.be.exactly('The UserID field is required.');
+				done();
+			});
 		});
 		it('when the UserID is not alphanumeric.', function(done){
 			done();
