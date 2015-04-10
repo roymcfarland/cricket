@@ -74,6 +74,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					// var allLineupPlayers = res;
 					// console.log(allLineupPlayers);
 					$scope.filteredLineup = allLineupPlayers.filter(function (el) {
+						// console.log("###:", el);
 						return el.LineupID.objectId == lineupId;
 					});
 				}
