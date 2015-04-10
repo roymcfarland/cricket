@@ -213,6 +213,31 @@ describe('Sending a PUT to /api/v1/matches/:objectId', function(){
 	});
 });
 
+describe('Sending a DELETE to /api/v1/matches/:objectId', function(){
+	describe('should fail', function(){
+		it('when the current user is not an admin.', function(done){
+			requestLocal
+			.del('/api/v1/matches/' + testMatch.objectId)
+			.send({
+				sessionToken: normalUser.sessionToken
+			})
+			.expect(403)
+			.end(done);
+		});
+	});
+	describe('should succeed', function(){
+		it('in deleting the match.', function(done){
+			requestLocal
+			.del('/api/v1/matches/' + testMatch.objectId)
+			.send({
+				sessionToken: adminUser.sessionToken
+			})
+			.expect(200)
+			.end(done);
+		});
+	});
+});
+
 describe('Cleaning up', function(){
 	describe('the user', function(){
 		it('adminUser', function(done){
@@ -230,16 +255,6 @@ describe('Cleaning up', function(){
 				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
 				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 				.set('X-Parse-Session-Token', normalUser.sessionToken)
-				.end(done);
-		});
-	});
-
-	describe('the match', function(){
-		it('testMatch', function(done){
-			requestParse
-				.del('/1/classes/Match/' + testMatch.objectId)
-				.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
-				.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 				.end(done);
 		});
 	});

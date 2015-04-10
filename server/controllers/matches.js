@@ -121,4 +121,20 @@ MatchesController.prototype.update = function(req, res) {
 	});
 };
 
+MatchesController.prototype.del = function(req, res) {
+	var admin = req.user.admin;
+
+	if(!admin) return res.sendStatus(403);
+
+	superagent
+	.del('https://api.parse.com/1/classes/Match/' + req.params.objectId)
+	.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
+	.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
+	.end(function(deleteResult){
+		if(deleteResult.body.code) return res.status(500).send(deleteResult.body);
+
+		return res.sendStatus(200);
+	});
+};
+
 module.exports = MatchesController;
