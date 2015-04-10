@@ -101,4 +101,13 @@ UserLeagueController.prototype.getAll = function(req, res) {
 	}
 };
 
+UserLeagueController.prototype.create = function(req, res) {
+	var rules = {
+		LeagueID: 'required|alpha_num'
+	};
+	var validation = new Validatorjs(req.body, rules);
+
+	if(validation.fails()) return res.status(428).send({errors: validation.errors.all()});
+};
+
 module.exports = UserLeagueController;
