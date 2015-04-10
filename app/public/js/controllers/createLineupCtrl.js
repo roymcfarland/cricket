@@ -48,7 +48,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				$scope.league = res;
 				$scope.status = status;
 				if (status == 200) {
-					console.log("League membership confirmed!");
+					// console.log("League membership confirmed!");
 					// console.log("$scope.status:", $scope.status);
 				}
 			})
@@ -65,6 +65,49 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					console.log("Error unknown");
 				}
 			});
+
+		// Get the user's saved lineupPlayers
+		$http.get("/api/v1/lineupPlayers?sessionToken=" + sessionToken, {})
+			.success(function (allLineupPlayers, status) {
+				if (status == 200) {
+					// console.log("###:", res);
+					// var allLineupPlayers = res;
+					// console.log(allLineupPlayers);
+					$scope.filteredLineup = allLineupPlayers.filter(function (el) {
+						return el.LineupID.objectId == lineupId;
+					});
+				}
+				// console.log("$scope.filteredLineup:", $scope.filteredLineup);
+
+				$scope.currentLineup = $scope.filteredLineup.map(function (el) {
+					return {
+						id: el.CricketPlayerID.objectId,
+						name: el.CricketPlayerID.name,
+						position: el.CricketPlayerID.CricketPlayerTypeID.name,
+						team: el.CricketPlayerID.team,
+						cost: el.CricketPlayerID.cost
+					};
+				});
+				// console.log("$scope.savedLineup:", $scope.savedLineup);
+				console.log("$scope.currentLineup:", $scope.currentLineup);
+				for (var i = 0; i < $scope.currentLineup.length; i++) {
+					if ($scope.currentLineup[i].position === "Bowler" && vm.numberOfBowlers > 0) {
+						vm.numberOfBowlers --;
+					} else if ($scope.currentLineup[i].position === "Batsman" && vm.numberOfBatsmen > 0) {
+						vm.numberOfBatsmen --;
+					} else if ($scope.currentLineup[i].postion === "Wicket Keeper" && vm.numberOfWicketKeepers > 0) {
+						vm.numberOfWicketKeepers --;
+					}
+				}
+			})
+			.error(function (res, status) {
+				if (status == 404) {
+					console.log("Error 404");
+				} else {
+					console.log("Unknown Error");
+				}
+			});
+
 	};
 
 	init();
@@ -79,11 +122,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$scope.players = data;
 	});
 
-	console.log('Leagues:', Leagues.getOne);
+	// console.log('Leagues:', Leagues.getOne);
 
 	Leagues.getOne.then(function(data) {
 		$scope.leagues = data;
-		console.log("###:", $scope.leagues);
+		// console.log("###:", $scope.leagues);
 	});
 
 
@@ -99,7 +142,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$scope.playerTeam = team;
 		$scope.playerCost = cost;
 
-		console.log("You selected", $scope.playerName);
+		// console.log("You selected", $scope.playerName);
 
 	};
 
@@ -206,7 +249,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	$scope.addPlayerToTeam = function() {
 
 		var selectedCricketPlayer = this.player;
-		var findWhere = _.findWhere(currentLineup, {id: selectedCricketPlayer.objectId});
+		var findWhere = _.findWhere($scope.currentLineup, {id: selectedCricketPlayer.objectId});
 		if (findWhere) return alert("You have already added this player to your lineup.");
 		
 		var playerId = $scope.playerId;
@@ -233,7 +276,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
 
 			$scope.lineupPlayer = lineupPlayer;
-			currentLineup.push(lineupPlayer);
+			$scope.currentLineup.push($scope.lineupPlayer);
 
 
 
@@ -245,7 +288,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				vm.numberOfWicketKeepers --;
 			}
 
-			$scope.currentLineup = currentLineup;
+			// $scope.currentLineup = currentLineup;
 			return currentLineup;
 
 		};
