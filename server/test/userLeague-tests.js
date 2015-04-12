@@ -175,6 +175,22 @@ describe('Sending a UPDATE to /api/v1/userLeagues/:objectId', function(){
 			.expect(403)
 			.end(done);
 		});
+		it('when the LeagueID is not alphanumeric.', function(done){
+			requestLocal
+			.put('/api/v1/userLeagues/' + testUserLeague.objectId)
+			.send({
+				sessionToken: testUser.sessionToken,
+				LeagueID: 'testLeague.objectId',
+				UserID: testSecondUser.objectId
+			})
+			.expect(428)
+			.end(function(err, res){
+				if(err) return done(err);
+
+				res.body.errors.LeagueID[0].should.be.exactly('The LeagueID field must be alphanumeric.');
+				done();
+			});
+		});
 	});
 });
 

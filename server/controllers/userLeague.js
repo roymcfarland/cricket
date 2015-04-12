@@ -1,5 +1,6 @@
 var Validatorjs = require('validatorjs');
 var superagent = require('superagent');
+var async = require('async');
 var config = require('../config/config');
 
 var getAllRules = {
@@ -146,7 +147,39 @@ UserLeagueController.prototype.getOne = function(req, res) {
 };
 
 UserLeagueController.prototype.update = function(req, res) {
-	if(req.user.objectId !== req.params.objectId) return res.sendStatus(403);
+	async.series({
+		checkCurrentUserOwnsUserLeague: function(done){
+			superagent
+			.get('https://api.parse.com/1/classes/UserLeague/' + req.params.objectId)
+			.set('X-Parse-Application-Id', config.parse.applicationId)
+			.set('X-Parse-REST-API-Key', config.parse.apiKey)
+			.query('include=UserID')
+			.end(function(result){
+				if(result.body.code) return done({code: 500, error: result.body});
+				if(req.user.objectId !== result.body.UserID.objectId) return done({code: 403});
+
+				done();
+			});
+		},
+		validateData: function(done){
+			var rules = {
+				LeagueID: 'alpha_num'
+			};
+			var validation = new Validatorjs(req.body, rules);
+
+			if(validation.fails()) return done({
+				code: 428,
+				error: {
+					errors: validation.errors.all()
+				}
+			});
+
+			done();
+		}
+	}, function(err, success){
+		if(err && err.code && err.error) return res.status(err.code).send(err.error);
+		if(err && err.code) return res.sendStatus(err.code);
+	});
 };
 
 module.exports = UserLeagueController;
