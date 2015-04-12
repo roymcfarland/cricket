@@ -119,6 +119,26 @@ describe('Sending a POST to /api/v1/userLeagues', function(){
 	});
 });
 
+describe('Sending a GET to /api/v1/userLeagues/:objectId', function(){
+	describe('should succeed', function(){
+		it('in getting one user league.', function(done){
+			requestLocal
+			.get('/api/v1/userLeagues/' + testUserLeague.objectId)
+			.query('sessionToken=' + testUser.sessionToken)
+			.expect(200)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				res.body.objectId.should.be.exactly(testUserLeague.objectId);
+				res.body.LeagueID.name.should.be.exactly('testLeague');
+				res.body.UserID.username.should.be.exactly('testUser');
+				done();
+			});
+		});
+	});
+});
+
 describe('Cleaning up after the user league tests', function(){
 	describe('by deleting', function(){
 		it('testLeague.', function(done){

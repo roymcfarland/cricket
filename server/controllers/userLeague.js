@@ -132,4 +132,17 @@ UserLeagueController.prototype.create = function(req, res) {
 	});
 };
 
+UserLeagueController.prototype.getOne = function(req, res) {
+	superagent
+	.get('https://api.parse.com/1/classes/UserLeague/' + req.params.objectId)
+	.set('X-Parse-Application-Id', config.parse.applicationId)
+	.set('X-Parse-REST-API-Key', config.parse.apiKey)
+	.query('include=LeagueID,UserID')
+	.end(function(getOneResult){
+		if(getOneResult.body.code) return res.status(500).send(getOneResult.body);
+
+		return res.send(getOneResult.body)
+	});
+};
+
 module.exports = UserLeagueController;
