@@ -163,7 +163,8 @@ UserLeagueController.prototype.update = function(req, res) {
 		},
 		validateData: function(done){
 			var rules = {
-				LeagueID: 'alpha_num'
+				LeagueID: 'alpha_num',
+				UserID: 'alpha_num'
 			};
 			var validation = new Validatorjs(req.body, rules);
 
