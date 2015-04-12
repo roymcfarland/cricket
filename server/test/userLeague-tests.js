@@ -235,6 +235,17 @@ describe('Sending a DELETE to /api/v1/userLeagues/:objectId', function(){
 			.end(done);
 		});
 	});
+	describe('should succeed', function(){
+		it('in deleting the user league.', function(done){
+			requestLocal
+			.del('/api/v1/userLeagues/' + testUserLeague.objectId)
+			.send({
+				sessionToken: testSecondUser.sessionToken
+			})
+			.expect(200)
+			.end(done);
+		});
+	});
 });
 
 describe('Cleaning up after the user league tests', function(){

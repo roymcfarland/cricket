@@ -224,6 +224,17 @@ UserLeagueController.prototype.del = function(req, res) {
 
 				done();
 			});
+		},
+		deleteUserLeague: function(done){
+			superagent
+			.del('https://api.parse.com/1/classes/UserLeague/' + req.params.objectId)
+			.set('X-Parse-Application-Id', config.parse.applicationId)
+			.set('X-Parse-REST-API-Key', config.parse.apiKey)
+			.end(function(result){
+				if(result.body.code) return done({code: 500, error: result.body});
+
+				done();
+			});
 		}
 	}, function(err, success){
 		if(err && err.code && err.error) return res.status(err.code).send(err.error);
