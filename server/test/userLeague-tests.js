@@ -4,6 +4,7 @@ var config = require('../config/config');
 
 var requestParse = supertest('https://api.parse.com');
 var testUser;
+var testSecondUser;
 var testLeague;
 var requestLocal = supertest('http://localhost:3000');
 var testUserLeague;
@@ -29,6 +30,28 @@ describe('Preparing for the user league tests', function(){
 				if(res.body.code) return done(res.body);
 
 				testUser = res.body;
+				done();
+			});
+		});
+		it('testSecondUser.', function(done){
+			requestParse
+			.post('/1/users')
+			.set('X-Parse-Application-Id', config.parse.applicationId)
+			.set('X-Parse-REST-API-Key', config.parse.apiKey)
+			.send({
+				username: 'testSecondUser',
+				password: 'password',
+				email: 'testSecondUser@latitude40.com',
+				totalScore: 0,
+				Money: 0,
+				admin: false
+			})
+			.expect(201)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				testSecondUser = res.body;
 				done();
 			});
 		});
@@ -139,6 +162,22 @@ describe('Sending a GET to /api/v1/userLeagues/:objectId', function(){
 	});
 });
 
+describe('Sending a UPDATE to /api/v1/userLeagues/:objectId', function(){
+	describe('should fail', function(){
+		it('when the current is not the user league owner.', function(done){
+			requestLocal
+			.put('/api/v1/userLeagues/' + testUserLeague.objectId)
+			.send({
+				sessionToken: testSecondUser.sessionToken,
+				LeagueID: testLeague.objectId,
+				UserID: testSecondUser.objectId
+			})
+			.expect(403)
+			.end(done);
+		});
+	});
+});
+
 describe('Cleaning up after the user league tests', function(){
 	describe('by deleting', function(){
 		it('testLeague.', function(done){
@@ -159,6 +198,19 @@ describe('Cleaning up after the user league tests', function(){
 			.set('X-Parse-Application-Id', config.parse.applicationId)
 			.set('X-Parse-REST-API-Key', config.parse.apiKey)
 			.set('X-Parse-Session-Token', testUser.sessionToken)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				done();
+			});
+		});
+		it('testSecondUser.', function(done){
+			requestParse
+			.del('/1/users/' + testSecondUser.objectId)
+			.set('X-Parse-Application-Id', config.parse.applicationId)
+			.set('X-Parse-REST-API-Key', config.parse.apiKey)
+			.set('X-Parse-Session-Token', testSecondUser.sessionToken)
 			.end(function(err, res){
 				if(err) return done(err);
 				if(res.body.code) return done(res.body);

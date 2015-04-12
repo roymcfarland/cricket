@@ -8,6 +8,7 @@ var userLeagueRoutes = function(app){
 	app.get('/api/v1/userLeagues', protectGetRoutes, userLeagueController.getAll);
 	app.post('/api/v1/userLeagues', protectPostRoutes, userLeagueController.create);
 	app.get('/api/v1/userLeagues/:objectId', protectGetRoutes, userLeagueController.getOne);
+	app.put('/api/v1/userLeagues/:objectId', protectPostRoutes, userLeagueController.update);
 };
 
 module.exports = userLeagueRoutes;

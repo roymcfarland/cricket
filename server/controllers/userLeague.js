@@ -145,4 +145,8 @@ UserLeagueController.prototype.getOne = function(req, res) {
 	});
 };
 
+UserLeagueController.prototype.update = function(req, res) {
+	if(req.user.objectId !== req.params.objectId) return res.sendStatus(403);
+};
+
 module.exports = UserLeagueController;
