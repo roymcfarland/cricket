@@ -208,6 +208,19 @@ describe('Sending a UPDATE to /api/v1/userLeagues/:objectId', function(){
 			});
 		});
 	});
+	describe('should succeed', function(){
+		it('in updating the user league.', function(done){
+			requestLocal
+			.put('/api/v1/userLeagues/' + testUserLeague.objectId)
+			.send({
+				sessionToken: testUser.sessionToken,
+				LeagueID: testLeague.objectId,
+				UserID: testSecondUser.objectId
+			})
+			.expect(200)
+			.end(done);
+		});
+	});
 });
 
 describe('Cleaning up after the user league tests', function(){

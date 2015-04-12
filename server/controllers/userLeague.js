@@ -176,10 +176,37 @@ UserLeagueController.prototype.update = function(req, res) {
 			});
 
 			done();
+		},
+		updateUserLeague: function(done){
+			var payload = {};
+
+			if(req.body.LeagueID) payload.LeagueID = {
+				__type: 'Pointer',
+				className: 'League',
+				objectId: req.body.LeagueID
+			};
+			if(req.body.UserID) payload.UserID = {
+				__type: 'Pointer',
+				className: '_User',
+				objectId: req.body.UserID
+			};
+
+			superagent
+			.put('https://api.parse.com/1/classes/UserLeague/' + req.params.objectId)
+			.set('X-Parse-Application-Id', config.parse.applicationId)
+			.set('X-Parse-REST-API-Key', config.parse.apiKey)
+			.send(payload)
+			.end(function(result){
+				if(result.body.code) return done({code: 500, error: result.body});
+
+				done();
+			});
 		}
 	}, function(err, success){
 		if(err && err.code && err.error) return res.status(err.code).send(err.error);
 		if(err && err.code) return res.sendStatus(err.code);
+
+		return res.sendStatus(200);
 	});
 };
 
