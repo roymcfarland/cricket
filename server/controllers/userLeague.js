@@ -210,4 +210,27 @@ UserLeagueController.prototype.update = function(req, res) {
 	});
 };
 
+UserLeagueController.prototype.del = function(req, res) {
+	async.series({
+		checkCurrentUserOwnsUserLeague: function(done){
+			superagent
+			.get('https://api.parse.com/1/classes/UserLeague/' + req.params.objectId)
+			.set('X-Parse-Application-Id', config.parse.applicationId)
+			.set('X-Parse-REST-API-Key', config.parse.apiKey)
+			.query('include=UserID')
+			.end(function(result){
+				if(result.body.code) return done({code: 500, error: result.body});
+				if(req.user.objectId !== result.body.UserID.objectId) return done({code: 403});
+
+				done();
+			});
+		}
+	}, function(err, success){
+		if(err && err.code && err.error) return res.status(err.code).send(err.error);
+		if(err && err.code) return res.sendStatus(err.code);
+
+		return res.sendStatus(200);
+	});
+};
+
 module.exports = UserLeagueController;

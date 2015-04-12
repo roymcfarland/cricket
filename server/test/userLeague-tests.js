@@ -223,6 +223,20 @@ describe('Sending a UPDATE to /api/v1/userLeagues/:objectId', function(){
 	});
 });
 
+describe('Sending a DELETE to /api/v1/userLeagues/:objectId', function(){
+	describe('should fail', function(){
+		it('when the current user is not the user league owner.', function(done){
+			requestLocal
+			.del('/api/v1/userLeagues/' + testUserLeague.objectId)
+			.send({
+				sessionToken: testUser.sessionToken
+			})
+			.expect(403)
+			.end(done);
+		});
+	});
+});
+
 describe('Cleaning up after the user league tests', function(){
 	describe('by deleting', function(){
 		it('testLeague.', function(done){
