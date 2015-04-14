@@ -48,7 +48,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				$scope.league = res;
 				$scope.status = status;
 				if (status == 200) {
-					console.log("League membership confirmed!");
+					// console.log("League membership confirmed!");
 					// console.log("$scope.status:", $scope.status);
 				}
 			})
@@ -65,6 +65,54 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					console.log("Error unknown");
 				}
 			});
+
+		// Get the user's saved lineupPlayers
+		$http.get("/api/v1/lineupPlayers?sessionToken=" + sessionToken, {})
+			.success(function (allLineupPlayers, status) {
+				if (status == 200) {
+					// console.log("###:", res);
+					// var allLineupPlayers = res;
+					// console.log(allLineupPlayers);
+					$scope.filteredLineup = allLineupPlayers.filter(function (el) {
+						// console.log("###:", el);
+						return el.LineupID.objectId == lineupId;
+					});
+				}
+				// console.log("$scope.filteredLineup:", $scope.filteredLineup);
+
+				$scope.currentLineup = $scope.filteredLineup.map(function (el) {
+					return {
+						id: el.CricketPlayerID.objectId,
+						name: el.CricketPlayerID.name,
+						position: el.CricketPlayerID.CricketPlayerTypeID.name,
+						team: el.CricketPlayerID.team,
+						cost: el.CricketPlayerID.cost
+					};
+				});
+				// console.log("$scope.currentLineup:", $scope.currentLineup);
+				for (var i = 0; i < $scope.currentLineup.length; i++) {
+					if ($scope.currentLineup[i].position === "Bowler" && vm.numberOfBowlers > 0) {
+						vm.numberOfBowlers --;
+					} else if ($scope.currentLineup[i].position === "Batsman" && vm.numberOfBatsmen > 0) {
+						vm.numberOfBatsmen --;
+					} else if ($scope.currentLineup[i].postion === "Wicket Keeper" && vm.numberOfWicketKeepers > 0) {
+						vm.numberOfWicketKeepers --;
+					}
+				}
+
+				for (var i = 0; i < $scope.currentLineup.length; i ++) {
+					$scope.currentBalance -= $scope.currentLineup[i].cost;
+				}
+
+			})
+			.error(function (res, status) {
+				if (status == 404) {
+					console.log("Error 404");
+				} else {
+					console.log("Unknown Error");
+				}
+			});
+
 	};
 
 	init();
@@ -79,11 +127,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$scope.players = data;
 	});
 
-	console.log('Leagues: ', Leagues.getOne);
+	// console.log('Leagues:', Leagues.getOne);
 
 	Leagues.getOne.then(function(data) {
-		$scope.leagues = data;
-		console.log("###:", $scope.leagues);
+		$scope.league = data;
+		$scope.currentBalance = $scope.league.beginningBalance;
+		// console.log("$scope.beginningBalance:", $scope.beginningBalance);
 	});
 
 
@@ -99,7 +148,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$scope.playerTeam = team;
 		$scope.playerCost = cost;
 
-		console.log("You selected", $scope.playerName);
+		// console.log("You selected", $scope.playerName);
 
 	};
 
@@ -109,31 +158,57 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	////////// saveLineup() /////////
 	/////////////////////////////////
 	
-	$scope.saveLineup = function() {
+	// problemSaving array to push problems to
+	$scope.problemSaving = [];
+
+	$scope.recursiveSave = function(arr, errors) {
+		if (arr.length == 0) return console.log("Save finished with " + errors + "number of errors.")
+
+			var cricketPlayer = arr.pop();
+			// console.log("###:", cricketPlayer.id);
+			var payload = {
+				user: user,
+				LineupID: lineupId,
+				CricketPlayerID: cricketPlayer.id
+			};
+			// AJAX POST
+			$http.post("/api/v1/lineupPlayers", payload)
+			.success(function (data, status) {
+				if (status == 201) {
+					console.log("### SAVED! ###");
+					$scope.recursiveSave(arr, errors);
+				}
+			})
+			.error(function (data, status) {
+				console.log("### THERE WAS AN ERROR ###");
+				$scope.problemSaving.push(cricketPlayer);
+				$scope.recursiveSave(arr, errors++)
+			})
+
 
 	};
 
+	$scope.saveLineup = function() {
+		var currentLineupToSave = angular.copy($scope.currentLineup);
+		// console.log("currentLineupToSave:", currentLineupToSave); 
+		// if (currentLineupToSave == 0)
+		$scope.recursiveSave(currentLineupToSave, 0);
+	};
 
-
-	/////////////////////////////////
-	////// addPlayerToTeam() ////////
-	/////////////////////////////////
+	/*
+	function save(arr, errors) {
+		// exit condition or errors is 3 exit out
+		// 
+		// 
+		// try saving first player AJAX POST
+		// if success, remove player from array and set errors to 0
+		// if failr, increment errors
+		// call save and pass array and errors
+	};
+	*/
 	
-	$scope.addPlayerToTeam = function() {
-
-		var selectedCricketPlayer = this.player;
-		var findWhere = _.findWhere(currentLineup, {id: selectedCricketPlayer.objectId});
-		if (findWhere) return alert("You have already added this player to your lineup.");
-		
-		var playerId = $scope.playerId;
-		var playerName = $scope.playerName;
-		var playerPosition = $scope.playerPosition;
-		var playerTeam = $scope.playerTeam;
-		var playerCost = $scope.playerCost;
-		var user = {
-			sessionToken: vm.user._sessionToken,
-			objectId: vm.user.id
-		};
+/*
+	$scope.saveLineup = function() {
 
 		// AJAX POST
 		$http.post("/api/v1/lineupPlayers", {user: user, LineupID: lineupId, CricketPlayerID: playerId}, [])
@@ -167,6 +242,32 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			}
 		});
 
+	};
+
+	*/
+
+
+
+	/////////////////////////////////
+	////// addPlayerToTeam() ////////
+	/////////////////////////////////
+	
+	$scope.addPlayerToTeam = function() {
+
+		var selectedCricketPlayer = this.player;
+		var findWhere = _.findWhere($scope.currentLineup, {id: selectedCricketPlayer.objectId});
+		if (findWhere) return alert("You have already added this player to your lineup.");
+		
+		var playerId = $scope.playerId;
+		var playerName = $scope.playerName;
+		var playerPosition = $scope.playerPosition;
+		var playerTeam = $scope.playerTeam;
+		var playerCost = $scope.playerCost;
+		var user = {
+			sessionToken: vm.user._sessionToken,
+			objectId: vm.user.id
+		};
+
 		// VISUALLY ADD PLAYER TO USER'S LINEUP
 		var Player = function(id, name, position, team, cost) {
 			this.id = id;
@@ -181,7 +282,15 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
 
 			$scope.lineupPlayer = lineupPlayer;
-			currentLineup.push(lineupPlayer);
+			$scope.currentLineup.push($scope.lineupPlayer);
+			
+			console.log("$scope.currentBalance:", $scope.currentBalance);
+			var decrementBalance = function() {
+				$scope.currentBalance -= selectedCricketPlayer.cost;
+			}
+			decrementBalance();
+			console.log("$scope.currentBalance:", $scope.currentBalance);
+
 
 
 
@@ -193,7 +302,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				vm.numberOfWicketKeepers --;
 			}
 
-			$scope.currentLineup = currentLineup;
 			return currentLineup;
 
 		};
@@ -220,11 +328,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// VISUALLY REMOVE PLAYER FROM USER'S LINEUP
 		var removePlayer = function() {
-			for (var i=0; i < currentLineup.length; i++)
-				if (currentLineup[i].id == playerId) {
-					var removedPlayerPosition = currentLineup[i].position;
+			for (var i=0; i < $scope.currentLineup.length; i++)
+				if ($scope.currentLineup[i].id == playerId) {
+					var removedPlayerPosition = $scope.currentLineup[i].position;
 					// console.log(removedPlayerPosition);
-					currentLineup.splice(i,1);
+					$scope.currentLineup.splice(i,1);
 					if (removedPlayerPosition === "Bowler" && vm.numberOfBowlers < 3) {
 						vm.numberOfBowlers ++;
 					} else if (removedPlayerPosition === "Batsman" && vm.numberOfBatsmen < 3) {
@@ -234,14 +342,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					}
 					break;
 				}
-			$scope.currentLineup = currentLineup;
 		};
 		removePlayer();
 	};
 
-	// console.log(typeof(lineup));
-	// console.log("lineup array:", lineup);
-
 });
-
-

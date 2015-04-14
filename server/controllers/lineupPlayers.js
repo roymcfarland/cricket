@@ -51,6 +51,7 @@ LineupPlayerController.prototype.getAll = function(req, res) {
 	.set('X-Parse-Application-Id', 'GeuNrmGKg5XYigjeBfB9w9mQWqp4WFWHDYqQPIzD')
 	.set('X-Parse-REST-API-Key', 'P5eKUwI4NOVquvQTPye7fMaAK2dcLNRkBVV8Xfdl')
 	.query('include=LineupID.UserLeagueID.LeagueID,CricketPlayerID.CricketPlayerTypeID')
+	.query('limit=1000')
 	.end(function(getAllResults){
 		if(getAllResults.body.code) return res.status(500).send(getAllResults.body);
 
