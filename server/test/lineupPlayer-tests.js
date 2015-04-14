@@ -296,6 +296,21 @@ describe('Sending a GET to /api/v1/lineupPlayers', function(){
 				done();
 			});
 		});
+		it('in getting all lineup players filtered by lineup.', function(done){
+			requireLocal
+			.get('/api/v1/lineupPlayers')
+			.query('sessionToken=' + testUser.sessionToken)
+			.query('lineupId=' + testLineup.objectId)
+			.expect(200)
+			.end(function(err, res){
+				if(err) return done(err);
+				if(res.body.code) return done(res.body);
+
+				res.body[0].objectId.should.be.type('string');
+				res.body.length.should.be.exactly(1);
+				done();
+			});
+		});
 	});
 });
 
