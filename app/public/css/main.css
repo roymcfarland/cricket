@@ -102,6 +102,8 @@ body {
 }
 .welcome-mssg{
 	float: left;
+	margin-left: 80px;
+	margin-top: 50px;
 }
 
 #home-buttons {
@@ -183,12 +185,13 @@ body {
 	border: 1px solid #030303;
 	float: left;
 	position: relative;
-	width: 350px;
-	height: 250px;
-	opacity: .6;
+	width: 415px;
+	height: 300px;
+	/*opacity: .6;*/
+	left: 115px;
 	/*top: 155px; */
 	
-	background-image: -webkit-gradient(
+	/*background-image: -webkit-gradient(
 		linear,
 		left top,
 		right bottom,
@@ -199,11 +202,17 @@ body {
 	background-image: -moz-linear-gradient(right bottom, #A1A1A1 0%, #000000 48%);
 	background-image: -webkit-linear-gradient(right bottom, #A1A1A1 0%, #000000 48%);
 	background-image: -ms-linear-gradient(right bottom, #A1A1A1 0%, #000000 48%);
-	background-image: linear-gradient(to right bottom, #A1A1A1 0%, #000000 48%);
-	}
+	background-image: linear-gradient(to right bottom, #A1A1A1 0%, #000000 48%);*/
+	
+	background-color: #E5F6FF;	
+}
 	
 .leaderboard {
 
+}
+
+.leaderboard-header {
+	background-color: #9EBAB6;
 }
 
 #spn-match-teams {
@@ -284,6 +293,89 @@ body {
 		height: 424px;
 		margin-top: 0;
 		padding-top: 0;
+}
+
+.how-to-play {
+	margin-left: 115px;
+}
+
+p.step-one {
+	float: left;
+	margin: 5px 5px 15px 0;
+	font-size: 58px;
+	font-weight:bold;
+	color: #55746F;
+}
+
+p.step-two {
+	float: left;
+	margin: 5px 5px 15px 20px;
+	font-size: 58px;
+	font-weight:bold;
+	color: #55746F;
+}
+
+p.step-three {
+	float: left;
+	margin: 5px 5px 15px 20px;
+	font-size: 58px;
+	font-weight:bold;
+	color: #55746F;
+}
+
+
+.rectangle {
+	background-color: #EEE;
+	height: 155px;
+	width: 200px;
+	background: white;
+	cursor: pointer;
+	float: left;
+	
+	background-image: -webkit-gradient(
+		linear,
+		right bottom,
+		left bottom,
+		color-stop(0, #9EBAB6),
+		color-stop(1, #FFFFFF)
+	);
+	background-image: -o-linear-gradient(left, #9EBAB6 0%, #FFFFFF 100%);
+	background-image: -moz-linear-gradient(left, #9EBAB6 0%, #FFFFFF 100%);
+	background-image: -webkit-linear-gradient(left, #9EBAB6 0%, #FFFFFF 100%);
+	background-image: -ms-linear-gradient(left, #9EBAB6 0%, #FFFFFF 100%);
+	background-image: linear-gradient(to left, #9EBAB6 0%, #FFFFFF 100%);
+}
+
+.rectangle-long {
+	background-color: #EEE;
+	height: 155px;
+	width: 247px;
+	background: white;
+	cursor: pointer;
+	float: left;
+	
+	background-image: -webkit-gradient(
+		linear,
+		right bottom,
+		left bottom,
+		color-stop(0, #9EBAB6),
+		color-stop(1, #FFFFFF)
+	);
+	background-image: -o-linear-gradient(left, #9EBAB6 0%, #FFFFFF 100%);
+	background-image: -moz-linear-gradient(left, #9EBAB6 0%, #FFFFFF 100%);
+	background-image: -webkit-linear-gradient(left, #9EBAB6 0%, #FFFFFF 100%);
+	background-image: -ms-linear-gradient(left, #9EBAB6 0%, #FFFFFF 100%);
+	background-image: linear-gradient(to left, #9EBAB6 0%, #FFFFFF 100%);
+}
+
+.arrow {
+
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 77.25px 0 77.25px 50px;
+	border-color: transparent transparent transparent #9EBAB6;
+	float: left;
 }
 
 .ng-invalid.ng-dirty {
