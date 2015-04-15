@@ -7,15 +7,16 @@
 
 #defaultCountdown { 
 	background-color: #080808; 
+	background-color: transparent;
 	border: none;
 	border-radius: 25%;
-	width: 225px; 
+	width: 205px; 
 	height: 225px; 
 	font-size:24px;
 	padding: 25px;
 	text-align: left;
 	position: relative;
-	float: right;
+	float: left;
 }
 
 .countdown-rtl {
