@@ -48,14 +48,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		if(!vm.user) return $location.path("/");
 
 		// Is the user a member of this league?
-		$http.get("/api/v1/userLeagues?leagueId=" + leagueId + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
+		$http.get("/api/v1/lineupPlayers?lineupId=" + lineupId + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
 			.success(function (res, status) {
-				$scope.league = res;
-				$scope.status = status;
-				if (status == 200) {
-					// console.log("League membership confirmed!");
-					// console.log("$scope.status:", $scope.status);
-				}
+				$scope.allLineupPlayers = res;
+				console.log("$scope.allLineupPlayers:", $scope.allLineupPlayers);
 			})
 			.error(function (res, status) {
 				$scope.res = res;
