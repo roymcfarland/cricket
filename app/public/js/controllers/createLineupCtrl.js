@@ -30,6 +30,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 	// Establish user's balance for buying players for lineup
 	// vm.beginningBalance = 10000000;
+	
+
+
+	// Array for players who need to be added or removed from DB on ng-click="saveLineup()"
+	var actionsQueue = [];
 
 
 
