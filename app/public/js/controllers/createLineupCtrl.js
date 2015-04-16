@@ -47,11 +47,14 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		// Is the user logged in?
 		if(!vm.user) return $location.path("/");
 
-		// Is the user a member of this league?
+		// Get all lineupPlayers
 		$http.get("/api/v1/lineupPlayers?lineupId=" + lineupId + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
 			.success(function (res, status) {
 				$scope.allLineupPlayers = res;
 				console.log("$scope.allLineupPlayers:", $scope.allLineupPlayers);
+				
+				sortLineupsIntoMatches();
+			
 			})
 			.error(function (res, status) {
 				$scope.res = res;
@@ -114,9 +117,54 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				}
 			});
 
+		return $scope.allLineupPlayers;
+
 	};
 
 	init();
+
+	var sortLineupsIntoMatches = function() {
+
+		$scope.matches = [{
+			name: "Current Lineup",
+			matchId: "", 
+			lineupPlayers: []
+		}];
+		
+		console.log("$scope.matches:", $scope.matches);
+
+		// Get matchId of lineupPlayer
+		for (var i = 0; i < $scope.allLineupPlayers.length; i ++) {
+
+			// If no matchId, add lineupPlayer to $scope.matches[0]
+			if (!$scope.allLineupPlayers[i].LineupID.MatchID) {
+				var lineupPlayer = $scope.allLineupPlayers[i].CricketPlayerID;
+				// console.log("lineupPlayer[" + i + "]:", lineupPlayer);
+				$scope.matches[0].lineupPlayers.push(lineupPlayer);
+			}
+
+			// If matchId but no matchId in $scope.matches, add lineupPlayer to $scope.matches and create matchId
+			else if ($scope.allLineupPlayers[i].LineupID.MatchID) {
+				var lineupPlayer = $scope.allLineupPlayers[i].CricketPlayerID;
+				var matchId = $scope.allLineupPlayers[i].LineupID.MatchID;
+				$scope.matches.push({
+					name: "Lineup" + [$scope.matches.length],
+					matchId: matchId,
+					lineupPlayers: []
+				});
+				$scope.matches[$scope.matches.length].lineupPlayers.push(lineupPlayer);
+			}
+
+			// If matchId and matchId in $scope.matches, add lineupPlayer to $scope.matches under matchId
+			else if ($scope.allLineupPlayers[i].LineupID.MatchID) {
+				var lineupPlayer = $scope.allLineupPlayers[i].CricketPlayerID;
+
+			}
+
+
+		};
+
+	};
 
 
 
@@ -195,57 +243,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		// if (currentLineupToSave == 0)
 		$scope.recursiveSave(currentLineupToSave, 0);
 	};
-
-	/*
-	function save(arr, errors) {
-		// exit condition or errors is 3 exit out
-		// 
-		// 
-		// try saving first player AJAX POST
-		// if success, remove player from array and set errors to 0
-		// if failr, increment errors
-		// call save and pass array and errors
-	};
-	*/
-	
-/*
-	$scope.saveLineup = function() {
-
-		// AJAX POST
-		$http.post("/api/v1/lineupPlayers", {user: user, LineupID: lineupId, CricketPlayerID: playerId}, [])
-		.success(function (res, status) {
-			$scope.res = res;
-			$scope.status = status;
-			if (status == 201) {
-				// console.log("$scope.status:", $scope.status);
-				// console.log("$scope.res:", $scope.res);
-				var lineupPlayerId = $scope.res.objectId;
-				console.log("lineupPlayerId:", lineupPlayerId);
-				console.log(playerName + " has been added to your team");
-			}
-		})
-		.error(function (res, status) {
-			$scope.res = res;
-			$scope.status = status;
-			if (status == 404) {
-				console.log("Error 404");
-			} else if (status == 428) {
-				console.log("Error 428");
-				console.log("Error $scope.res:", $scope.res);
-			} else if (status == 500) {
-				console.log("Error 500");
-				console.log("Error $scope.res:", $scope.res);
-			} else if (status == 520) {
-				console.log("Error 520");
-				console.log("Error $scope.res:", $scope.res);
-			} else {
-				console.log("Error unknown")
-			}
-		});
-
-	};
-
-	*/
 
 
 
