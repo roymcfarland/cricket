@@ -148,7 +148,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				var lineupPlayer = $scope.allLineupPlayers[i].CricketPlayerID;
 				var matchId = $scope.allLineupPlayers[i].LineupID.MatchID;
 				$scope.matches.push({
-					name: "Lineup" + [$scope.matches.length],
+					name: "Past Lineup" + [$scope.matches.length],
 					matchId: matchId,
 					lineupPlayers: []
 				});
@@ -163,6 +163,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 
 		};
+
+		$scope.currentSavedLineup = angular.copy($scope.matches);
+
+		console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
+		console.log($scope.matches === $scope.currentSavedLineup);
 
 	};
 
