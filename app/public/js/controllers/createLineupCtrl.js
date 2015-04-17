@@ -293,6 +293,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			$scope.lineupPlayer = lineupPlayer;
 			$scope.currentLineup.push($scope.lineupPlayer);
 			
+			// decrement user's $ balance
 			console.log("$scope.currentBalance:", $scope.currentBalance);
 			var decrementBalance = function() {
 				$scope.currentBalance -= selectedCricketPlayer.cost;
@@ -300,9 +301,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			decrementBalance();
 			console.log("$scope.currentBalance:", $scope.currentBalance);
 
-
-
-
+			// adjust user's lineup minimums accordingly
 			if (selectedCricketPlayer.CricketPlayerType.name === "Bowler" && vm.numberOfBowlers > 0) {
 				vm.numberOfBowlers --;
 			} else if (selectedCricketPlayer.CricketPlayerType.name === "Batsman" && vm.numberOfBatsmen) {
@@ -316,6 +315,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 
 		addPlayerToLineup();
+		console.log("$scope.currentLineup[0].name:", $scope.currentLineup[0].name);
+
+		// add selected cricketPlayer to actionsQueue
+		
 
 	};
 

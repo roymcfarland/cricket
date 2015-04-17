@@ -24,7 +24,8 @@ leaguesService.factory("Leagues", function($http, $q, $location) {
 
 	var getOne = (function() {
 		var league = {
-			beginningBalance: 1000000
+			// mock server data insert here
+			beginningBalance: 100000000
 		};
 		return {
 			then: function(cb){cb(league)}
