@@ -330,9 +330,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			return currentLineup;
 
 		};
-
 		addPlayerToLineup();
-		console.log("$scope.currentLineup[0].name:", $scope.currentLineup[0].name);
 
 		// add selected cricketPlayer to actionsQueue
 		addPlayerToActionsQueue($scope.currentLineup[0]);
