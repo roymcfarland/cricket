@@ -167,8 +167,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
 		console.log($scope.matches === $scope.currentSavedLineup);
 
-		// insert function here //
-
 	};
 
 
@@ -202,8 +200,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$scope.playerTeam = team;
 		$scope.playerCost = cost;
 
-		console.log("You selected", $scope.playerName);
-		console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
+		// console.log("You selected", $scope.playerName);
+		// console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
 
 	};
 
@@ -259,8 +257,15 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	$scope.addPlayerToTeam = function() {
 
 		var selectedCricketPlayer = this.player;
-		var findWhere = _.findWhere($scope.currentLineup, {id: selectedCricketPlayer.objectId});
-		if (findWhere) return alert("You have already added this player to your lineup.");
+
+		// Prevent user from adding same player to lineup if player has already been added to $scope.currentLineup
+		var findWhereInScopeCurrentLineup = _.findWhere($scope.currentLineup, {id: selectedCricketPlayer.objectId});
+		if (findWhereInScopeCurrentLineup) return alert("You have already added this player to your lineup.");
+
+		// Prevent user from adding same player to lineup if player has already been added to $scope.currentSavedLineup
+		var findWhereInScopeCurrentSavedLineup = _.findWhere($scope.currentSavedLineup, {id: selectedCricketPlayer.objectId});
+		if (findWhereInScopeCurrentSavedLineup) return alert("You have already added this player to your lineup.");
+		
 		
 		var playerId = $scope.playerId;
 		var playerName = $scope.playerName;
