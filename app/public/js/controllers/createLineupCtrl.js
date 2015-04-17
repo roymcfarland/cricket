@@ -174,17 +174,18 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	// add cricketPlayer to actionsQueue //
 	///////////////////////////////////////
 	
-	var addPlayerToActionsQueue = function(addedPlayer) {
+	// type: "add"
+	var addPlayerToActionsQueueTypeAdd = function(addedPlayer) {
 		$scope.actionsQueue = actionsQueue;
 		actionsQueue.push({
 			type: "add",
 			lineupPlayer: addedPlayer
 		});
-
 		console.log("$scope.actionsQueue:", $scope.actionsQueue);
-
 	};
 
+	// type: "remove"
+	var addPlayerToActionsQueueTypeRemove = 
 
 
 
@@ -327,13 +328,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				vm.numberOfWicketKeepers --;
 			}
 
-			return currentLineup;
-
 		};
 		addPlayerToLineup();
 
 		// add selected cricketPlayer to actionsQueue
-		addPlayerToActionsQueue($scope.currentLineup[0]);
+		addPlayerToActionsQueueTypeAdd($scope.currentLineup[0]);
 		
 
 	};
@@ -368,7 +367,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					} else if (removedPlayerPosition === "Wicket Keeper" && vm.numberOfWicketKeepers < 1) {
 						vm.numberOfWicketKeepers ++;
 					}
-					break;
 				}
 		};
 		removePlayer();
