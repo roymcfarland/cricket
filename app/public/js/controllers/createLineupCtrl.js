@@ -10,29 +10,20 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	vm.user = Parse.User.current();
 	vm.username = vm.user.getUsername();
 	vm.userMoney = vm.user.attributes.Money;
+	// console.log("$routeParams:", $routeParams);
 	var leagueId = $routeParams.leagueId;
+	// console.log("leagueId:", leagueId);
 	var lineupId = $routeParams.lineupId;
+	// console.log("lineupId:", lineupId);
 	var user = Parse.User.current();
 	var userId = user.id;
 	var sessionToken = user._sessionToken;
-
-	// console.log("$routeParams:", $routeParams);
-	// console.log("lineupId:", lineupId);
-	// console.log("leagueId:", leagueId);
-
-
+	// Array for adding/removing players (visually) to/from user's lineup on ng-click="addPlayerToTeam()" and ng-click="removePlayerFromTeam()"
 	var currentLineup = [];
-
-	// Establish cricketPlayerType minimums for user's lineup
+	// Setup cricketPlayerType minimums for user's lineup
 	vm.numberOfBowlers = 3;
 	vm.numberOfBatsmen = 3;
 	vm.numberOfWicketKeepers = 1;
-
-	// Establish user's balance for buying players for lineup
-	// vm.beginningBalance = 10000000;
-	
-
-
 	// Array for players who need to be added or removed from DB on ng-click="saveLineup()"
 	var actionsQueue = [];
 
@@ -53,8 +44,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				$scope.allLineupPlayers = res;
 				console.log("$scope.allLineupPlayers:", $scope.allLineupPlayers);
 				
+				// * * * //
 				sortLineupsIntoMatches();
 			
+
 			})
 			.error(function (res, status) {
 				$scope.res = res;
@@ -123,6 +116,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 	init();
 
+
+
+	/////////////////////////////////
+	//// sortLineupsIntoMatches /////
+	/////////////////////////////////
+
 	var sortLineupsIntoMatches = function() {
 
 		$scope.matches = [{
@@ -165,9 +164,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 
 		$scope.currentSavedLineup = angular.copy($scope.matches);
-
 		console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
 		console.log($scope.matches === $scope.currentSavedLineup);
+
+		// insert function here //
 
 	};
 
@@ -202,7 +202,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$scope.playerTeam = team;
 		$scope.playerCost = cost;
 
-		// console.log("You selected", $scope.playerName);
+		console.log("You selected", $scope.playerName);
+		console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
 
 	};
 
@@ -216,7 +217,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	$scope.problemSaving = [];
 
 	$scope.recursiveSave = function(arr, errors) {
-		if (arr.length == 0) return console.log("Save finished with " + errors + "number of errors.")
+		if (arr.length == 0) return console.log("Save finished with " + errors + " number of errors.")
 
 			var cricketPlayer = arr.pop();
 			// console.log("###:", cricketPlayer.id);
