@@ -304,22 +304,18 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			this.cost = cost;
 		};
 		
-		var addPlayerToLineup = function() {
-			
+		var addPlayer = function() {
 			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
-
 			$scope.lineupPlayer = lineupPlayer;
 			$scope.currentLineup.push($scope.lineupPlayer);
 			
 			// decrement user's $ balance
-			console.log("$scope.currentBalance:", $scope.currentBalance);
 			var decrementBalance = function() {
 				$scope.currentBalance -= selectedCricketPlayer.cost;
-			}
+			};
 			decrementBalance();
-			console.log("$scope.currentBalance:", $scope.currentBalance);
 
-			// adjust user's lineup minimums accordingly
+			// decrement user's lineup minimums accordingly
 			if (selectedCricketPlayer.CricketPlayerType.name === "Bowler" && vm.numberOfBowlers > 0) {
 				vm.numberOfBowlers --;
 			} else if (selectedCricketPlayer.CricketPlayerType.name === "Batsman" && vm.numberOfBatsmen) {
@@ -329,7 +325,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			}
 
 		};
-		addPlayerToLineup();
+		addPlayer();
 
 		// add selected cricketPlayer to actionsQueue
 		addPlayerToActionsQueueTypeAdd($scope.currentLineup[0]);
@@ -343,7 +339,9 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	////////////////////////////////
 	
 	$scope.removePlayerFromTeam = function() {
-		var playerId = this.player.id;
+
+		var selectedCricketPlayer = this.player;
+		var playerId = selectedCricketPlayer.id;
 		var playerName = $scope.lineupPlayer.name;
 		var playerPosition = $scope.lineupPlayer.position;
 		var playerTeam = $scope.lineupPlayer.team;
@@ -357,9 +355,21 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		var removePlayer = function() {
 			for (var i=0; i < $scope.currentLineup.length; i++)
 				if ($scope.currentLineup[i].id == playerId) {
+
+					// set variables before splice
 					var removedPlayerPosition = $scope.currentLineup[i].position;
-					// console.log(removedPlayerPosition);
+
+					// * * * //
 					$scope.currentLineup.splice(i,1);
+
+					// increment user's $ balance
+					var incrementBalance = function() {
+						$scope.currentBalance += selectedCricketPlayer.cost;
+					};
+					incrementBalance();
+					
+
+					// increment user's lineup minimums accordingly
 					if (removedPlayerPosition === "Bowler" && vm.numberOfBowlers < 3) {
 						vm.numberOfBowlers ++;
 					} else if (removedPlayerPosition === "Batsman" && vm.numberOfBatsmen < 3) {
