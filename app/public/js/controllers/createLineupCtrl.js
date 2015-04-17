@@ -170,6 +170,23 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	};
 
 
+	///////////////////////////////////////
+	// add cricketPlayer to actionsQueue //
+	///////////////////////////////////////
+	
+	var addPlayerToActionsQueue = function(addedPlayer) {
+		$scope.actionsQueue = actionsQueue;
+		actionsQueue.push({
+			type: "add",
+			lineupPlayer: addedPlayer
+		});
+
+		console.log("$scope.actionsQueue:", $scope.actionsQueue);
+
+	};
+
+
+
 
 	/////////////////////////////////
 	//// createLineupService.js /////
@@ -318,6 +335,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		console.log("$scope.currentLineup[0].name:", $scope.currentLineup[0].name);
 
 		// add selected cricketPlayer to actionsQueue
+		addPlayerToActionsQueue($scope.currentLineup[0]);
 		
 
 	};
