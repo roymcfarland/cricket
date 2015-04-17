@@ -42,7 +42,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$http.get("/api/v1/lineupPlayers?lineupId=" + lineupId + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
 			.success(function (res, status) {
 				$scope.allLineupPlayers = res;
-				console.log("$scope.allLineupPlayers:", $scope.allLineupPlayers);
+				// console.log("$scope.allLineupPlayers:", $scope.allLineupPlayers);
 				
 				// * * * //
 				sortLineupsIntoMatches();
@@ -110,7 +110,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				}
 			});
 
-		return $scope.allLineupPlayers;
+		// return $scope.allLineupPlayers;
 
 	};
 
@@ -129,8 +129,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			matchId: "", 
 			lineupPlayers: []
 		}];
-		
-		console.log("$scope.matches:", $scope.matches);
 
 		// Get matchId of lineupPlayer
 		for (var i = 0; i < $scope.allLineupPlayers.length; i ++) {
@@ -164,8 +162,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 
 		$scope.currentSavedLineup = angular.copy($scope.matches);
-		console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
-		console.log($scope.matches === $scope.currentSavedLineup);
+		// console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
+		// console.log($scope.matches === $scope.currentSavedLineup);
 
 	};
 
@@ -181,11 +179,31 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			type: "add",
 			lineupPlayer: addedPlayer
 		});
-		console.log("$scope.actionsQueue:", $scope.actionsQueue);
 	};
-
 	// type: "remove"
-	var addPlayerToActionsQueueTypeRemove = 
+	var addPlayerToActionsQueueTypeRemove = function() {};
+
+
+
+	////////////////////////////////////////////
+	// remove cricketPlayer from actionsQueue //
+	////////////////////////////////////////////
+
+	var removePlayerFromActionsQueue = function(removedPlayer) {
+		for (var i=0; i < $scope.actionsQueue.length; i++) {
+
+			for(var j=0; j < $scope.actionsQueue[i].lineupPlayer.length; j++) {
+				
+				console.log(lineupPlayer[j].id);
+
+				if ($scope.actionsQueue[i].lineupPlayer[j].id == removedPlayer.id) {
+					$scope.actionsQueue.splice(i,1);
+				}
+			
+			}
+
+		}
+	};
 
 
 
@@ -329,6 +347,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// add selected cricketPlayer to actionsQueue
 		addPlayerToActionsQueueTypeAdd($scope.currentLineup[0]);
+		console.log("$scope.actionsQueue:", $scope.actionsQueue);
 		
 
 	};
@@ -341,6 +360,9 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	$scope.removePlayerFromTeam = function() {
 
 		var selectedCricketPlayer = this.player;
+		// console.log(selectedCricketPlayer.id);
+
+
 		var playerId = selectedCricketPlayer.id;
 		var playerName = $scope.lineupPlayer.name;
 		var playerPosition = $scope.lineupPlayer.position;
@@ -376,6 +398,14 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				}
 		};
 		removePlayer();
+
+		// remove selected cricketPlayer from actionsQueue - if applicable
+		removePlayerFromActionsQueue(selectedCricketPlayer);
+		console.log("$scope.actionsQueue:", $scope.actionsQueue);
+
+
 	};
+
+
 
 });
