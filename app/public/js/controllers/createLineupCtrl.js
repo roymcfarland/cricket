@@ -276,10 +276,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		var selectedCricketPlayer = this.player;
 
+		// ERROR
 		// Prevent user from adding same player to lineup if player has already been added to $scope.currentLineup
 		var findWhereInScopeCurrentLineup = _.findWhere($scope.currentLineup, {id: selectedCricketPlayer.objectId});
 		if (findWhereInScopeCurrentLineup) return alert("You have already added this player to your lineup.");
 
+		// ERROR
 		// Prevent user from adding same player to lineup if player has already been added to $scope.currentSavedLineup
 		var findWhereInScopeCurrentSavedLineup = _.findWhere($scope.currentSavedLineup, {id: selectedCricketPlayer.objectId});
 		if (findWhereInScopeCurrentSavedLineup) return alert("You have already added this player to your lineup.");
@@ -307,13 +309,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		var addPlayer = function() {
 			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
 			$scope.lineupPlayer = lineupPlayer;
-			$scope.currentLineup.push($scope.lineupPlayer);
 			
+			// * * * //
+			$scope.currentLineup.push($scope.lineupPlayer);
 			// decrement user's $ balance
-			var decrementBalance = function() {
-				$scope.currentBalance -= selectedCricketPlayer.cost;
-			};
-			decrementBalance();
+			$scope.currentBalance -= selectedCricketPlayer.cost;
 
 			// decrement user's lineup minimums accordingly
 			if (selectedCricketPlayer.CricketPlayerType.name === "Bowler" && vm.numberOfBowlers > 0) {
@@ -361,12 +361,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 					// * * * //
 					$scope.currentLineup.splice(i,1);
-
 					// increment user's $ balance
-					var incrementBalance = function() {
-						$scope.currentBalance += selectedCricketPlayer.cost;
-					};
-					incrementBalance();
+					$scope.currentBalance += selectedCricketPlayer.cost;
 					
 
 					// increment user's lineup minimums accordingly
