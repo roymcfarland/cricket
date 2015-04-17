@@ -340,8 +340,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		addPlayer();
 
 		// add selected cricketPlayer to actionsQueue
-		// ******* PROBLEM BEGINS HERE. NEEDS TO ADD LAST ITEM IN ARRAY TO ACTIONSQUEUE - NOT 0 INDEX ********** //
-		addPlayerToActionsQueueTypeAdd($scope.currentLineup[0]);
+		var actionsQueueCounter = $scope.currentLineup.length;
+		addPlayerToActionsQueueTypeAdd($scope.currentLineup[actionsQueueCounter - 1]);
 		console.log("$scope.actionsQueue:", $scope.actionsQueue);
 		
 
