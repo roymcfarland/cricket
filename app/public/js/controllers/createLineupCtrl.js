@@ -190,19 +190,13 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	////////////////////////////////////////////
 
 	var removePlayerFromActionsQueue = function(removedPlayer) {
-		for (var i=0; i < $scope.actionsQueue.length; i++) {
+		$scope.actionsQueue = actionsQueue;
+		console.log("###:", actionsQueue);
 
-			for(var j=0; j < $scope.actionsQueue[i].lineupPlayer.length; j++) {
-				
-				console.log(lineupPlayer[j].id);
-
-				if ($scope.actionsQueue[i].lineupPlayer[j].id == removedPlayer.id) {
-					$scope.actionsQueue.splice(i,1);
-				}
-			
-			}
-
+		for (var i=0; i < actionsQueue.length; i++) {
+			console.log("!!![" + i + "]:", actionsQueue[i]);
 		}
+
 	};
 
 
@@ -346,6 +340,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		addPlayer();
 
 		// add selected cricketPlayer to actionsQueue
+		// ******* PROBLEM BEGINS HERE. NEEDS TO ADD LAST ITEM IN ARRAY TO ACTIONSQUEUE - NOT 0 INDEX ********** //
 		addPlayerToActionsQueueTypeAdd($scope.currentLineup[0]);
 		console.log("$scope.actionsQueue:", $scope.actionsQueue);
 		
