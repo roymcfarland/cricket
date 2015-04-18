@@ -7,6 +7,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////////////////////////////////
 	
 	var vm = this;
+	console.log(vm);
 	vm.user = Parse.User.current();
 	vm.username = vm.user.getUsername();
 	vm.userMoney = vm.user.attributes.Money;
