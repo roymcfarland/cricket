@@ -190,13 +190,9 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	////////////////////////////////////////////
 
 	var removePlayerFromActionsQueue = function(removedPlayer) {
-		$scope.actionsQueue = actionsQueue;
-		console.log("###:", actionsQueue);
-
-		for (var i=0; i < actionsQueue.length; i++) {
-			console.log("!!![" + i + "]:", actionsQueue[i]);
+		for (var i=0; i < $scope.actionsQueue.length; i++) {
+			if ($scope.actionsQueue[i].lineupPlayer.id == removedPlayer.id) return $scope.actionsQueue.splice(i,1);
 		}
-
 	};
 
 
