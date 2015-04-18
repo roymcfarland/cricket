@@ -50,7 +50,7 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 		$scope.leagueName = name;
 		$scope.leagueEntryFee = entryFee;
 
-		console.log("You selected", $scope.leagueName);
+		// console.log("You selected", $scope.leagueName);
 
 	};
 
@@ -95,8 +95,8 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 							$scope.res2 = res;
 							$scope.status = status;
 							if (status == 201) {
-								console.log("res2.status:", status);
-								console.log("res2.objectId:", $scope.res2.objectId);
+								// console.log("res2.status:", status);
+								// console.log("res2.objectId:", $scope.res2.objectId);
 								var lineupId = $scope.res2.objectId;
 								$location.path("/dashboard/leagues/createLineup/lineup/" + lineupId + "/league/" + leagueId);
 							}

@@ -25,7 +25,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	vm.numberOfBatsmen = 3;
 	vm.numberOfWicketKeepers = 1;
 	// Array for players who need to be added or removed from DB on ng-click="saveLineup()"
-	var actionsQueue = [];
+	$scope.actionsQueue = [];
 
 
 
@@ -174,14 +174,18 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	
 	// type: "add"
 	var addPlayerToActionsQueueTypeAdd = function(addedPlayer) {
-		$scope.actionsQueue = actionsQueue;
-		actionsQueue.push({
+		$scope.actionsQueue.push({
 			type: "add",
 			lineupPlayer: addedPlayer
 		});
 	};
 	// type: "remove"
-	var addPlayerToActionsQueueTypeRemove = function() {};
+	var addPlayerToActionsQueueTypeRemove = function(removedPlayer) {
+		$scope.actionsQueue.push({
+			type: "remove",
+			lineupPlayer: removedPlayer
+		});
+	};
 
 
 
@@ -191,7 +195,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 	var removePlayerFromActionsQueue = function(removedPlayer) {
 		for (var i=0; i < $scope.actionsQueue.length; i++) {
-			if ($scope.actionsQueue[i].lineupPlayer.id == removedPlayer.id) return $scope.actionsQueue.splice(i,1);
+			if ($scope.actionsQueue[i].lineupPlayer.id == removedPlayer.id) {
+				$scope.actionsQueue.splice(i,1);
+			} else {
+				console.log("###");
+			}
 		}
 	};
 
@@ -335,11 +343,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 		addPlayer();
 
-		// add selected cricketPlayer to actionsQueue
+		// add selectedCricketPlayer to $scope.actionsQueue as type: "add" - if applicable
 		var actionsQueueCounter = $scope.currentLineup.length;
 		addPlayerToActionsQueueTypeAdd($scope.currentLineup[actionsQueueCounter - 1]);
 		console.log("$scope.actionsQueue:", $scope.actionsQueue);
-		
+		console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
 
 	};
 
@@ -355,10 +363,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 
 		var playerId = selectedCricketPlayer.id;
-		var playerName = $scope.lineupPlayer.name;
-		var playerPosition = $scope.lineupPlayer.position;
-		var playerTeam = $scope.lineupPlayer.team;
-		var playerCost = $scope.lineupPlayer.cost;
+		var playerName = selectedCricketPlayer.name;
+		var playerPosition = selectedCricketPlayer.position;
+		var playerTeam = selectedCricketPlayer.team;
+		var playerCost = selectedCricketPlayer.cost;
 		var user = {
 			sessionToken: vm.user._sessionToken,
 			objectId: vm.user.id
@@ -390,10 +398,13 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 		removePlayer();
 
-		// remove selected cricketPlayer from actionsQueue - if applicable
+		// remove selectedCricketPlayer from actionsQueue - if applicable
 		removePlayerFromActionsQueue(selectedCricketPlayer);
-		console.log("$scope.actionsQueue:", $scope.actionsQueue);
 
+		// add selectedCricketPlayer to actionsQueue as type: "remove" - if applicable
+		addPlayerToActionsQueueTypeRemove(selectedCricketPlayer);
+		console.log("$scope.actionsQueue:", $scope.actionsQueue);
+		console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
 
 	};
 
