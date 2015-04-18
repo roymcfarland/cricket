@@ -398,10 +398,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 		removePlayer();
 
-		// remove selectedCricketPlayer from actionsQueue - if applicable
+		// remove selectedCricketPlayer from actionsQueue (type: "add") - if applicable
 		removePlayerFromActionsQueue(selectedCricketPlayer);
 
-		// add selectedCricketPlayer to actionsQueue as type: "remove" - if applicable
+		// add selectedCricketPlayer to actionsQueue (type: "remove") - if applicable
 		addPlayerToActionsQueueTypeRemove(selectedCricketPlayer);
 		console.log("$scope.actionsQueue:", $scope.actionsQueue);
 		console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
