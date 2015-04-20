@@ -7,7 +7,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////////////////////////////////
 	
 	var vm = this;
-	console.log(vm);
 	vm.user = Parse.User.current();
 	vm.username = vm.user.getUsername();
 	vm.userMoney = vm.user.attributes.Money;
@@ -182,6 +181,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	};
 	// type: "remove"
 	var addPlayerToActionsQueueTypeRemove = function(removedPlayer) {
+		// if player is not in currentSavedLineup, he only needs to be removed from visual representation of lineup (locally)
+		// check first whether player is in currentSavedLineup. if yes, add to actionsQueue (type: "remove")
+		
+
+		// push cricketPlayer to actionsQueue - if applicable
 		$scope.actionsQueue.push({
 			type: "remove",
 			lineupPlayer: removedPlayer
