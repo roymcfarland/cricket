@@ -184,15 +184,15 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		// if player is not in currentSavedLineup, he only needs to be removed from visual representation of lineup (locally)
 		// check first whether player is in currentSavedLineup. if yes, add to actionsQueue (type: "remove")
 
-		console.log("removedPlayer.id:", removedPlayer.id);
-		console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
+		// console.log("removedPlayer.id:", removedPlayer.id);
+		// console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
 		// console.log($scope.currentSavedLineup[0].lineupPlayers[0].objectId);
 
 		// ERROR //
 		// Prevent user from adding same player to lineup if player has already been added to $scope.currentLineup
-		var findWhereInScopeCurrentSavedLineup = _.findWhere($scope.currentSavedLineup[0].lineupPlayers, {objectId: removedPlayer.id});
-		if (findWhereInScopeCurrentSavedLineup) {
-			console.log("player pushed into actionsQueue (type: remove)");
+		var findWhereInScopeCurrentSavedLineupLineupPlayers = _.findWhere($scope.currentSavedLineup[0].lineupPlayers, {objectId: removedPlayer.id});
+		if (findWhereInScopeCurrentSavedLineupLineupPlayers) {
+			// console.log("player pushed into actionsQueue (type: remove)");
 			// push removedPlayer into actionsQueue - if applicable
 			$scope.actionsQueue.push({
 			type: "remove",
@@ -200,7 +200,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		});
 		} else {
 			// do not push removedPlayer into actionsQueue
-			console.log("addPlayerToActionsQueueTypeRemove() is not necessary. no add'l actions taken.");
+			// console.log("addPlayerToActionsQueueTypeRemove() is not necessary. no add'l actions taken.");
 		};
 
 	};
@@ -216,7 +216,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			if ($scope.actionsQueue[i].lineupPlayer.id == removedPlayer.id) {
 				$scope.actionsQueue.splice(i,1);
 			} else {
-				console.log("###");
+				// console.log("###");
 			}
 		}
 	};
@@ -263,9 +263,14 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	////////// saveLineup() /////////
 	/////////////////////////////////
 	
+	// create function that loops thru actionsQueue and pushes players into new arrays by type - ADD || REMOVE
+	$scope.processActionsQueue = function(arr, errors) {};
+
+
+	// RECURSIVE SAVE FUNCTION //
 	// problemSaving array to push problems to
 	$scope.problemSaving = [];
-
+	// recursiveSave to be called on event ng-click="saveLineup()" below
 	$scope.recursiveSave = function(arr, errors) {
 		if (arr.length == 0) return console.log("Save finished with " + errors + " number of errors.")
 
@@ -293,11 +298,24 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 	};
 
+
+	// RECURSIVE REMOVE FUNCTION //
+	// problemRemoving array to push problems to
+	$scope.problemRemoving = [];
+	// recursiveRemove to be called on event ng-click="saveLineup()" below
+	$scope.recursiveRemove = function() {
+
+	};
+
+
+	// SAVE FUNCTION ON NG-CLICK //
 	$scope.saveLineup = function() {
 		var currentLineupToSave = angular.copy($scope.currentLineup);
 		// console.log("currentLineupToSave:", currentLineupToSave); 
-		// if (currentLineupToSave == 0)
+
+		// * * * //
 		$scope.recursiveSave(currentLineupToSave, 0);
+
 	};
 
 
