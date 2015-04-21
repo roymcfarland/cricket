@@ -264,7 +264,20 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////////////////////////////////
 	
 	// create function that loops thru actionsQueue and pushes players into new arrays by type - ADD || REMOVE
-	$scope.processActionsQueue = function(arr, errors) {};
+	$scope.problemProcessing = [];
+	$scope.processActionsQueue = function(arr, errors) {
+		// console.log("### HELLO FROM LINE 269 ###");
+		// console.log(arr[0].type);
+		var findWhereInActionsQueueTypeAdd = _.findWhere($scope.actionsQueue, {type: "add"});
+		if (findWhereInActionsQueueTypeAdd) {
+			console.log("*** _.findWhere found type ADD ***");
+		};
+		var findWhereInActionsQueueTypeRemove = _.findWhere($scope.actionsQueue, {type: "remove"});
+		if (findWhereInActionsQueueTypeRemove) {
+			console.log("*** _.findWhere found type REMOVE ***");
+		};
+
+	};
 
 
 	// RECURSIVE SAVE FUNCTION //
@@ -310,11 +323,15 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 	// SAVE FUNCTION ON NG-CLICK //
 	$scope.saveLineup = function() {
-		var currentLineupToSave = angular.copy($scope.currentLineup);
-		// console.log("currentLineupToSave:", currentLineupToSave); 
+		// console.log("$scope.actionsQueue:", $scope.actionsQueue);
+		$scope.processActionsQueue($scope.actionsQueue, 0);
 
+		// []
+
+		// var currentLineupToSave = angular.copy($scope.currentLineup);
+		// console.log("currentLineupToSave:", currentLineupToSave); 
 		// * * * //
-		$scope.recursiveSave(currentLineupToSave, 0);
+		// $scope.recursiveSave(currentLineupToSave, 0);
 
 	};
 
