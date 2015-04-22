@@ -346,11 +346,18 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$scope.processActionsQueue($scope.actionsQueue, 0);
 
 		// ADD players to user's lineup in DB
-		console.log("***", $scope.cricketPlayersToAdd);
+		console.log("original ADD array", $scope.cricketPlayersToAdd);
 		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
-		console.log("cricketPlayersToAdd:", cricketPlayersToAdd); 
+		console.log("angular.copy", cricketPlayersToAdd); 
 		// * * * //
-		// $scope.recursiveSave(currentLineupToSave, 0);
+		// $scope.recursiveSave(cricketPlayersToAdd, 0);
+		
+		// REMOVE players from user's lineup in DB
+		console.log("original REMOVE array", $scope.cricketPlayersToRemove);
+		var cricketPlayersToRemove = angular.copy($scope.cricketPlayersToRemove);
+		console.log("angular.copy", cricketPlayersToRemove);
+		// * * * //
+		// $scope.recursiveRemove(cricketPlayersToRemove, 0); 
 
 	};
 
