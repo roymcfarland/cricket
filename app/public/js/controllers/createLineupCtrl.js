@@ -339,7 +339,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	$scope.problemRemoving = [];
 	
 	// recursiveRemove to be called on event ng-click="saveLineup()" below
-	$scope.recursiveRemove = function() {
+	$scope.recursiveRemove = function(arr, errors) {
+
+		// break recursive logic after array is emptied
+		if (arr.length == 0) return console.log("")
 
 	};
 
