@@ -345,12 +345,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		// console.log("$scope.actionsQueue:", $scope.actionsQueue);
 		$scope.processActionsQueue($scope.actionsQueue, 0);
 
+		// ADD players to user's lineup in DB
 		console.log("***", $scope.cricketPlayersToAdd);
-
-		// []
-
-		// var currentLineupToSave = angular.copy($scope.currentLineup);
-		// console.log("currentLineupToSave:", currentLineupToSave); 
+		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
+		console.log("cricketPlayersToAdd:", cricketPlayersToAdd); 
 		// * * * //
 		// $scope.recursiveSave(currentLineupToSave, 0);
 
