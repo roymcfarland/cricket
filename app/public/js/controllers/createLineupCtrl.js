@@ -270,29 +270,31 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 
 	$scope.processActionsQueue = function(arr, errors) {
-		// console.log("### HELLO FROM LINE 269 ###");
-		// console.log(arr[0].type);
+
 		/*
-		var findWhereInActionsQueueTypeAdd = _.findWhere($scope.actionsQueue, {type: "add"});
+		var findWhereInActionsQueueTypeAdd = _.findWhere(arr, {type: "add"});
 		if (findWhereInActionsQueueTypeAdd) {
-			for (var i = 0; i < arr.length; i ++) {
-			// console.log("*** _.findWhere found type ADD *** [" + (i + 1) + "] time(s).");
-				if (arr[i].type == "add") {
-					var playerToAdd = arr.splice(i,1);
-					$scope.cricketPlayersToAdd.push(playerToAdd);
-				};
-			};
-			console.log("$scop.cricketPlayersToAdd:", $scope.cricketPlayersToAdd);
+			console.log("*** _.findWhere found type ADD ***");
 		};
 		var findWhereInActionsQueueTypeRemove = _.findWhere($scope.actionsQueue, {type: "remove"});
 		if (findWhereInActionsQueueTypeRemove) {
 			console.log("*** _.findWhere found type REMOVE ***");
 		};
 		*/
-		console.log(arr);
+	
+		if (arr.length == 0) return console.log("actionsQueue processed with " + errors + " number of errors.");
 		var cricketPlayer = arr.pop();
-		console.log("###:", cricketPlayer[0]);
-		console.log("###:", cricketPlayer[1]);
+		// console.log("###:", cricketPlayer.type);
+		if (cricketPlayer.type == "add") {
+			$scope.cricketPlayersToAdd.push(cricketPlayer);
+			$scope.processActionsQueue(arr, errors);
+		} else if (cricketPlayer.type == "remove") {
+			$scope.cricketPlayersToRemove.push(cricketPlayer);
+			$scope.processActionsQueue(arr, errors);
+		};
+
+		console.log("$scope.cricketPlayersToAdd:", $scope.cricketPlayersToAdd);
+		console.log("$scope.cricketPlayersToRemove:", $scope.cricketPlayersToRemove);
 
 	};
 
@@ -342,6 +344,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	$scope.saveLineup = function() {
 		// console.log("$scope.actionsQueue:", $scope.actionsQueue);
 		$scope.processActionsQueue($scope.actionsQueue, 0);
+
+		console.log("***", $scope.cricketPlayersToAdd);
 
 		// []
 
