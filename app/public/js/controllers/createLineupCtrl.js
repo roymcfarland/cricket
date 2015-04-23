@@ -308,6 +308,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 			var cricketPlayer = arr.pop();
 			// console.log("###:", cricketPlayer.id);
+<<<<<<< HEAD
+=======
+			
+			// encapsulate data to be sent to server
+>>>>>>> parent of e20fd6c... broken; commit before rollback and revert
 			var payload = {
 				user: user,
 				LineupID: lineupId,
@@ -335,7 +340,19 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	// problemRemoving array to push problems to
 	$scope.problemRemoving = [];
 	// recursiveRemove to be called on event ng-click="saveLineup()" below
+
 	$scope.recursiveRemove = function() {
+		
+		// break recursive logic after array is emptied
+		if (arr.length == 0) return console.log("Remove finished with " + errors = " number of errors.")
+
+			// empty the array one player at a time
+			var cricketPlayer = arr.pop();
+
+			// encapsulate data to be sent to server
+			var payload = {};
+
+			// ajax
 
 	};
 
@@ -350,7 +367,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
 		console.log("angular.copy", cricketPlayersToAdd); 
 		// * * * //
+<<<<<<< HEAD
 		$scope.recursiveSave(cricketPlayersToAdd, 0);
+=======
+		// $scope.recursiveSave(cricketPlayersToAdd, 0);
+>>>>>>> parent of e20fd6c... broken; commit before rollback and revert
 		
 		// REMOVE players from user's lineup in DB
 		console.log("original REMOVE array", $scope.cricketPlayersToRemove);
