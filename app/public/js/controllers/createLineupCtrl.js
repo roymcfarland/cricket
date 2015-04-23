@@ -350,7 +350,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
 		console.log("angular.copy", cricketPlayersToAdd); 
 		// * * * //
-		// $scope.recursiveSave(cricketPlayersToAdd, 0);
+		$scope.recursiveSave(cricketPlayersToAdd, 0);
 		
 		// REMOVE players from user's lineup in DB
 		console.log("original REMOVE array", $scope.cricketPlayersToRemove);
