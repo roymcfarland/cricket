@@ -312,7 +312,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			var payload = {
 				user: user,
 				LineupID: lineupId,
-				CricketPlayerID: cricketPlayer.id
+				CricketPlayerID: cricketPlayer.lineupPlayer.id
 			};
 			// AJAX POST
 			$http.post("/api/v1/lineupPlayers", payload)
