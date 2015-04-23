@@ -328,10 +328,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// []
 
-		// var currentLineupToSave = angular.copy($scope.currentLineup);
+		var currentLineupToSave = angular.copy($scope.currentLineup);
 		// console.log("currentLineupToSave:", currentLineupToSave); 
 		// * * * //
-		// $scope.recursiveSave(currentLineupToSave, 0);
+		$scope.recursiveSave(currentLineupToSave, 0);
 
 	};
 
