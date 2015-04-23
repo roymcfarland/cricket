@@ -265,14 +265,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	
 	// create function that loops thru actionsQueue and pushes players into new arrays by type - ADD || REMOVE
 	$scope.problemProcessing = [];
-	$scope.cricketPlayersToAdd = [];
-	$scope.cricketPlayersToRemove = [];
-
-
 	$scope.processActionsQueue = function(arr, errors) {
-
-		/*
-		var findWhereInActionsQueueTypeAdd = _.findWhere(arr, {type: "add"});
+		// console.log("### HELLO FROM LINE 269 ###");
+		// console.log(arr[0].type);
+		var findWhereInActionsQueueTypeAdd = _.findWhere($scope.actionsQueue, {type: "add"});
 		if (findWhereInActionsQueueTypeAdd) {
 			console.log("*** _.findWhere found type ADD ***");
 		};
@@ -280,21 +276,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		if (findWhereInActionsQueueTypeRemove) {
 			console.log("*** _.findWhere found type REMOVE ***");
 		};
-		*/
-	
-		if (arr.length == 0) return console.log("actionsQueue processed with " + errors + " number of errors.");
-		var cricketPlayer = arr.pop();
-		// console.log("###:", cricketPlayer.type);
-		if (cricketPlayer.type == "add") {
-			$scope.cricketPlayersToAdd.push(cricketPlayer);
-			$scope.processActionsQueue(arr, errors);
-		} else if (cricketPlayer.type == "remove") {
-			$scope.cricketPlayersToRemove.push(cricketPlayer);
-			$scope.processActionsQueue(arr, errors);
-		};
-
-		console.log("$scope.cricketPlayersToAdd:", $scope.cricketPlayersToAdd);
-		console.log("$scope.cricketPlayersToRemove:", $scope.cricketPlayersToRemove);
 
 	};
 
@@ -308,7 +289,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 			var cricketPlayer = arr.pop();
 			// console.log("###:", cricketPlayer.id);
-
 			var payload = {
 				user: user,
 				LineupID: lineupId,
@@ -324,7 +304,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			})
 			.error(function (data, status) {
 				console.log("### THERE WAS AN ERROR ###");
-				console.log(data);
 				$scope.problemSaving.push(cricketPlayer);
 				$scope.recursiveSave(arr, errors++)
 			})
@@ -337,19 +316,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	// problemRemoving array to push problems to
 	$scope.problemRemoving = [];
 	// recursiveRemove to be called on event ng-click="saveLineup()" below
-
 	$scope.recursiveRemove = function() {
-
-		// break recursive logic after array is emptied
-		// if (arr.length == 0) return console.log("Remove finished with " + errors = " number of errors.")
-
-			// empty the array one player at a time
-			var cricketPlayer = arr.pop();
-
-			// encapsulate data to be sent to server
-			var payload = {};
-
-			// ajax
 
 	};
 
@@ -359,19 +326,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		// console.log("$scope.actionsQueue:", $scope.actionsQueue);
 		$scope.processActionsQueue($scope.actionsQueue, 0);
 
-		// ADD players to user's lineup in DB
-		console.log("original ADD array", $scope.cricketPlayersToAdd);
-		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
-		console.log("angular.copy", cricketPlayersToAdd); 
+		// []
+
+		// var currentLineupToSave = angular.copy($scope.currentLineup);
+		// console.log("currentLineupToSave:", currentLineupToSave); 
 		// * * * //
-		$scope.recursiveSave(cricketPlayersToAdd, 0);
-		
-		// REMOVE players from user's lineup in DB
-		console.log("original REMOVE array", $scope.cricketPlayersToRemove);
-		var cricketPlayersToRemove = angular.copy($scope.cricketPlayersToRemove);
-		console.log("angular.copy", cricketPlayersToRemove);
-		// * * * //
-		// $scope.recursiveRemove(cricketPlayersToRemove, 0); 
+		// $scope.recursiveSave(currentLineupToSave, 0);
 
 	};
 
