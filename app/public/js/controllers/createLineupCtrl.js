@@ -39,10 +39,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		if(!vm.user) return $location.path("/");
 
 		// Get all lineupPlayers
-		$http.get("/api/v1/lineupPlayers?lineupId=" + lineupId + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
+		$http.get("/api/v1/lineupPlayers?lineupId=" + lineupId + "&userId=" + userId + "&sessionToken=" + sessionToken, {})
 			.success(function (res, status) {
 				$scope.allLineupPlayers = res;
-				// console.log("$scope.allLineupPlayers:", $scope.allLineupPlayers);
+				console.log("$scope.allLineupPlayers:", $scope.allLineupPlayers);
 				
 				// * * * //
 				sortLineupsIntoMatches();
@@ -130,6 +130,9 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			lineupPlayers: []
 		}];
 
+		// break recursive logic after array is emptied
+		// if (arr.length == 0) return console.log("sortLineupsIntoMatches finished with " + errors + "number of errors.");
+
 		// Get matchId of lineupPlayer
 		for (var i = 0; i < $scope.allLineupPlayers.length; i ++) {
 
@@ -157,7 +160,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				var lineupPlayer = $scope.allLineupPlayers[i].CricketPlayerID;
 
 			}
-
 
 		};
 
@@ -307,7 +309,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 			// empty the array one player at a time
 			var cricketPlayer = arr.pop();
-			// console.log("###:", cricketPlayer.id);
+			console.log("###:", cricketPlayer.objectId);
 			
 			// encapsulate data to be sent to server
 			var payload = {
@@ -325,6 +327,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				}
 			})
 			.error(function (data, status) {
+				console.log(data);
 				console.log("### THERE WAS AN ERROR ###");
 				$scope.problemSaving.push(cricketPlayer);
 				$scope.recursiveSave(arr, errors++)
@@ -342,7 +345,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	$scope.recursiveRemove = function(arr, errors) {
 
 		// break recursive logic after array is emptied
-		if (arr.length == 0) return console.log("Remove finished with " + errors = " number of errors.")
+		// if (arr.length == 0) return console.log("Remove finished with " + errors = " number of errors.")
 
 			// empty the array one player at a time
 			var cricketPlayer = arr.pop();
@@ -361,16 +364,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$scope.processActionsQueue($scope.actionsQueue, 0);
 
 		// ADD players to user's lineup in DB
-		console.log("original ADD array", $scope.cricketPlayersToAdd);
-		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
-		console.log("angular.copy", cricketPlayersToAdd); 
+		console.log("$scope.cricketPlayersToAdd:", $scope.cricketPlayersToAdd);
 		// * * * //
-		// $scope.recursiveSave(cricketPlayersToAdd, 0);
+		$scope.recursiveSave($scope.cricketPlayersToAdd, 0);
 		
 		// REMOVE players from user's lineup in DB
-		console.log("original REMOVE array", $scope.cricketPlayersToRemove);
-		var cricketPlayersToRemove = angular.copy($scope.cricketPlayersToRemove);
-		console.log("angular.copy", cricketPlayersToRemove);
+		console.log("$scope.cricketPlayersToRemove:", $scope.cricketPlayersToRemove);
 		// * * * //
 		// $scope.recursiveRemove(cricketPlayersToRemove, 0); 
 
