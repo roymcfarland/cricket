@@ -270,23 +270,28 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 
 	$scope.processActionsQueue = function(arr, errors) {
+
+		/*
+		var findWhereInActionsQueueTypeAdd = _.findWhere(arr, {type: "add"});
+		if (findWhereInActionsQueueTypeAdd) {
+			console.log("*** _.findWhere found type ADD ***");
+		};
+		var findWhereInActionsQueueTypeRemove = _.findWhere($scope.actionsQueue, {type: "remove"});
+		if (findWhereInActionsQueueTypeRemove) {
+			console.log("*** _.findWhere found type REMOVE ***");
+		};
+		*/
 	
-		// break recursive logic after array is emptied
 		if (arr.length == 0) return console.log("actionsQueue processed with " + errors + " number of errors.");
-		
-			// empty the array one player at a time
-			var cricketPlayer = arr.pop();
-			// console.log("###:", cricketPlayer.type);
-			
-			// sort each player by type and push to proper array for saving - ADD or REMOVE
-			if (cricketPlayer.type == "add") {
-				$scope.cricketPlayersToAdd.push(cricketPlayer);
-				$scope.processActionsQueue(arr, errors);
-			} 
-			else if (cricketPlayer.type == "remove") {
-				$scope.cricketPlayersToRemove.push(cricketPlayer);
-				$scope.processActionsQueue(arr, errors);
-			};
+		var cricketPlayer = arr.pop();
+		// console.log("###:", cricketPlayer.type);
+		if (cricketPlayer.type == "add") {
+			$scope.cricketPlayersToAdd.push(cricketPlayer);
+			$scope.processActionsQueue(arr, errors);
+		} else if (cricketPlayer.type == "remove") {
+			$scope.cricketPlayersToRemove.push(cricketPlayer);
+			$scope.processActionsQueue(arr, errors);
+		};
 
 		console.log("$scope.cricketPlayersToAdd:", $scope.cricketPlayersToAdd);
 		console.log("$scope.cricketPlayersToRemove:", $scope.cricketPlayersToRemove);
@@ -295,28 +300,20 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 
 	// RECURSIVE SAVE FUNCTION //
-	
 	// problemSaving array to push problems to
 	$scope.problemSaving = [];
-	
 	// recursiveSave to be called on event ng-click="saveLineup()" below
 	$scope.recursiveSave = function(arr, errors) {
-		
-		// break recursive logic after array is emptied
 		if (arr.length == 0) return console.log("Save finished with " + errors + " number of errors.")
 
-			// empty the array one player at a time
 			var cricketPlayer = arr.pop();
 			// console.log("###:", cricketPlayer.id);
-			
-			// encapsulate data to be sent to server
 			var payload = {
 				user: user,
 				LineupID: lineupId,
 				CricketPlayerID: cricketPlayer.id
 			};
-			
-			// ajax
+			// AJAX POST
 			$http.post("/api/v1/lineupPlayers", payload)
 			.success(function (data, status) {
 				if (status == 201) {
@@ -330,14 +327,13 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				$scope.recursiveSave(arr, errors++)
 			})
 
+
 	};
 
 
 	// RECURSIVE REMOVE FUNCTION //
-	
 	// problemRemoving array to push problems to
 	$scope.problemRemoving = [];
-	
 	// recursiveRemove to be called on event ng-click="saveLineup()" below
 	$scope.recursiveRemove = function() {
 
