@@ -342,7 +342,15 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	$scope.recursiveRemove = function(arr, errors) {
 
 		// break recursive logic after array is emptied
-		if (arr.length == 0) return console.log("")
+		if (arr.length == 0) return console.log("Remove finished with " + errors = " number of errors.")
+
+			// empty the array one player at a time
+			var cricketPlayer = arr.pop();
+
+			// encapsulate data to be sent to server
+			var payload = {};
+
+			// ajax
 
 	};
 
