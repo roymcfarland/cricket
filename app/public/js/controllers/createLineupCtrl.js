@@ -307,12 +307,13 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		if (arr.length == 0) return console.log("Save finished with " + errors + " number of errors.")
 
 			var cricketPlayer = arr.pop();
-			// console.log("###:", cricketPlayer.id);
+			console.log(cricketPlayer);
+			console.log("###:", cricketPlayer.lineupPlayer.id);
 
 			var payload = {
 				user: user,
 				LineupID: lineupId,
-				CricketPlayerID: cricketPlayer.id
+				CricketPlayerID: cricketPlayer.lineupPlayer.id
 			};
 			// AJAX POST
 			$http.post("/api/v1/lineupPlayers", payload)
