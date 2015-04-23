@@ -324,6 +324,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			})
 			.error(function (data, status) {
 				console.log("### THERE WAS AN ERROR ###");
+				console.log(data);
 				$scope.problemSaving.push(cricketPlayer);
 				$scope.recursiveSave(arr, errors++)
 			})
@@ -340,7 +341,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	$scope.recursiveRemove = function() {
 
 		// break recursive logic after array is emptied
-		if (arr.length == 0) return console.log("Remove finished with " + errors = " number of errors.")
+		// if (arr.length == 0) return console.log("Remove finished with " + errors = " number of errors.")
 
 			// empty the array one player at a time
 			var cricketPlayer = arr.pop();
@@ -363,7 +364,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
 		console.log("angular.copy", cricketPlayersToAdd); 
 		// * * * //
-		// $scope.recursiveSave(cricketPlayersToAdd, 0);
+		$scope.recursiveSave(cricketPlayersToAdd, 0);
 		
 		// REMOVE players from user's lineup in DB
 		console.log("original REMOVE array", $scope.cricketPlayersToRemove);
