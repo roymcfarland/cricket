@@ -372,7 +372,23 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		console.log("angular.copy", cricketPlayersToRemove);
 		// * * * //
 		// $scope.recursiveRemove(cricketPlayersToRemove, 0); 
+		
+		/*
+		console.log(user);
 
+		var payload = {
+			"sessionToken": "scRfu9eX7XsbCtkKQ5IsifpsC",
+			"CricketPlayerID": "wLM36W3w5R"
+		};
+
+		$http.delete("/api/v1/lineupPlayers/wLM36W3w5R", [{sessionToken: "scRfu9eX7XsbCtkKQ5IsifpsC"}])
+			.success(function(data, status) {
+				console.log("### SUCCESS ###");
+			})
+			.error(function(data, status) {
+				console.log("### FAILURE ###");
+			})
+		*/
 	};
 
 
