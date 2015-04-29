@@ -62,43 +62,29 @@ leaguesCtrl.controller("leaguesController", function($location, $scope, $http, $
 
 	$scope.addUserToLeague = function() {
 
-		var leagueId = $scope.leagueId;
-		var leagueName = $scope.leagueName;
-		var leagueEntryFee = $scope.leagueEntryFee;
+		var selectedLeague = this.league;
 		var user = {
 			sessionToken: vm.user._sessionToken,
 			objectId: vm.user.id
 		};
 
-		/*
-		console.log("leagueId: ", leagueId);
-		console.log("leagueName: ", leagueName);
-		console.log("leagueEntryFee: ", leagueEntryFee);
-		console.log("user:", user);
-		*/
 
 		// AJAX POST //
-		$http.post("/api/v1/leagues/" + leagueId + "?addUser=true", {user: user}, [])
-			.success(function (res, status) {
-				$scope.res1 = res;
-				$scope.status = status;
+		$http.post("/api/v1/leagues/" + selectedLeague.objectId + "?addUser=true", {user: user})
+			.success(function (res1, status) {
 				if (status == 200) {
-					alert(leagueName + " membership confirmed");
-					var userLeagueId = $scope.res1.objectId;
+					alert(selectedLeague.name + " membership confirmed");
+					var userLeagueId = res1.objectId;
 					var user = {
 						sessionToken: vm.user._sessionToken,
 						objectId: vm.user.id
 					};
 					// AJAX POST //
 					$http.post("/api/v1/lineups", {UserLeagueId: userLeagueId, Locked: false, user: user}, [])
-						.success(function (res, status) {
-							$scope.res2 = res;
-							$scope.status = status;
+						.success(function (res2, status) {
 							if (status == 201) {
-								// console.log("res2.status:", status);
-								// console.log("res2.objectId:", $scope.res2.objectId);
-								var lineupId = $scope.res2.objectId;
-								$location.path("/dashboard/leagues/createLineup/lineup/" + lineupId + "/league/" + leagueId);
+								var lineupId = res2.objectId;
+								$location.path("/dashboard/leagues/createLineup/lineup/" + lineupId + "/league/" + $scope.leagueId);
 							}
 						})
 						.error(function (res, status) {

@@ -523,14 +523,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	
 	$scope.resetLineup = function() {
 
-		console.log("$scope.actionsQueue:", $scope.actionsQueue);
+		// empty actionsQueue array
 		$scope.actionsQueue = [];
-		console.log("$scope.actionsQueue:", $scope.actionsQueue);
 
 		// * * * //
 		init();
-
-
 
 	};
 
