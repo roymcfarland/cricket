@@ -375,7 +375,9 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		// gatekeeprs
 		// if (vm.numberOfBowlers < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBowlers) + " bowlers. You need at least " + vm.numberOfBowlers + " more.");
 		// if (vm.numberOfBatsmen < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBatsmen) + " batsmen. You need at least " + vm.numberOfBatsmen + " more.");
-		if (vm.numberOfWicketKeepers === 1) return alert("Lineup cannot be saved. You need at least 1 wicket keeper.");
+		// if (vm.numberOfWicketKeepers === 1) return alert("Lineup cannot be saved. You need at least 1 wicket keeper.");
+		console.log("$scope.currentBalance:", $scope.currentBalance);
+		if ($scope.currentBalance < 0) return alert("Lineup cannot be saved. Your $ balance is negative.");
 
 		// add
 		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
