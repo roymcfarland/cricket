@@ -361,26 +361,28 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	};
 
 
-	// SAVE FUNCTION ON NG-CLICK //
+	// SAVE FUNCTION ON EVENT NG-CLICK //
 	$scope.saveLineup = function() {
 		
 		// * * * //
 		$scope.processActionsQueue($scope.actionsQueue, 0);
 
-		// ADD players to user's lineup in DB
-		console.log("original ADD array", $scope.cricketPlayersToAdd);
+		// remove
+		var cricketPlayersToRemove = angular.copy($scope.cricketPlayersToRemove);
+		// * * * //
+		$scope.recursiveRemove(cricketPlayersToRemove, 0); 
+
+		// gatekeeprs
+		if (vm.numberOfBowlers < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBowlers) + " bowlers. You need at least " + vm.numberOfBowlers + " more.");
+
+		// add
 		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
-		console.log("angular.copy", cricketPlayersToAdd); 
 		// * * * //
 		$scope.recursiveSave(cricketPlayersToAdd, 0);
 		
-		// REMOVE players from user's lineup in DB
-		console.log("original REMOVE array", $scope.cricketPlayersToRemove);
-		var cricketPlayersToRemove = angular.copy($scope.cricketPlayersToRemove);
-		console.log("angular.copy", cricketPlayersToRemove);
-		// * * * //
-		$scope.recursiveRemove(cricketPlayersToRemove, 0); 
-		
+
+
+
 
 		// TESTING UNDERWAY $http.delete //
 		/*
