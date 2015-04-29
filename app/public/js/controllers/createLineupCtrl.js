@@ -110,8 +110,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				}
 			});
 
-		// return $scope.allLineupPlayers;
-
 	};
 
 	init();
@@ -460,6 +458,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	};
 
 
+
 	////////////////////////////////
 	//// removePlayerFromTeam() ////
 	////////////////////////////////
@@ -516,6 +515,24 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 	};
 
+
+
+	////////////////////////////////
+	///////// resetLineup() ////////
+	////////////////////////////////
+	
+	$scope.resetLineup = function() {
+
+		console.log("$scope.actionsQueue:", $scope.actionsQueue);
+		$scope.actionsQueue = [];
+		console.log("$scope.actionsQueue:", $scope.actionsQueue);
+
+		// * * * //
+		init();
+
+
+
+	};
 
 
 });
