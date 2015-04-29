@@ -432,6 +432,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 		
 		var addPlayer = function() {
+
+			console.log(selectedCricketPlayer.name);
+			console.log(selectedCricketPlayer.CricketPlayerType.name);
+
 			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
 			$scope.lineupPlayer = lineupPlayer;
 			
