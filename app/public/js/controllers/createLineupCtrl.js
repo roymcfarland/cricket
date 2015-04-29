@@ -360,7 +360,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
 		console.log("angular.copy", cricketPlayersToAdd); 
 		// * * * //
-		$scope.recursiveSave(cricketPlayersToAdd, 0);
+		// $scope.recursiveSave(cricketPlayersToAdd, 0);
 		
 		// REMOVE players from user's lineup in DB
 		console.log("original REMOVE array", $scope.cricketPlayersToRemove);
@@ -369,20 +369,17 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		// * * * //
 		// $scope.recursiveRemove(cricketPlayersToRemove, 0); 
 		
+
+		// TESTING UNDERWAY $http.delete //
 		/*
-		console.log(user);
-
-		var payload = {
-			"sessionToken": "scRfu9eX7XsbCtkKQ5IsifpsC",
-			"CricketPlayerID": "wLM36W3w5R"
-		};
-
-		$http.delete("/api/v1/lineupPlayers/wLM36W3w5R", [{sessionToken: "scRfu9eX7XsbCtkKQ5IsifpsC"}])
-			.success(function(data, status) {
-				console.log("### SUCCESS ###");
+		console.log("sessionToken:", sessionToken);
+		var config = {headers: {sessionToken: "scRfu9eX7XsbCtkKQ5IsifpsC"}};
+		$http.delete("/api/v1/lineupPlayers/XCmh7hqAl0", config)
+			.success(function(){
+				console.log("Success!");
 			})
-			.error(function(data, status) {
-				console.log("### FAILURE ###");
+			.error(function(){
+				console.log("Error!");
 			})
 		*/
 	};
