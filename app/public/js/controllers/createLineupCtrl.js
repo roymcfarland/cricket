@@ -294,9 +294,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	};
 
 
-	// RECURSIVE SAVE FUNCTION //
-	// problemSaving array to push problems to
+	// SAVE CRICKET PLAYER(S) TO LINEUP IN DATABASE //
+
 	$scope.problemSaving = [];
+
 	// recursiveSave to be called on event ng-click saveLineup() below
 	$scope.recursiveSave = function(arr, errors) {
 		if (arr.length == 0) return console.log("Save finished with " + errors + " number of errors.")
@@ -314,13 +315,14 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			.success(function (data, status) {
 				if (status == 201) {
 					console.log("### SAVED! ###");
+					// * * * //
 					$scope.recursiveSave(arr, errors);
 				}
 			})
 			.error(function (data, status) {
 				console.log("### THERE WAS AN ERROR ###");
-				console.log(data);
 				$scope.problemSaving.push(cricketPlayer);
+				// * * * //
 				$scope.recursiveSave(arr, errors++)
 			})
 
@@ -328,23 +330,33 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	};
 
 
-	// RECURSIVE REMOVE FUNCTION //
-	// problemRemoving array to push problems to
+	// REMOVE CRICKET PLAYER(S) FROM LINEUP IN DATABASE //
+	
 	$scope.problemRemoving = [];
-	// recursiveRemove to be called on event ng-click="saveLineup()" below
 
-	$scope.recursiveRemove = function() {
+	// recursiveRemove to be called on event ng-click="saveLineup()" below
+	$scope.recursiveRemove = function(arr, errors) {
 
 		// break recursive logic after array is emptied
-		// if (arr.length == 0) return console.log("Remove finished with " + errors = " number of errors.")
+		if (arr.length == 0) return console.log("Remove finished with " + errors + " number of errors.")
 
 			// empty the array one player at a time
 			var cricketPlayer = arr.pop();
 
-			// encapsulate data to be sent to server
-			var payload = {};
-
 			// ajax
+			var config = {headers: {"X-Auth-Parse": sessionToken}}; // set sessionToken in header
+			$http.delete("/api/v1/lineupPlayers/" + cricketPlayer.lineupPlayer.id)
+			.success(function(data, status) {
+				console.log("### REMOVED ! ###");
+				// * * * //
+				$scope.recursiveRemove(arr, errors);
+			})
+			.error(function(data, status) {
+				console.log("### ERROR! ###");
+				$scope.problemRemoving.push(cricketPlayer);
+				// * * * //
+				$scope.recursiveRemove(arr, errors++);
+			})
 
 	};
 
@@ -360,14 +372,14 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
 		console.log("angular.copy", cricketPlayersToAdd); 
 		// * * * //
-		// $scope.recursiveSave(cricketPlayersToAdd, 0);
+		$scope.recursiveSave(cricketPlayersToAdd, 0);
 		
 		// REMOVE players from user's lineup in DB
 		console.log("original REMOVE array", $scope.cricketPlayersToRemove);
 		var cricketPlayersToRemove = angular.copy($scope.cricketPlayersToRemove);
 		console.log("angular.copy", cricketPlayersToRemove);
 		// * * * //
-		// $scope.recursiveRemove(cricketPlayersToRemove, 0); 
+		$scope.recursiveRemove(cricketPlayersToRemove, 0); 
 		
 
 		// TESTING UNDERWAY $http.delete //
