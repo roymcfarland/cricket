@@ -267,24 +267,18 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	$scope.problemProcessing = [];
 	$scope.cricketPlayersToAdd = [];
 	$scope.cricketPlayersToRemove = [];
-
-
+	
+	// recursive function to be called on event ng-click saveLineup() below
 	$scope.processActionsQueue = function(arr, errors) {
 
-		/*
-		var findWhereInActionsQueueTypeAdd = _.findWhere(arr, {type: "add"});
-		if (findWhereInActionsQueueTypeAdd) {
-			console.log("*** _.findWhere found type ADD ***");
-		};
-		var findWhereInActionsQueueTypeRemove = _.findWhere($scope.actionsQueue, {type: "remove"});
-		if (findWhereInActionsQueueTypeRemove) {
-			console.log("*** _.findWhere found type REMOVE ***");
-		};
-		*/
-	
+		// break recursive logic after array is emptied
 		if (arr.length == 0) return console.log("actionsQueue processed with " + errors + " number of errors.");
+		
+		// empty the actionsQueue array one player at a time
 		var cricketPlayer = arr.pop();
 		// console.log("###:", cricketPlayer.type);
+		
+		// push cricket players into array by type - ADD or REMOVE
 		if (cricketPlayer.type == "add") {
 			$scope.cricketPlayersToAdd.push(cricketPlayer);
 			$scope.processActionsQueue(arr, errors);
@@ -293,6 +287,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			$scope.processActionsQueue(arr, errors);
 		};
 
+		// see the results
 		console.log("$scope.cricketPlayersToAdd:", $scope.cricketPlayersToAdd);
 		console.log("$scope.cricketPlayersToRemove:", $scope.cricketPlayersToRemove);
 
@@ -302,7 +297,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	// RECURSIVE SAVE FUNCTION //
 	// problemSaving array to push problems to
 	$scope.problemSaving = [];
-	// recursiveSave to be called on event ng-click="saveLineup()" below
+	// recursiveSave to be called on event ng-click saveLineup() below
 	$scope.recursiveSave = function(arr, errors) {
 		if (arr.length == 0) return console.log("Save finished with " + errors + " number of errors.")
 
@@ -356,7 +351,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 	// SAVE FUNCTION ON NG-CLICK //
 	$scope.saveLineup = function() {
-		// console.log("$scope.actionsQueue:", $scope.actionsQueue);
+		
+		// * * * //
 		$scope.processActionsQueue($scope.actionsQueue, 0);
 
 		// ADD players to user's lineup in DB
@@ -432,9 +428,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 		
 		var addPlayer = function() {
-
-			console.log(selectedCricketPlayer.name);
-			console.log(selectedCricketPlayer.CricketPlayerType.name);
 
 			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
 			$scope.lineupPlayer = lineupPlayer;
