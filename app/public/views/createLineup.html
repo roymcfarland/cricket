@@ -27,6 +27,16 @@
 				<div class="row wrapper">
 					<p>Minimum Lineup: {{createLineupCtrl.numberOfWicketKeepers}} <img src="/../images/wicket.png" alt="wicket"> {{createLineupCtrl.numberOfBowlers}} <img src="/../images/ball.png"> {{createLineupCtrl.numberOfBatsmen}} <img src="/../images/bat.png"></p>
 				</div>
+				<div class="row wrapper">
+					<ul class="nav nav-pills nav-justified">
+						<li><a class="btn btn-default" href="">June 4</a></li>
+						<li><a class="btn btn-default" href="">June 5</a></li>
+						<li><a class="btn btn-default" href="">June 6</a></li>
+						<li><a class="btn btn-default" href="">June 7</a></li>
+						<li><a class="btn btn-default" href="">June 8</a></li>
+						<li><a class="btn btn-default active" href="">Current</a></li>
+					</ul>
+				</div>
 				<table class="table table-striped">
 					<thead>
 						<th></th>
@@ -48,6 +58,7 @@
 				<div>
 					<a class="btn btn-default" ng-click="saveLineup()">Save Lineup</a>
 					<a class="btn btn-default" ng-click="resetLineup()">Reset</a>
+					<a class="btn btn-default">{ Dev } Archive</a>
 				</div>
 			</div>
 			<div class="col-sm-6">
