@@ -369,16 +369,17 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// remove
 		var cricketPlayersToRemove = angular.copy($scope.cricketPlayersToRemove);
-		// * * * //
-		$scope.recursiveRemove(cricketPlayersToRemove, 0); 
+			// * * * //
+			$scope.recursiveRemove(cricketPlayersToRemove, 0); 
 
 		// gatekeeprs
-		if (vm.numberOfBowlers < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBowlers) + " bowlers. You need at least " + vm.numberOfBowlers + " more.");
+		// if (vm.numberOfBowlers < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBowlers) + " bowlers. You need at least " + vm.numberOfBowlers + " more.");
+		if (vm.numberOfBatsmen < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBatsmen) + " batsmen. You need at least " + vm.numberOfBatsmen + " more.");
 
 		// add
 		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
-		// * * * //
-		$scope.recursiveSave(cricketPlayersToAdd, 0);
+			// * * * //
+			$scope.recursiveSave(cricketPlayersToAdd, 0);
 		
 
 
