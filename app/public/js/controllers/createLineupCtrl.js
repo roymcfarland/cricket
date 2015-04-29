@@ -92,7 +92,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 						vm.numberOfBowlers --;
 					} else if ($scope.currentLineup[i].position === "Batsman" && vm.numberOfBatsmen > 0) {
 						vm.numberOfBatsmen --;
-					} else if ($scope.currentLineup[i].postion === "Wicket Keeper" && vm.numberOfWicketKeepers > 0) {
+					} else if ($scope.currentLineup[i].position === "Wicket Keeper" && vm.numberOfWicketKeepers > 0) {
 						vm.numberOfWicketKeepers --;
 					}
 				}
@@ -374,7 +374,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// gatekeeprs
 		// if (vm.numberOfBowlers < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBowlers) + " bowlers. You need at least " + vm.numberOfBowlers + " more.");
-		if (vm.numberOfBatsmen < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBatsmen) + " batsmen. You need at least " + vm.numberOfBatsmen + " more.");
+		// if (vm.numberOfBatsmen < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBatsmen) + " batsmen. You need at least " + vm.numberOfBatsmen + " more.");
+		if (vm.numberOfWicketKeepers === 1) return alert("Lineup cannot be saved. You need at least 1 wicket keeper.");
 
 		// add
 		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
