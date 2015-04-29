@@ -373,34 +373,22 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			$scope.recursiveRemove(cricketPlayersToRemove, 0); 
 
 		// gatekeeprs
-		// if (vm.numberOfBowlers < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBowlers) + " bowlers. You need at least " + vm.numberOfBowlers + " more.");
-		// if (vm.numberOfBatsmen < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBatsmen) + " batsmen. You need at least " + vm.numberOfBatsmen + " more.");
-		// if (vm.numberOfWicketKeepers === 1) return alert("Lineup cannot be saved. You need at least 1 wicket keeper.");
-		// if ($scope.currentBalance < 0) return alert("Lineup cannot be saved. Your $ balance is negative.");
-		console.log($scope.currentLineup.length);
+		/*
+		if (vm.numberOfBowlers < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBowlers) + " bowlers. You need at least " + vm.numberOfBowlers + " more.");
+		if (vm.numberOfBatsmen < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBatsmen) + " batsmen. You need at least " + vm.numberOfBatsmen + " more.");
+		if (vm.numberOfWicketKeepers === 1) return alert("Lineup cannot be saved. You need at least 1 wicket keeper.");
+		if ($scope.currentBalance < 0) return alert("Lineup cannot be saved. Your $ balance is negative.");
 		if ($scope.currentLineup.length < 11) return alert("Lineup cannot be saved. Your lineup must include 11 players.");
+		*/
 
 		// add
 		var cricketPlayersToAdd = angular.copy($scope.cricketPlayersToAdd);
 			// * * * //
 			$scope.recursiveSave(cricketPlayersToAdd, 0);
-		
 
+		// reset controller
+		init();
 
-
-
-		// TESTING UNDERWAY $http.delete //
-		/*
-		console.log("sessionToken:", sessionToken);
-		var config = {headers: {sessionToken: "scRfu9eX7XsbCtkKQ5IsifpsC"}};
-		$http.delete("/api/v1/lineupPlayers/XCmh7hqAl0", config)
-			.success(function(){
-				console.log("Success!");
-			})
-			.error(function(){
-				console.log("Error!");
-			})
-		*/
 	};
 
 
@@ -413,12 +401,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		var selectedCricketPlayer = this.player;
 
-		// ERROR
 		// Prevent user from adding same player to lineup if player has already been added to $scope.currentLineup
 		var findWhereInScopeCurrentLineup = _.findWhere($scope.currentLineup, {id: selectedCricketPlayer.objectId});
 		if (findWhereInScopeCurrentLineup) return alert("You have already added this player to your lineup.");
 
-		// ERROR
 		// Prevent user from adding same player to lineup if player has already been added to $scope.currentSavedLineup
 		var findWhereInScopeCurrentSavedLineup = _.findWhere($scope.currentSavedLineup, {id: selectedCricketPlayer.objectId});
 		if (findWhereInScopeCurrentSavedLineup) return alert("You have already added this player to your lineup.");
