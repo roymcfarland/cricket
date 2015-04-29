@@ -532,4 +532,16 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	};
 
 
+
+	////////////////////////////////
+	/////// archiveLineup() ////////
+	////////////////////////////////
+	
+	$scope.archiveLineup = function() {
+
+		console.log("Hardest button to button");
+
+	};
+
+
 });
