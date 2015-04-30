@@ -182,20 +182,17 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		// if player is not in currentSavedLineup, he only needs to be removed from visual representation of lineup (locally)
 		// check first whether player is in currentSavedLineup. if yes, add to actionsQueue (type: "remove")
 
-		// console.log("removedPlayer.id:", removedPlayer.id);
-		// console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
-		// console.log($scope.currentSavedLineup[0].lineupPlayers[0].objectId);
-
-		// ERROR //
 		// Prevent user from adding same player to lineup if player has already been added to $scope.currentLineup
 		var findWhereInScopeCurrentSavedLineupLineupPlayers = _.findWhere($scope.currentSavedLineup[0].lineupPlayers, {objectId: removedPlayer.id});
+		
+
 		if (findWhereInScopeCurrentSavedLineupLineupPlayers) {
 			// console.log("player pushed into actionsQueue (type: remove)");
 			// push removedPlayer into actionsQueue - if applicable
 			$scope.actionsQueue.push({
-			type: "remove",
-			lineupPlayer: removedPlayer
-		});
+				type: "remove",
+				lineupPlayer: removedPlayer
+			})
 		} else {
 			// do not push removedPlayer into actionsQueue
 			// console.log("addPlayerToActionsQueueTypeRemove() is not necessary. no add'l actions taken.");
