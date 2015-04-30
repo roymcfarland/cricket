@@ -42,7 +42,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$http.get("/api/v1/lineupPlayers?lineupId=" + lineupId + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
 			.success(function (res, status) {
 				$scope.allLineupPlayers = res;
-				// console.log("$scope.allLineupPlayers:", $scope.allLineupPlayers);
+				console.log("$scope.allLineupPlayers:", $scope.allLineupPlayers);
 				
 				// * * * //
 				sortLineupsIntoMatches();
