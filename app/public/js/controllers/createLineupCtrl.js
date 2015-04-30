@@ -42,7 +42,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$http.get("/api/v1/lineupPlayers?lineupId=" + lineupId + "&userId=" + userId + "&sessionToken=" + sessionToken, {}, [])
 			.success(function (res, status) {
 				$scope.allLineupPlayers = res;
-				console.log("$scope.allLineupPlayers:", $scope.allLineupPlayers);
+				// console.log("$scope.allLineupPlayers:", $scope.allLineupPlayers);
 				
 				// * * * //
 				sortLineupsIntoMatches();
@@ -536,7 +536,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	
 	$scope.archiveLineup = function() {
 
-		console.log("Hardest button to button");
+		// copy lineup so it can be saved with matchId to database
+		$scope.archivedLineup = angular.copy($scope.currentSavedLineup[0].lineupPlayers);
+		
+		console.log("$scope.archivedLineup:", $scope.archivedLineup);
 
 	};
 
