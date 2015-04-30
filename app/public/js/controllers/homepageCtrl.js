@@ -4,7 +4,6 @@ homepageCtrl.controller("homepageController", function() {
 
 	// Variables
 	var vm = this;
-
     // jQuery countdown
     $(function () {
 		var gameDay = new Date(2015, 4 - 1, 16);
