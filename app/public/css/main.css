@@ -414,5 +414,9 @@ p.step-three {
 	margin-bottom: 10px;
 }
 
-
+#availablePlayersList {
+	width: 455px;
+	height: 400px;
+	overflow: scroll;
+}
 
