@@ -6,7 +6,7 @@ homepageCtrl.controller("homepageController", function() {
 	var vm = this;
     // jQuery countdown
     $(function () {
-		var gameDay = new Date(2015, 7 - 1, 16);
+		var gameDay = new Date(2015, 6 - 1, 16);
 		$('#defaultCountdown').countdown({
 			until: gameDay,
 			padZeroes: true, 
