@@ -561,8 +561,9 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// copy lineup so it can be saved with matchId to database
 		$scope.archivedLineup = angular.copy($scope.currentSavedLineup[0].lineupPlayers);
-		
 		console.log("$scope.archivedLineup:", $scope.archivedLineup);
+
+		var cricketPlayer = $scope.archivedLineup.pop();
 
 	};
 
