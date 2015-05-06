@@ -18,14 +18,36 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	var user = Parse.User.current();
 	var userId = user.id;
 	var sessionToken = user._sessionToken;
+	
 	// Array for adding/removing players (visually) to/from user's lineup on ng-click="addPlayerToTeam()" and ng-click="removePlayerFromTeam()"
 	var currentLineup = [];
+	
 	// Setup cricketPlayerType minimums for user's lineup
 	vm.numberOfBowlers = 3;
 	vm.numberOfBatsmen = 3;
 	vm.numberOfWicketKeepers = 1;
+	
 	// Array for players who need to be added or removed from DB on ng-click="saveLineup()"
 	$scope.actionsQueue = [];
+
+
+
+	/////////////////////////////////
+	/////// Countdown Feature ///////
+	/////////////////////////////////
+
+	// jQuery countdown
+    $(function () {
+		var gameDay = new Date(2015, 6 - 1, 16);
+		$('#defaultCountdown').countdown({
+			until: gameDay,
+			padZeroes: true, 
+			format: 'yDHMS', 
+			layout: '<ul>{y<}<li>{yn} {yl}</li>{y>}' + 
+				'{d<}<li>{dnn} {dl}</li>{d>}{h<}<li>{hnn} {hl}</li>{h>}' + 
+				'{m<}<li>{mnn} {ml}</li>{m>}{s<}<li>{snn} {sl}</li>{s>}</ul>'
+		});
+	});
 
 
 
@@ -164,6 +186,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		// console.log($scope.matches === $scope.currentSavedLineup);
 
 	};
+
 
 
 	///////////////////////////////////////
@@ -538,7 +561,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// copy lineup so it can be saved with matchId to database
 		$scope.archivedLineup = angular.copy($scope.currentSavedLineup[0].lineupPlayers);
-		
 		console.log("$scope.archivedLineup:", $scope.archivedLineup);
 
 	};
