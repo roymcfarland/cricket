@@ -563,8 +563,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$scope.archivedLineup = angular.copy($scope.currentSavedLineup[0].lineupPlayers);
 		console.log("$scope.archivedLineup:", $scope.archivedLineup);
 
-		var cricketPlayer = $scope.archivedLineup.pop();
-
 	};
 
 });
