@@ -409,6 +409,9 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 	};
 
+	// NOTES FOR BUGS WITH SAVING TO DB //
+	// 
+
 
 
 	/////////////////////////////////
