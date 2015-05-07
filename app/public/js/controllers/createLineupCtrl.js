@@ -11,8 +11,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	vm.username = vm.user.getUsername();
 	vm.userMoney = vm.user.attributes.Money;
 	
-	// $routeParams
-	console.log("$routeParams:", $routeParams);
+	// store $routeParams
+	// console.log("$routeParams:", $routeParams);
 	var leagueId = $routeParams.leagueId;
 	// console.log("leagueId:", leagueId);
 	var lineupId = $routeParams.lineupId;
@@ -153,8 +153,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			lineupPlayers: []
 		}];
 
-		console.log("#####");
-
 		// Get matchId of lineupPlayer
 		for (var i = 0; i < $scope.allLineupPlayers.length; i ++) {
 
@@ -187,7 +185,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 
 		$scope.currentSavedLineup = angular.copy($scope.matches);
-		console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
+		// console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
 		// console.log($scope.matches === $scope.currentSavedLineup);
 
 	};
@@ -409,40 +407,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			// * * * //
 			$scope.recursiveSave(cricketPlayersToAdd, 0);
 
-		// reset controller
-		// init();
-
-		// $scope.resetController($scope.cricketPlayersToRemove, $scope.cricketPlayersToAdd);
-
-		/*
-		console.log("$scope.actionsQueue:", $scope.actionsQueue);
-		console.log("$scope.cricketPlayersToRemove:", $scope.cricketPlayersToRemove);
-		console.log("$scope.cricketPlayersToAdd:", $scope.cricketPlayersToAdd); 
-		*/
-	
+		// empty arrays
+		$scope.actionsQueue = [];
 		$scope.cricketPlayersToRemove = [];
 		$scope.cricketPlayersToAdd = [];
-	
-		// $location.path("/dashboard/leagues/createLineup/lineup/" + lineupId + "/league/" + leagueId);
-
-		console.log("$scope.actionsQueue:", $scope.actionsQueue);
-		console.log("$scope.cricketPlayersToRemove:", $scope.cricketPlayersToRemove);
-		console.log("$scope.cricketPlayersToAdd:", $scope.cricketPlayersToAdd);
 
 	};
-
-	// BUGS WITH SAVING TO DB //
-	// on init() refresh called on line 408 -> sortLineupsIntoMatches()
-	// ERROR 1 - cricketPlayersToAdd and cricketPlayersToRemove arrays are not emptied after save. that can create double save.
-	
-	/*
-	$scope.resetController = function (arr1, arr2) {
-
-		$scope.arr1 = [];
-		$scope.arr2 = [];
-
-	};
-	*/
 
 
 
