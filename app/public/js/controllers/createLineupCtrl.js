@@ -150,6 +150,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			lineupPlayers: []
 		}];
 
+		console.log("#####");
+
 		// Get matchId of lineupPlayer
 		for (var i = 0; i < $scope.allLineupPlayers.length; i ++) {
 
@@ -182,7 +184,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 
 		$scope.currentSavedLineup = angular.copy($scope.matches);
-		// console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
+		console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
 		// console.log($scope.matches === $scope.currentSavedLineup);
 
 	};
@@ -405,12 +407,27 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			$scope.recursiveSave(cricketPlayersToAdd, 0);
 
 		// reset controller
-		init();
+		// init();
+
+		// $scope.resetController($scope.cricketPlayersToRemove, $scope.cricketPlayersToAdd);
+
+		console.log("$scope.actionsQueue:", $scope.actionsQueue);
+		console.log("$scope.cricketPlayersToRemove:", $scope.cricketPlayersToRemove);
+		console.log("$scope.cricketPlayersToAdd:", $scope.cricketPlayersToAdd); 
 
 	};
 
-	// NOTES FOR BUGS WITH SAVING TO DB //
-	// 
+	// BUGS WITH SAVING TO DB //
+	// on init() refresh called on line 408 -> sortLineupsIntoMatches()
+	
+	/*
+	$scope.resetController = function (arr1, arr2) {
+
+		$scope.arr1 = [];
+		$scope.arr2 = [];
+
+	};
+	*/
 
 
 
