@@ -10,11 +10,14 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	vm.user = Parse.User.current();
 	vm.username = vm.user.getUsername();
 	vm.userMoney = vm.user.attributes.Money;
-	// console.log("$routeParams:", $routeParams);
+	
+	// $routeParams
+	console.log("$routeParams:", $routeParams);
 	var leagueId = $routeParams.leagueId;
 	// console.log("leagueId:", leagueId);
 	var lineupId = $routeParams.lineupId;
 	// console.log("lineupId:", lineupId);
+	
 	var user = Parse.User.current();
 	var userId = user.id;
 	var sessionToken = user._sessionToken;
@@ -411,14 +414,26 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 
 		// $scope.resetController($scope.cricketPlayersToRemove, $scope.cricketPlayersToAdd);
 
+		/*
 		console.log("$scope.actionsQueue:", $scope.actionsQueue);
 		console.log("$scope.cricketPlayersToRemove:", $scope.cricketPlayersToRemove);
 		console.log("$scope.cricketPlayersToAdd:", $scope.cricketPlayersToAdd); 
+		*/
+	
+		$scope.cricketPlayersToRemove = [];
+		$scope.cricketPlayersToAdd = [];
+	
+		// $location.path("/dashboard/leagues/createLineup/lineup/" + lineupId + "/league/" + leagueId);
+
+		console.log("$scope.actionsQueue:", $scope.actionsQueue);
+		console.log("$scope.cricketPlayersToRemove:", $scope.cricketPlayersToRemove);
+		console.log("$scope.cricketPlayersToAdd:", $scope.cricketPlayersToAdd);
 
 	};
 
 	// BUGS WITH SAVING TO DB //
 	// on init() refresh called on line 408 -> sortLineupsIntoMatches()
+	// ERROR 1 - cricketPlayersToAdd and cricketPlayersToRemove arrays are not emptied after save. that can create double save.
 	
 	/*
 	$scope.resetController = function (arr1, arr2) {
