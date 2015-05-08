@@ -536,9 +536,17 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 						vm.numberOfBatsmen ++;
 					} else if (removedPlayerPosition === "Wicket Keeper" && vm.numberOfWicketKeepers < 1) {
 						vm.numberOfWicketKeepers ++;
-					} else if (removedPlayerPosition === "All Rounder" && $scope.allroundersAsBatsmen > 0) {
-						vm.numberOfBatsmen ++;
-						$scope.allroundersAsBatsmen --;
+					} else if (removedPlayerPosition === "All Rounder" && $scope.allroundersAsBatsmen.length > 0) {
+						
+						// check whether player who has been removed is all rounder who was originally added as batsmen. if so, increment lineup minimum for batsmen.
+						console.log($scope.allroundersAsBatsmen);
+						console.log(typeof(selectedCricketPlayer.id));
+						var findAllroundersAsBatsmen = _.find($scope.allroundersAsBatsmen, function (num) { return num == selectedCricketPlayer.id} );
+						console.log(findAllroundersAsBatsmen);
+						if (findAllroundersAsBatsmen) {
+							vm.numberOfBatsmen ++;
+						}
+						
 						console.log("$scope.allroundersAsBatsmen:", $scope.allroundersAsBatsmen);
 					}
 				}
