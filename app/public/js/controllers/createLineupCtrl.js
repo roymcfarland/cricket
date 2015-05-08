@@ -481,7 +481,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					console.log("$scope.allroundersAsBatsmen:", $scope.allroundersAsBatsmen);
 				}
 			} else if (selectedCricketPlayer.CricketPlayerType.name === "All Rounder" && vm.numberOfBowlers > 0) {
-				console.log("###");
+				var isPlayerBowler = confirm(selectedCricketPlayer.name + " is an All Rounder. Would you like him to count towards your minimum lineup requirements as a bowler?");
+				if (isPlayerBowler == true) {
+					vm.numberOfBowlers --;
+					$scope.allroundersAsBowlers.push(selectedCricketPlayer.objectId);
+					console.log("$scope.allroundersAsBowlers:", $scope.allroundersAsBowlers);
+				}
 			}
 
 		};
