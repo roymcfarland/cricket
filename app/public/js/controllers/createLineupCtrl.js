@@ -478,14 +478,14 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				if (isPlayerBatsman == true) {
 					vm.numberOfBatsmen --;
 					$scope.allroundersAsBatsmen.push(selectedCricketPlayer.objectId);
-					console.log("$scope.allroundersAsBatsmen:", $scope.allroundersAsBatsmen);
+					// console.log("$scope.allroundersAsBatsmen:", $scope.allroundersAsBatsmen);
 				}
 			} else if (selectedCricketPlayer.CricketPlayerType.name === "All Rounder" && vm.numberOfBowlers > 0) {
 				var isPlayerBowler = confirm(selectedCricketPlayer.name + " is an All Rounder. Would you like him to count towards your minimum lineup requirements as a bowler?");
 				if (isPlayerBowler == true) {
 					vm.numberOfBowlers --;
 					$scope.allroundersAsBowlers.push(selectedCricketPlayer.objectId);
-					console.log("$scope.allroundersAsBowlers:", $scope.allroundersAsBowlers);
+					// console.log("$scope.allroundersAsBowlers:", $scope.allroundersAsBowlers);
 				}
 			}
 
@@ -545,17 +545,21 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 						vm.numberOfWicketKeepers ++;
 					} else if (removedPlayerPosition === "All Rounder" && $scope.allroundersAsBatsmen.length > 0) {
 						// check whether player who has been removed is all rounder who was originally added as batsmen. if so, increment lineup minimum for batsmen.
-						console.log($scope.allroundersAsBatsmen);
-						console.log(typeof(selectedCricketPlayer.id));
+						// console.log($scope.allroundersAsBatsmen);
+						// console.log(typeof(selectedCricketPlayer.id));
 						var findAllroundersAsBatsmen = _.find($scope.allroundersAsBatsmen, function (num) { return num == selectedCricketPlayer.id} );
-						console.log(findAllroundersAsBatsmen);
-						if (findAllroundersAsBatsmen) {
+						// console.log(findAllroundersAsBatsmen);
+						if (findAllroundersAsBatsmen && vm.numberOfBatsmen < 3) {
 							vm.numberOfBatsmen ++;
 						}
 						console.log("$scope.allroundersAsBatsmen:", $scope.allroundersAsBatsmen);
 					} else if (removedPlayerPosition === "All Rounder" && $scope.allroundersAsBowlers.length > 0) {
 						// check whether player who has been removed is all rounder who was originally added as bowler. if so, increment lineup minimum for bowlers.
-						console.log($scope.allroundersAsBowlers);
+						// console.log($scope.allroundersAsBowlers);
+						var findAllroundersAsBowlers = _.find($scope.allroundersAsBowlers, function(num) { return num == selectedCricketPlayer.id} );
+						if (findAllroundersAsBowlers && vm.numberOfBowlers < 3) {
+							vm.numberOfBowlers ++;
+						}
 					}
 				}
 		};
