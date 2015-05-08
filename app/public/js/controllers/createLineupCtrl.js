@@ -480,6 +480,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					$scope.allroundersAsBatsmen.push(selectedCricketPlayer.objectId);
 					console.log("$scope.allroundersAsBatsmen:", $scope.allroundersAsBatsmen);
 				}
+			} else if (selectedCricketPlayer.CricketPlayerType.name === "All Rounder" && vm.numberOfBowlers > 0) {
+				console.log("###");
 			}
 
 		};
@@ -546,7 +548,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 						if (findAllroundersAsBatsmen) {
 							vm.numberOfBatsmen ++;
 						}
-						
 						console.log("$scope.allroundersAsBatsmen:", $scope.allroundersAsBatsmen);
 					}
 				}
