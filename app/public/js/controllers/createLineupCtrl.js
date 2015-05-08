@@ -29,6 +29,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	vm.numberOfBowlers = 3;
 	vm.numberOfBatsmen = 3;
 	vm.numberOfWicketKeepers = 1;
+
+	// Keep track of all rounders who were added as batsmen or bowlers
+	$scope.allroundersAsBatsmen = 0;
+	$scope.allroundersAsBowlers = 0;
 	
 	// Array for players who need to be added or removed from DB on ng-click="saveLineup()"
 	$scope.actionsQueue = [];
@@ -465,12 +469,19 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			// decrement user's lineup minimums accordingly
 			if (selectedCricketPlayer.CricketPlayerType.name === "Bowler" && vm.numberOfBowlers > 0) {
 				vm.numberOfBowlers --;
-			} else if (selectedCricketPlayer.CricketPlayerType.name === "Batsman" && vm.numberOfBatsmen) {
+			} else if (selectedCricketPlayer.CricketPlayerType.name === "Batsman" && vm.numberOfBatsmen > 0) {
 				vm.numberOfBatsmen --;
 			} else if (selectedCricketPlayer.CricketPlayerType.name === "Wicket Keeper" && vm.numberOfWicketKeepers > 0) {
 				vm.numberOfWicketKeepers --;
-			} else if (selectedCricketPlayer.CricketPlayerType.name === "All Rounder") {
-				console.log("###");
+			} else if (selectedCricketPlayer.CricketPlayerType.name === "All Rounder" && vm.numberOfBatsmen > 0) {
+				var isPlayerBatsman = confirm(selectedCricketPlayer.name + " is an All Rounder. Would you like him to count towards your minimum lineup requirements as a batsmen?");
+				if (isPlayerBatsman == true) {
+					vm.numberOfBatsmen --;
+					$scope.allroundersAsBatsmen ++;
+					console.log("$scope.allroundersAsBatsmen:", $scope.allroundersAsBatsmen);
+				} else {
+					console.log("No action taken.");
+				}
 			}
 
 		};
