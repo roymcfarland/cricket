@@ -29,6 +29,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	vm.numberOfBowlers = 3;
 	vm.numberOfBatsmen = 3;
 	vm.numberOfWicketKeepers = 1;
+
+	// Keep track of all rounders who were added as batsmen or bowlers
+	$scope.allroundersAsBatsmen = [];
+	$scope.allroundersAsBowlers = [];
 	
 	// Array for players who need to be added or removed from DB on ng-click="saveLineup()"
 	$scope.actionsQueue = [];
@@ -465,10 +469,24 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			// decrement user's lineup minimums accordingly
 			if (selectedCricketPlayer.CricketPlayerType.name === "Bowler" && vm.numberOfBowlers > 0) {
 				vm.numberOfBowlers --;
-			} else if (selectedCricketPlayer.CricketPlayerType.name === "Batsman" && vm.numberOfBatsmen) {
+			} else if (selectedCricketPlayer.CricketPlayerType.name === "Batsman" && vm.numberOfBatsmen > 0) {
 				vm.numberOfBatsmen --;
 			} else if (selectedCricketPlayer.CricketPlayerType.name === "Wicket Keeper" && vm.numberOfWicketKeepers > 0) {
 				vm.numberOfWicketKeepers --;
+			} else if (selectedCricketPlayer.CricketPlayerType.name === "All Rounder" && vm.numberOfBatsmen > 0) {
+				var isPlayerBatsman = confirm(selectedCricketPlayer.name + " is an All Rounder. Would you like him to count towards your minimum lineup requirements as a batsmen?");
+				if (isPlayerBatsman == true) {
+					vm.numberOfBatsmen --;
+					$scope.allroundersAsBatsmen.push(selectedCricketPlayer.objectId);
+					// console.log("$scope.allroundersAsBatsmen:", $scope.allroundersAsBatsmen);
+				}
+			} else if (selectedCricketPlayer.CricketPlayerType.name === "All Rounder" && vm.numberOfBowlers > 0) {
+				var isPlayerBowler = confirm(selectedCricketPlayer.name + " is an All Rounder. Would you like him to count towards your minimum lineup requirements as a bowler?");
+				if (isPlayerBowler == true) {
+					vm.numberOfBowlers --;
+					$scope.allroundersAsBowlers.push(selectedCricketPlayer.objectId);
+					// console.log("$scope.allroundersAsBowlers:", $scope.allroundersAsBowlers);
+				}
 			}
 
 		};
@@ -525,8 +543,27 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 						vm.numberOfBatsmen ++;
 					} else if (removedPlayerPosition === "Wicket Keeper" && vm.numberOfWicketKeepers < 1) {
 						vm.numberOfWicketKeepers ++;
+					} else if (removedPlayerPosition === "All Rounder" && $scope.allroundersAsBatsmen.length > 0) {
+						
+						// check whether player who has been removed is all rounder who was originally added as batsmen. if so, increment lineup minimum for batsmen.
+						var findAllroundersAsBatsmen = _.find($scope.allroundersAsBatsmen, function (num) { return num == selectedCricketPlayer.id} );
+						if (findAllroundersAsBatsmen && vm.numberOfBatsmen < 3) {
+							vm.numberOfBatsmen ++;
+						}
+					
+					} else if (removedPlayerPosition === "All Rounder" && $scope.allroundersAsBowlers.length > 0) {
+						
+						// check whether player who has been removed is all rounder who was originally added as bowler. if so, increment lineup minimum for bowlers.
+						var findAllroundersAsBowlers = _.find($scope.allroundersAsBowlers, function(num) { return num == selectedCricketPlayer.id} );
+						if (findAllroundersAsBowlers && vm.numberOfBowlers < 3) {
+							vm.numberOfBowlers ++;
+						}
+					
 					}
+
+
 				}
+
 		};
 		removePlayer();
 
