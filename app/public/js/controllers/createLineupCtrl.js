@@ -469,6 +469,8 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				vm.numberOfBatsmen --;
 			} else if (selectedCricketPlayer.CricketPlayerType.name === "Wicket Keeper" && vm.numberOfWicketKeepers > 0) {
 				vm.numberOfWicketKeepers --;
+			} else if (selectedCricketPlayer.CricketPlayerType.name === "All Rounder") {
+				console.log("###");
 			}
 
 		};
