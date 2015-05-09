@@ -113,6 +113,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					return {
 						id: el.CricketPlayerID.objectId,
 						name: el.CricketPlayerID.name,
+						country: el.CricketPlayerID.country,
 						position: el.CricketPlayerID.CricketPlayerTypeID.name,
 						team: el.CricketPlayerID.team,
 						cost: el.CricketPlayerID.cost
