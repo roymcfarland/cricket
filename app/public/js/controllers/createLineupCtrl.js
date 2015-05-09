@@ -444,11 +444,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		// Prevent user from adding same player to lineup if player has already been added to $scope.currentLineup
 		var findWhereInScopeCurrentLineup = _.findWhere($scope.currentLineup, {id: selectedCricketPlayer.objectId});
 		if (findWhereInScopeCurrentLineup) return alert("You have already added this player to your lineup.");
-
 		// Prevent user from adding same player to lineup if player has already been added to $scope.currentSavedLineup
 		var findWhereInScopeCurrentSavedLineup = _.findWhere($scope.currentSavedLineup, {id: selectedCricketPlayer.objectId});
 		if (findWhereInScopeCurrentSavedLineup) return alert("You have already added this player to your lineup.");
-		
+		// Prevent player from being added if he is foreign and user has already added 4 foreign players
+		if ($scope.numberOfForeignPlayers === 4) return alert(selectedCricketPlayer.name + " cannot be added. You can only have 4 foreign players in your lineup.");
 		
 		var playerId = $scope.playerId;
 		var playerName = $scope.playerName;
