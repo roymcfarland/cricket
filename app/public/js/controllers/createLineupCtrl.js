@@ -30,9 +30,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	vm.numberOfBatsmen = 3;
 	vm.numberOfWicketKeepers = 1;
 
-	// Keep track of all rounders who were added as batsmen or bowlers
+	// Track all rounders who were added as batsmen or bowlers
 	$scope.allroundersAsBatsmen = [];
 	$scope.allroundersAsBowlers = [];
+
+	// Track foreign players added to user's currentLineup
+	$scope.numberOfForeignPlayers = 0;
 	
 	// Array for players who need to be added or removed from DB on ng-click="saveLineup()"
 	$scope.actionsQueue = [];
@@ -126,8 +129,14 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					}
 				}
 
-				for (var i = 0; i < $scope.currentLineup.length; i ++) {
+				for (var i = 0; i < $scope.currentLineup.length; i++) {
 					$scope.currentBalance -= $scope.currentLineup[i].cost;
+				}
+
+				for (var i = 0; i < $scope.currentLineup.length; i++) {
+					if ($scope.currentLineup[i].country === "India") {
+						console.log("###");
+					}
 				}
 
 			})
@@ -278,7 +287,6 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		$scope.playerTeam = team;
 		$scope.playerCost = cost;
 
-		console.log($scope.playerCountry);
 		// console.log("You selected", $scope.playerName);
 		// console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
 
@@ -492,6 +500,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				}
 			}
 
+			// increment numberOfForeignPlayers array if foreign player is added to lineup
+			if (selectedCricketPlayer.country !== "India") {
+				$scope.numberOfForeignPlayers ++;
+				// console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
+			}
+
 		};
 		addPlayer();
 
@@ -562,6 +576,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 							vm.numberOfBowlers ++;
 						}
 					
+					}
+
+					// decrement numberOfForeignPlayers array if foreign player is removed from lineup
+					if (selectedCricketPlayer.country !== "India") {
+						$scope.numberOfForeignPlayers --;
+						// console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
 					}
 
 
