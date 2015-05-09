@@ -270,13 +270,15 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////// createLineup.html ///////
 	/////////////////////////////////
 
-	$scope.selectPlayer = function(id, name, position, team, cost) {
+	$scope.selectPlayer = function(id, name, country, position, team, cost) {
 		$scope.playerId = id;
 		$scope.playerName = name;
+		$scope.playerCountry = country;
 		$scope.playerPosition = position;
 		$scope.playerTeam = team;
 		$scope.playerCost = cost;
 
+		console.log($scope.playerCountry);
 		// console.log("You selected", $scope.playerName);
 		// console.log("$scope.currentSavedLineup:", $scope.currentSavedLineup);
 

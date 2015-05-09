@@ -83,7 +83,7 @@
 						<th>Cost</th>
 					</thead>
 					<tbody>
-						<tr ng-repeat="player in players.players" ng-click="selectPlayer(player.objectId, player.name, player.CricketPlayerType.name, player.team, player.cost)">
+						<tr ng-repeat="player in players.players" ng-click="selectPlayer(player.objectId, player.name, player.country, player.CricketPlayerType.name, player.team, player.cost)">
 							<td><a class="btn btn-success" ng-click="addPlayerToTeam()">+</a></td>
 							<td>{{player.name}}</td>
 							<td>{{player.country}}</td>
