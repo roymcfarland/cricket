@@ -30,9 +30,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	vm.numberOfBatsmen = 3;
 	vm.numberOfWicketKeepers = 1;
 
-	// Keep track of all rounders who were added as batsmen or bowlers
+	// Track all rounders who were added as batsmen or bowlers
 	$scope.allroundersAsBatsmen = [];
 	$scope.allroundersAsBowlers = [];
+
+	// Track foreign players added to user's currentLineup
+	$scope.numberOfForeignPlayers = 0;
 	
 	// Array for players who need to be added or removed from DB on ng-click="saveLineup()"
 	$scope.actionsQueue = [];
@@ -110,6 +113,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					return {
 						id: el.CricketPlayerID.objectId,
 						name: el.CricketPlayerID.name,
+						country: el.CricketPlayerID.country,
 						position: el.CricketPlayerID.CricketPlayerTypeID.name,
 						team: el.CricketPlayerID.team,
 						cost: el.CricketPlayerID.cost
@@ -126,8 +130,15 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					}
 				}
 
-				for (var i = 0; i < $scope.currentLineup.length; i ++) {
+				for (var i = 0; i < $scope.currentLineup.length; i++) {
 					$scope.currentBalance -= $scope.currentLineup[i].cost;
+				}
+
+				for (var i = 0; i < $scope.currentLineup.length; i++) {
+					if ($scope.currentLineup[i].country !== "India") {
+						$scope.numberOfForeignPlayers ++;
+						// console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
+					}
 				}
 
 			})
@@ -270,9 +281,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 	/////// createLineup.html ///////
 	/////////////////////////////////
 
-	$scope.selectPlayer = function(id, name, position, team, cost) {
+	$scope.selectPlayer = function(id, name, country, position, team, cost) {
 		$scope.playerId = id;
 		$scope.playerName = name;
+		$scope.playerCountry = country;
 		$scope.playerPosition = position;
 		$scope.playerTeam = team;
 		$scope.playerCost = cost;
@@ -398,6 +410,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			$scope.recursiveRemove(cricketPlayersToRemove, 0); 
 
 		// gatekeeprs
+		if ($scope.numberOfForeignPlayers > 4) return alert("Lineup cannot be saved. No more than 4 foreign players allowed.");
 		/*
 		if (vm.numberOfBowlers < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBowlers) + " bowlers. You need at least " + vm.numberOfBowlers + " more.");
 		if (vm.numberOfBatsmen < 3) return alert("Lineup cannot be saved. You only have " + (3 - vm.numberOfBatsmen) + " batsmen. You need at least " + vm.numberOfBatsmen + " more.");
@@ -431,11 +444,11 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		// Prevent user from adding same player to lineup if player has already been added to $scope.currentLineup
 		var findWhereInScopeCurrentLineup = _.findWhere($scope.currentLineup, {id: selectedCricketPlayer.objectId});
 		if (findWhereInScopeCurrentLineup) return alert("You have already added this player to your lineup.");
-
 		// Prevent user from adding same player to lineup if player has already been added to $scope.currentSavedLineup
 		var findWhereInScopeCurrentSavedLineup = _.findWhere($scope.currentSavedLineup, {id: selectedCricketPlayer.objectId});
 		if (findWhereInScopeCurrentSavedLineup) return alert("You have already added this player to your lineup.");
-		
+		// Prevent player from being added if he is foreign and user has already added 4 foreign players
+		if ($scope.numberOfForeignPlayers === 4 && selectedCricketPlayer.country !== "India") return alert(selectedCricketPlayer.name + " cannot be added. You can only have 4 foreign players in your lineup.");
 		
 		var playerId = $scope.playerId;
 		var playerName = $scope.playerName;
@@ -448,9 +461,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 
 		// VISUALLY ADD PLAYER TO USER'S LINEUP
-		var Player = function(id, name, position, team, cost) {
+		var Player = function(id, name, country, position, team, cost) {
 			this.id = id;
 			this.name = name;
+			this.country = country;
 			this.position = position;
 			this.team = team;
 			this.cost = cost;
@@ -458,7 +472,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		
 		var addPlayer = function() {
 
-			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
+			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.country, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
 			$scope.lineupPlayer = lineupPlayer;
 			
 			// * * * //
@@ -487,6 +501,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					$scope.allroundersAsBowlers.push(selectedCricketPlayer.objectId);
 					// console.log("$scope.allroundersAsBowlers:", $scope.allroundersAsBowlers);
 				}
+			}
+
+			// increment numberOfForeignPlayers array if foreign player is added to lineup
+			if (selectedCricketPlayer.country !== "India") {
+				$scope.numberOfForeignPlayers ++;
+				// console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
 			}
 
 		};
@@ -559,6 +579,12 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 							vm.numberOfBowlers ++;
 						}
 					
+					}
+
+					// decrement numberOfForeignPlayers array if foreign player is removed from lineup
+					if (selectedCricketPlayer.country !== "India") {
+						$scope.numberOfForeignPlayers --;
+						// console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
 					}
 
 
