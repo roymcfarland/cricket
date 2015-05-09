@@ -134,8 +134,9 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				}
 
 				for (var i = 0; i < $scope.currentLineup.length; i++) {
-					if ($scope.currentLineup[i].country === "India") {
-						console.log("###");
+					if ($scope.currentLineup[i].country !== "India") {
+						$scope.numberOfForeignPlayers ++;
+						console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
 					}
 				}
 
@@ -503,7 +504,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			// increment numberOfForeignPlayers array if foreign player is added to lineup
 			if (selectedCricketPlayer.country !== "India") {
 				$scope.numberOfForeignPlayers ++;
-				// console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
+				console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
 			}
 
 		};
@@ -581,7 +582,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					// decrement numberOfForeignPlayers array if foreign player is removed from lineup
 					if (selectedCricketPlayer.country !== "India") {
 						$scope.numberOfForeignPlayers --;
-						// console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
+						console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
 					}
 
 
