@@ -450,9 +450,10 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		};
 
 		// VISUALLY ADD PLAYER TO USER'S LINEUP
-		var Player = function(id, name, position, team, cost) {
+		var Player = function(id, name, country, position, team, cost) {
 			this.id = id;
 			this.name = name;
+			this.country = country;
 			this.position = position;
 			this.team = team;
 			this.cost = cost;
@@ -460,7 +461,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		
 		var addPlayer = function() {
 
-			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
+			var lineupPlayer = new Player (selectedCricketPlayer.objectId, selectedCricketPlayer.name, selectedCricketPlayer.country, selectedCricketPlayer.CricketPlayerType.name, selectedCricketPlayer.team, selectedCricketPlayer.cost);
 			$scope.lineupPlayer = lineupPlayer;
 			
 			// * * * //
