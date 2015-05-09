@@ -137,7 +137,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 				for (var i = 0; i < $scope.currentLineup.length; i++) {
 					if ($scope.currentLineup[i].country !== "India") {
 						$scope.numberOfForeignPlayers ++;
-						console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
+						// console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
 					}
 				}
 
@@ -448,7 +448,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 		var findWhereInScopeCurrentSavedLineup = _.findWhere($scope.currentSavedLineup, {id: selectedCricketPlayer.objectId});
 		if (findWhereInScopeCurrentSavedLineup) return alert("You have already added this player to your lineup.");
 		// Prevent player from being added if he is foreign and user has already added 4 foreign players
-		if ($scope.numberOfForeignPlayers === 4) return alert(selectedCricketPlayer.name + " cannot be added. You can only have 4 foreign players in your lineup.");
+		if ($scope.numberOfForeignPlayers === 4 && selectedCricketPlayer.country !== "India") return alert(selectedCricketPlayer.name + " cannot be added. You can only have 4 foreign players in your lineup.");
 		
 		var playerId = $scope.playerId;
 		var playerName = $scope.playerName;
@@ -506,7 +506,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 			// increment numberOfForeignPlayers array if foreign player is added to lineup
 			if (selectedCricketPlayer.country !== "India") {
 				$scope.numberOfForeignPlayers ++;
-				console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
+				// console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
 			}
 
 		};
@@ -584,7 +584,7 @@ createLineupCtrl.controller("createLineupController", function($location, $scope
 					// decrement numberOfForeignPlayers array if foreign player is removed from lineup
 					if (selectedCricketPlayer.country !== "India") {
 						$scope.numberOfForeignPlayers --;
-						console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
+						// console.log("$scope.numberOfForeignPlayers:", $scope.numberOfForeignPlayers);
 					}
 
 
