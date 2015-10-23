@@ -1,11 +1,11 @@
 Status Codes
 ------------
 
-==Success Codes==
+=Success=
 200 - General success
 201 - Created
 
-==Error Codes==
+==Error==
 403 - Unauthorized
 404 - User not found on parse
 427 - Object ID not included when searching for leagues created by the user
